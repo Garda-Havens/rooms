@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -45,6 +47,7 @@
                         <img src="static/1/4.jpeg" alt="Room 1 Image 4">
                     </div>
                 </div>
+                <button class="open-gallery" data-room="1">View Gallery</button>
                 <div class="room-info">
                     <h3>Room 1 - Quadruple</h3>
                     <p>Description</p>
@@ -67,6 +70,7 @@
                         <img src="static/2/4.jpeg" alt="Room 2 Image 4">
                     </div>
                 </div>
+                <button class="open-gallery" data-room="2">View Gallery</button>
                 <div class="room-info">
                     <h3>Room 2 - Sestuple</h3>
                     <p>Description</p>
@@ -92,6 +96,7 @@
                         <img src="static/3/5.jpeg" alt="Room 3 Image 5">
                     </div>
                 </div>
+                <button class="open-gallery" data-room="3">View Gallery</button>
                 <div class="room-info">
                     <h3>Room 3 - Quadruple</h3>
                     <p>Description</p>
@@ -120,6 +125,7 @@
                         <img src="static/4/6.JPG" alt="Room 4 Image 6">
                     </div>
                 </div>
+                <button class="open-gallery" data-room="4">View Gallery</button>
                 <div class="room-info">
                     <h3>Room 4 - Double</h3>
                     <p>Description</p>
@@ -133,6 +139,7 @@
                         <img src="static/logo copy.png" alt="Room 5 Image 1">
                     </div>
                 </div>
+                <button class="open-gallery" data-room="5">View Gallery</button>
                 <div class="room-info">
                     <h3>Room 5 - Quadruple</h3>
                     <p>Description</p>
@@ -146,6 +153,7 @@
                         <img src="static/logo copy.png" alt="Room 6 Image 1">
                     </div>
                 </div>
+                <button class="open-gallery" data-room="6">View Gallery</button>
                 <div class="room-info">
                     <h3>Room 6 - Quadruple</h3>
                     <p>Description</p>
@@ -153,13 +161,26 @@
             </div>
         </section>
 
-        <!-- Map Section -->
-        <div class="map-container">
-            <!-- Embed Google Map iframe -->
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11195.970260688371!2d10.712896290130246!3d45.44980593717816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4781e99c75ec9e77%3A0x1a4f368651ec54d4!2sGarda%20Havens!5e0!3m2!1sen!2sit!4v1731749765168!5m2!1sen!2sit" 
-                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+        <!-- Modal Gallery -->
+        <div id="gallery-modal" class="gallery-modal">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="modal-image">
+            <div id="caption"></div>
+            <div class="gallery-navigation">
+                <button id="prev-image">Previous</button>
+                <button id="next-image">Next</button>
+            </div>
         </div>
+
+        <!-- Map Section -->
+        <footermap>
+            <div class="map-container">
+                <!-- Embed Google Map iframe -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11195.970260688371!2d10.712896290130246!3d45.44980593717816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4781e99c75ec9e77%3A0x1a4f368651ec54d4!2sGarda%20Havens!5e0!3m2!1sen!2sit!4v1731749765168!5m2!1sen!2sit" 
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </footermap>
 
         <!-- Footer Section -->
         <footer>
@@ -185,4 +206,5 @@
         </footer>
     </div>
 </body>
+
 </html>
