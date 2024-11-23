@@ -612,6 +612,22 @@ footermap iframe {
     padding: 20px;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
+    .roomprice {
+        width: 45%; /* 2 columns on medium screens (tablets) */
+    }
+}
+
+@media (max-width: 768px) {
+    .roomprice {
+        width: 100%; /* 1 column on smaller screens (mobile devices) */
+    }
+    .roomsprice {
+        justify-content: center; /* Center items in a single column */
+    }
+}
+
 .roomprice h3 {
     font-size: 28px;
     font-weight: 600;
