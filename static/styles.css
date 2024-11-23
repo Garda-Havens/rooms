@@ -455,8 +455,8 @@ footermap iframe {
 }
 
 .logo img {
-    max-height: 600px; /* Adjust the size of the logo */
-    width: auto;
+    max-height: 40%; /* Adjust the size of the logo */
+    width: 40%;
 }
 
 
