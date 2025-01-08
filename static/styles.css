@@ -1,0 +1,857 @@
+/****************************************************************************/
+/*GENERAL*/
+/****************************************************************************/
+
+html {
+    background: linear-gradient(135deg, #E8BA67, #744526); /* Background gradient */
+    height: 400%; /* Ensure it covers the entire page */
+}
+
+@media (max-width: 1100px) {
+    html {
+        background: linear-gradient(135deg, #E8BA67, #744526); /* Background gradient */
+        height: 600%; /* Ensure it covers the entire page */
+    }
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    line-height: 1.5;
+    background-color: #faf0d7;
+    color: #333;
+    padding: 20px;
+    margin-left: 20%;   /* 20% left margin for centering */
+    margin-right: 20%;  /* 20% right margin for centering */
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-radius: 5px;
+}
+
+@media (max-width: 1800px) {
+    body {
+        margin-left: 2%;   /* 20% left margin for centering */
+        margin-right: 2%;  /* 20% right margin for centering */
+        text-align: center;
+    }
+}
+
+/* Main Content Wrapper */
+.main-wrapper {
+    background-color: #ffffee;
+    width: 80%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/****************************************************************************/
+/*HEADING & HEADER*/
+/****************************************************************************/
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: #faf0d7;
+}
+
+p {
+    font-family: 'Playfair Display', serif;
+    color: #744526;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #A09B6F, #404927); /* Gradient header background */
+    color: #faf0d7;
+    top: 0;
+    left: 20%;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px;
+    margin-top: 0%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center;    /* Centers items vertically */
+    gap: 30px;              /* Adds spacing between the list items */
+    padding: 0;             /* Removes default padding from the list */
+    margin: 0;              /* Removes default margin from the list */
+}
+
+header nav ul li {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+header nav ul li a {
+    color: #faf0d7;
+    padding: 5px 20px;
+    border-radius: 30px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+header nav ul li a:hover {
+    background-color: #404927;
+    color: #faf0d7;
+}
+
+/* Header Logo and Title */
+.header-logo-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    max-height: 80px; /* Adjust size of the logo */
+    width: auto;
+}
+
+header h1 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+@media (max-width: 1100px) { /* Target devices with width <= 768px */
+    header {
+        background: linear-gradient(135deg, #A09B6F, #404927); /* Gradient header background */
+        color: #faf0d7;
+        left: 0; /* Remove left margin for full-width header */
+        width: 100%; /* Full width for mobile screens */
+        flex-direction: column; /* Stack items vertically */
+        padding: 10px; /* Reduce padding for smaller screens */
+        text-align: center; /* Center align text */
+    }
+    header nav ul {
+        flex-direction: column; /* Stack navigation items vertically */
+        align-items: center; /* Center items horizontally */
+        gap: 15px; /* Reduce gap between items */
+        width: 100%; /* Ensure the nav spans the width */
+    }
+    header nav ul li {
+        width: 100%; /* Allow list items to take full width if needed */
+        text-align: center; /* Center-align the text */
+        font-size: 20px;
+    }
+    header nav ul li a {
+        display: inline-block; /* Ensure links behave like inline blocks for proper padding */
+        text-align: center; /* Center-align text within the links */
+        width: auto; /* Let the links take natural width */
+    }
+    header h1 {
+        font-size: 30px;
+        font-weight: 700;
+    }
+}
+
+@media (max-width: 400px) { /* Target devices with width <= 768px */
+    header {
+        background: linear-gradient(135deg, #A09B6F, #404927); /* Gradient header background */
+        color: #faf0d7;
+        left: 0; /* Remove left margin for full-width header */
+        width: 100%; /* Full width for mobile screens */
+        flex-direction: column; /* Stack items vertically */
+        padding: 10px; /* Reduce padding for smaller screens */
+        text-align: center; /* Center align text */
+    }
+    header nav ul {
+        flex-direction: column; /* Stack navigation items vertically */
+        align-items: center; /* Center items horizontally */
+        gap: 15px; /* Reduce gap between items */
+        width: 100%; /* Ensure the nav spans the width */
+    }
+    header nav ul li {
+        width: 100%; /* Allow list items to take full width if needed */
+        text-align: center; /* Center-align the text */
+        font-size: 10px;
+    }
+    header nav ul li a {
+        display: inline-block; /* Ensure links behave like inline blocks for proper padding */
+        text-align: center; /* Center-align text within the links */
+        width: auto; /* Let the links take natural width */
+    }
+    header h1 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
+
+/************************************************************************************ Hero Section */
+.hero {
+    background: linear-gradient(135deg, #A09B6F, #404927);
+    color: #faf0d7;
+    text-align: center;
+    padding: 150px 20px;
+    margin-top: 50px; /* Clears the fixed header */
+    border-radius: 5px;
+}
+
+.hero h2 {
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 40px;
+}
+
+.hero .btn {
+    background-color: #404927;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #faf0d7;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.hero .btn:hover {
+    background-color: #E8BA67; /* A lighter shade of green */
+}
+
+@media (max-width: 768px) { /* Target devices with width <= 768px */
+    .hero h2 {
+        font-size: 50px;
+    }
+    
+    .hero p {
+        font-size: 20px;
+    }
+    
+    .hero .btn {
+        font-size: 15px;
+    }
+
+    .hero {
+        padding: 60px 20px;
+    }
+} 
+
+@media (max-width: 400px) { /* Target devices with width <= 768px */
+    .hero h2 {
+        font-size: 30px;
+    }
+    
+    .hero p {
+        font-size: 12px;
+    }
+    
+    .hero .btn {
+        font-size: 9px;
+    }
+
+    .hero {
+        padding: 60px 20px;
+    }
+} 
+ 
+/************************************************************************************ Rooms Section */
+.rooms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px 20px; /* Vertical gap: 30px, Horizontal gap: 0px */
+    margin-top: 30px;
+}
+
+.room {
+    width: 31%; /* Ensure width leaves space for gaps */
+    background-color: #ffffee;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 32.3%;
+    min-height: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .rooms {
+        justify-content: center; /* Center items on smaller screens */
+    }
+
+    .room {
+        width: 100%; /* Take full width on smaller screens */
+        min-height: 400px; /* Reduce the minimum height for smaller screens */
+    }
+}
+
+/* Tablet adjustments */
+@media (max-width: 1100px) and (min-width: 768px) {
+    .room {
+        width: 45%; /* Two items per row on tablet screens */
+        min-height: 500px; /* Adjust height for tablets */
+    }
+}
+
+.room img {
+    position: absolute;
+    bottom: 0;              /* Align image to bottom */
+    left: 0;
+    width: 100%;            /* Full width */
+    height: auto;
+    min-height: 120%;       /* Stretch to fill the container */
+    /*object-fit: cover;      /* Maintain aspect ratio */
+    object-position: bottom; /* Start from bottom */
+    border-bottom: 5px solid #404927;
+}
+
+.room-info {
+    padding: 20px;
+}
+
+.room h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #E8BA67;
+}
+
+.room p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #404927;
+}
+
+.room:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) { /* Target devices with width <= 768px */
+    .room h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #E8BA67;
+    }
+    
+    .room p {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .price {
+        font-size: 16px;
+        font-weight: bold;
+        color: #404927;
+    }
+} 
+
+@media (max-width: 400px) { /* Target devices with width <= 768px */
+    .room h3 {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #E8BA67;
+    }
+    
+    .room p {
+        font-size: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .price {
+        font-size: 10px;
+        font-weight: bold;
+        color: #404927;
+    }
+}
+
+/************************************************************************************ Footer */
+
+footer {
+    background: linear-gradient(135deg, #A09B6F, #404927);
+    color: #ffffee;
+    text-align: center;
+    padding: 10px;  /* Reduced padding to give more space to the map */
+    margin-top: 0px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+footermap {
+    /*background: linear-gradient(135deg, #A09B6F, #404927);*/
+    color: #ffffee;
+    text-align: center;
+    padding: 10px;  /* Reduced padding to give more space to the map */
+    margin-top: 0px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+footer a {
+    color: #404927;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footermap .map-container {
+    margin-top: 0px;
+    text-align: center;
+}
+
+footermap iframe {
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;  /* Makes the map responsive */
+    height: 100%;  /* Make the height 100% of the parent container */
+    max-width: 100%;  /* Allow the iframe to grow to full width of the footer */
+    min-height: 600px;  /* Increase maximum height of the iframe */
+}
+
+@media (max-width: 768px) {
+    footermap iframe {
+        min-height: 300px;  /* Increase maximum height of the iframe */
+    }
+}
+
+/* Footer Icons container */
+.footer-icons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
+    margin-top: 30px;
+    flex-wrap: wrap; /* Ensure responsiveness */
+    padding: 20px;
+}
+
+/* Individual Icon Box */
+.icon-box {
+    text-align: center;
+    max-width: 400px; /* Optional: limits the width for each icon section */
+    transition: transform 0.3s ease;
+}
+
+.icon-box i {
+    font-size: 50px; /* Larger icons */
+    color: #faf0d7;
+    margin-bottom: 15px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.icon-box p {
+    font-size: 18px;
+    color: #faf0d7;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .footer-icons .icon-box i {
+        font-size: 40px;
+    }
+    .footer-icons .icon-box p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .footer-icons .icon-box i {
+        font-size: 35px;
+    }
+    .footer-icons .icon-box p {
+        font-size: 12px;
+    }
+}
+
+.icon-box a {
+    color: #faf0d7;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Hover effects for icons */
+.icon-box i:hover {
+    color: #E8BA67; /* Change icon color on hover */
+    transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+
+.icon-box p:hover {
+    color: #E8BA67; /* Change text color on hover */
+}
+
+.icon-box a:hover {
+    color: #E8BA67; /* Change link color on hover */
+    text-decoration: underline; /* Underline text on hover */
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .footer-icons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .icon-box i {
+        font-size: 45px; /* Slightly smaller icons on mobile */
+    }
+
+    .icon-box p {
+        font-size: 16px; /* Smaller text on mobile */
+    }
+}
+
+/* Logo Styling */
+.logo {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.logo img {
+    max-height: 55%; /* Adjust the size of the logo */
+    width: 55%;
+}
+
+/* Slideshow Container */
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Ensure it has a fixed height */
+    overflow: hidden;
+    border-bottom: 5px solid #404927; /* Add the border to the bottom */
+}
+
+@media (max-width: 768px) {
+    .slideshow-container {
+        height: 300px; /* Ensure it has a fixed height */
+    }
+}
+
+/* Individual Slide */
+.slide {
+    position: bottom;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    padding-bottom: 56.25%;  /* Aspect ratio of 16:9 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Active Slide */
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* This makes sure the image covers the entire box */
+    object-position: center; /* Center the image in case it's cropped */
+}
+
+.gallery-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.gallery-modal .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+}
+
+.gallery-modal #caption {
+    margin: 10px auto;
+    text-align: center;
+    color: #ccc;
+    font-size: 18px;
+}
+
+.gallery-modal .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #f1f1f1;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.gallery-navigation {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.gallery-navigation button {
+    background-color: #404927; /* Match hero button background */
+    padding: 15px 30px; /* Match padding */
+    font-size: 18px; /* Match font size */
+    font-weight: bold; /* Match font weight */
+    color: #faf0d7; /* Match hero button text color */
+    border-radius: 30px; /* Add rounded corners */
+    transition: background-color 0.3s ease; /* Add smooth transition */
+    border: none; /* Ensure no border */
+    cursor: pointer;
+    margin: 0 10px; /* Maintain navigation margin */
+}
+
+.gallery-navigation button:hover {
+    background-color: #555; /* You can adjust this to align with your hero button hover effect */
+}
+
+.open-gallery {
+    background-color: #404927; /* Match hero button background */
+    padding: 15px 30px; /* Match padding */
+    position: relative; /* Ensure it's positioned relative to its container */
+    top: 20px; /* Shift down */
+    font-size: 18px; /* Match font size */
+    font-weight: bold; /* Match font weight */
+    color: #faf0d7; /* Match hero button text color */
+    border-radius: 30px; /* Add rounded corners */
+    transition: background-color 0.3s ease; /* Add smooth transition */
+    border: none; /* Remove any default border */
+    cursor: pointer;
+}
+
+@media (max-width: 768px) { /* Target devices with width <= 768px */
+    .open-gallery {
+        padding: 14px 25px; /* Match padding */
+        font-size: 15px; /* Match font size */
+    }
+} 
+
+@media (max-width: 400px) { /* Target devices with width <= 768px */
+    .open-gallery {
+        padding: 8px 15px; /* Match padding */
+        font-size: 9px; /* Match font size */
+    }
+}
+
+.open-gallery:hover {
+    background-color: #606840; /* Match hover effect with hero button */
+}
+
+.roomsprice {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.roomprice {
+    background-color: #ffffee;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 30%;
+    min-height: 100px; /* Minimum height to ensure space for the image */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.roomprice img {
+    position: absolute;
+    bottom: 0;              /* Align image to bottom */
+    left: 0;
+    width: 100%;            /* Full width */
+    height: auto;
+    min-height: 120%;       /* Stretch to fill the container */
+    /*object-fit: cover;      /* Maintain aspect ratio */
+    object-position: bottom; /* Start from bottom */
+    border-bottom: 5px solid #404927;
+}
+
+.roomprice-info {
+    padding: 20px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 1024px) {
+    .roomprice {
+        width: 45%; /* 2 columns on medium screens (tablets) */
+    }
+}
+
+@media (max-width: 768px) {
+    .roomprice {
+        width: 100%; /* 1 column on smaller screens (mobile devices) */
+    }
+    .roomsprice {
+        justify-content: center; /* Center items in a single column */
+    }
+}
+
+.roomprice h3 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #E8BA67;
+}
+
+.roomprice p {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #744526;
+}
+
+@media (max-width: 768px) {
+    .roomprice h3 {
+        font-size: 24px;
+    }
+    
+    .roomprice p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .roomprice h3 {
+        font-size: 14px;
+    }
+    
+    .roomprice p {
+        font-size: 10px;
+    }
+}
+
+.roomprice:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-us {
+    display: flex;
+    gap: 20px; /* Space between the boxes */
+    max-width: 100%; /* Limit the total width for better centering */
+    margin: 50px auto; /* Center horizontally */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: space-between; /* Equal space between items */
+    align-items: stretch; /* Align items to have the same height */
+}
+
+.about-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between the left boxes */
+    flex: 1; /* Equal space allocation to left and right */
+}
+
+.about-right {
+    flex: 1; /* Take equal space as the left side */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out content vertically */
+    background-color: #ffffee;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-box {
+    background-color: #ffffee;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 20px;
+    height: 100%; /* Ensures equal height across boxes */
+}
+
+.about-box h2 {
+    color: #E8BA67;
+    font-size: 24px;
+}
+
+@media (max-width: 768px) {
+    .about-box {
+        font-size: 16px;
+    }
+    
+    .about-box h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .about-box {
+        font-size: 10px;
+    }
+    
+    .about-box h2 {
+        font-size: 12px;
+    }
+}
+
+.about-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+/* For responsive design */
+@media (max-width: 768px) {
+    .about-us {
+        flex-direction: column; /* Stack boxes vertically on smaller screens */
+    }
+
+    .about-left, .about-right {
+        flex: 1; /* Make both columns take equal space on small screens */
+    }
+}
+
+
+/* Styling for the textarea */
+#special-requests {
+    width: 100%; /* Make it take full width of the form */
+    height: 200px; /* Increase height of the textarea */
+    font-family: 'Merriweather', serif; /* Change the font family */
+    font-size: 16px; /* Set font size */
+    padding: 10px; /* Add padding inside the textarea */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 5px; /* Rounded corners */
+    resize: vertical; /* Allow vertical resizing only */
+}
