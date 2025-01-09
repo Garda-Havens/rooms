@@ -150,7 +150,7 @@ header h1 {
         text-align: center; /* Center-align the text */
         font-size: 20px;
     }
-    header nav ul li a {
+    header nav ul li a:not(#lang-switch) {
         display: inline-block; /* Ensure links behave like inline blocks for proper padding */
         text-align: center; /* Center-align text within the links */
         width: auto; /* Let the links take natural width */
@@ -182,7 +182,7 @@ header h1 {
         text-align: center; /* Center-align the text */
         font-size: 10px;
     }
-    header nav ul li a {
+    header nav ul li a:not(#lang-switch) {
         display: inline-block; /* Ensure links behave like inline blocks for proper padding */
         text-align: center; /* Center-align text within the links */
         width: auto; /* Let the links take natural width */
@@ -860,38 +860,16 @@ footermap iframe {
 
 /* Specific styles for the language switch */
 /* Specific styles for the language switch */
-#lang-switch {
-    padding: 0; /* Remove padding applied to the <li> */
-}
-
-#lang-switch a {
-    display: inline-block;
-    text-decoration: none;
-    color: inherit; /* Ensure it doesn’t inherit color from header styles */
-    cursor: pointer;
-    padding: 0; /* Remove padding */
-    border-radius: 0; /* Remove border-radius */
-    background: none; /* Ensure no background color */
-}
-
-#lang-switch a:hover {
-    text-decoration: none;
-    color: inherit; /* Prevent hover styles */
-    background: none; /* Avoid hover background */
-}
 
 #lang-switch img {
     display: inline-block;
     vertical-align: middle;
-    width: 40px;
-    height: auto;
-}
+    width: 40px;}
 
 @media (max-width: 768px) {
     #lang-switch img {
         display: inline-block;
         vertical-align: middle;
         width: 25px;
-        height: auto;
     }
 }
