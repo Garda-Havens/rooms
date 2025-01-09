@@ -100,14 +100,14 @@ header nav ul li {
     font-weight: 500;
 }
 
-header nav ul li a {
+header nav ul li a:not(#lang-switch) {
     color: #faf0d7;
     padding: 5px 20px;
     border-radius: 30px;
     transition: background-color 0.3s ease-in-out;
 }
 
-header nav ul li a:hover {
+header nav ul li a:not(#lang-switch):hover {
     background-color: #404927;
     color: #faf0d7;
 }
@@ -854,4 +854,44 @@ footermap iframe {
     border: 1px solid #ccc; /* Border styling */
     border-radius: 5px; /* Rounded corners */
     resize: vertical; /* Allow vertical resizing only */
+}
+
+/* Translation */
+
+/* Specific styles for the language switch */
+/* Specific styles for the language switch */
+#lang-switch {
+    padding: 0; /* Remove padding applied to the <li> */
+}
+
+#lang-switch a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit; /* Ensure it doesn’t inherit color from header styles */
+    cursor: pointer;
+    padding: 0; /* Remove padding */
+    border-radius: 0; /* Remove border-radius */
+    background: none; /* Ensure no background color */
+}
+
+#lang-switch a:hover {
+    text-decoration: none;
+    color: inherit; /* Prevent hover styles */
+    background: none; /* Avoid hover background */
+}
+
+#lang-switch img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40px;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    #lang-switch img {
+        display: inline-block;
+        vertical-align: middle;
+        width: 25px;
+        height: auto;
+    }
 }
