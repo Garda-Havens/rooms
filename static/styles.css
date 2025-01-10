@@ -85,7 +85,7 @@ header nav ul {
 
 header nav ul li {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 300;
 }
 
 header nav ul li a:not(#lang-switch) {
@@ -123,7 +123,7 @@ header nav ul li a:not(#lang-switch):hover {
 
 header h1 {
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 @media (max-width: 1150px) {
@@ -155,7 +155,7 @@ header h1 {
     }
     header h1 {
         font-size: 20px;
-        font-weight: 700;
+        font-weight: 500;
     }
 }
 
@@ -175,7 +175,7 @@ header h1 {
 
 .hero h2 {
     font-size: 60px;
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: 30px;
 }
 
@@ -192,7 +192,7 @@ header h1 {
     background-color: #404927;
     padding: 15px 30px;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     color: #faf0d7;
     border-radius: 30px;
     transition: background-color 0.3s ease;
@@ -416,7 +416,7 @@ header h1 {
 
 .room h3 {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 300;
     margin-bottom: 15px;
     color: #E8BA67;
 }
@@ -580,7 +580,7 @@ footermap iframe {
 .icon-box a {
     color: #faf0d7;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
@@ -675,7 +675,7 @@ h5 {
     right: 25px;
     color: #f1f1f1;
     font-size: 35px;
-    font-weight: bold;
+    font-weight: 500;
     cursor: pointer;
 }
 
@@ -690,7 +690,7 @@ h5 {
     background-color: #404927; /* Match hero button background */
     padding: 15px 30px; /* Match padding */
     font-size: 20px; /* Match font size */
-    font-weight: bold; /* Match font weight */
+    font-weight: 500; /* Match font weight */
     color: #faf0d7; /* Match hero button text color */
     border-radius: 30px; /* Add rounded corners */
     transition: background-color 0.3s ease; /* Add smooth transition */
@@ -709,7 +709,7 @@ h5 {
     position: relative; /* Ensure it's positioned relative to its container */
     top: 20px; /* Shift down */
     font-size: 20px; /* Match font size */
-    font-weight: bold; /* Match font weight */
+    font-weight: 500; /* Match font weight */
     color: #faf0d7; /* Match hero button text color */
     border-radius: 30px; /* Add rounded corners */
     transition: background-color 0.3s ease; /* Add smooth transition */
@@ -800,13 +800,13 @@ h5 {
 }
 
 .price {
-    font-weight: bold;
+    font-weight: 500;
     color: #404927;
 }
 
 .roomprice h3 {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 300;
     margin-bottom: 15px;
     color: #E8BA67;
 }
