@@ -554,19 +554,26 @@ footermap iframe {
     }
 }
 
-@media (max-width: 410px) {
-    .footer-icons .icon-box i {
-        font-size: 25px;
-    }
-    .footer-icons .icon-box p {
-        font-size: 11px;
-    }
-}
-
 @media (max-width: 550px) {
     .footer-icons {
         flex-direction: column;
         align-items: center;
+    }
+
+    .footer-icons .icon-box i {
+        font-size: 32px;
+    }
+    .footer-icons .icon-box p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 410px) {
+    .footer-icons .icon-box i {
+        font-size: 28px;
+    }
+    .footer-icons .icon-box p {
+        font-size: 12px;
     }
 }
 
