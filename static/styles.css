@@ -373,7 +373,7 @@ header h1 {
     background-color: #ffffee;
     border-radius: 5px;
     overflow: hidden;
-    min-height: 600px;
+    /*min-height: 600px;*/
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
@@ -382,7 +382,7 @@ header h1 {
 @media (max-width: 1150px) and (min-width: 550px) {
     .room {
         width: calc(98%/ 2); 
-        min-height: 500px; /* Adjust height for tablets */
+       /* min-height: 500px; /* Adjust height for tablets */
     }
 }
 
@@ -394,7 +394,7 @@ header h1 {
 
     .room {
         width: 100%; 
-        min-height: 400px; /* Reduce the minimum height for smaller screens */
+        /*min-height: 400px; /* Reduce the minimum height for smaller screens */
     }
 }
 
