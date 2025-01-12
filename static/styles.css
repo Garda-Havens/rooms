@@ -169,7 +169,7 @@ header h1 {
     text-align: center;
     padding: 300px 20px;
     margin-top: 50px; /* Clears the fixed header */
-    margin-bottom: 30px; /* Clears the fixed header */
+    margin-bottom: 0px; /* Clears the fixed header */
     border-radius: 5px;
 }
 
@@ -460,7 +460,7 @@ footer {
     color: #ffffee;
     text-align: center;
     padding: 10px;  /* Reduced padding to give more space to the map */
-    margin-top: 30px;
+    margin-top: 0px;
     border-radius: 5px;
     position: relative;
     overflow: hidden;
