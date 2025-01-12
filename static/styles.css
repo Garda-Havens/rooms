@@ -285,7 +285,7 @@ header h1 {
     display: flex;
     gap: 20px; /* Space between the boxes */
     max-width: 100%; /* Limit the total width for better centering */
-    margin: 30px auto; /* Center horizontally */
+    margin-top: 30px; /* Center horizontally */
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
     justify-content: space-between; /* Equal space between items */
     align-items: stretch; /* Align items to have the same height */
