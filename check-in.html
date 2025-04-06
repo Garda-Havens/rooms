@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Room Rental</title>
+    <title>Check-In - Garda Havens</title>
     <link rel="stylesheet" href="static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
     <div class="container">
         <header>
             <div class="header-logo-title">
-                <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
+                <img src="static/logonobg.png" alt="Garda Havens Logo" class="logo-img">
                 <h1>Garda Havens</h1>
             </div>
             <nav>
@@ -25,7 +25,7 @@
                     <li><a href="prices-it.html">Prezzi & Servizi</a></li>
                     <li><a href="check-in.html">Check-In</a></li>
                     <li>
-                        <a href="about.html" id="lang-switch">
+                        <a href="prices.html" id="lang-switch">
                             <img src="static/uk.png" alt="uk Flag">
                         </a>
                     </li>
@@ -33,27 +33,20 @@
             </nav>
         </header>
 
-        <!-- About Us Section -->
-        <section class="about-us">
-            <div class="about-left">
-                <div class="about-box">
-                    <h2>Informazioni sulla Struttura</h2>
-                    <p>Garda Havens è il luogo ideale per una pausa rilassante, a due passi da Gardaland e dal Lago di Garda. Immerso nella quiete della campagna, offre camere moderne e accoglienti, perfette per famiglie o per chi cerca un’oasi di tranquillità lontano dal ritmo frenetico della città. Rilassati e lasciati avvolgere dal comfort di un ambiente verde e rigenerante, pensato per rendere il tuo soggiorno indimenticabile.</p>                </div>
-                <div class="about-box">
-                    <h2>Informazioni sugli Host</h2>
-                    <p>Ti presentiamo i tuoi host, Jenny e Alessandro! Siamo due studenti dell'Università di Verona, appassionati di viaggi e sempre pronti a condividere storie ed esperienze. Ci dedichiamo con entusiasmo a creare soggiorni accoglienti e a regalare esperienze indimenticabili ai nostri ospiti!</p>
-                </div>
-            </div>
-            <div class="about-right about-box">
-                <h2>Informazioni sulle Attrazioni</h2>
-                <p>Benvenuto a Peschiera del Garda! Qui ti trovi nella posizione ideale per scoprire un’infinità di attrazioni. Inizia la tua avventura a Gardaland, il parco divertimenti numero uno in Italia, e accanto, tuffati nel divertimento di Movieland Park, celebre per le sue giostre emozionanti e spettacoli unici. Per una giornata rinfrescante, Caneva Aquapark offre scivoli mozzafiato e piscine adatte a tutte le età.</p>  
-                <p>Approfitta del Lago di Garda con gite in barca panoramiche o prova sport come la vela e la pesca. La zona è ricca di magnifici sentieri per il ciclismo e il trekking, che regalano viste spettacolari sul lago e sul paesaggio circostante.</p>  
-                <p>Esplora il borgo storico di Sirmione, famoso per il suo antico castello e le sue terme, oppure immergiti nel patrimonio culturale di Verona, nota per l'Arena e il suo anfiteatro. Le incantevoli cittadine di Lazise e Bardolino ti aspettano con passeggiate sul lungolago e degustazioni di vini locali. Rendi il tuo soggiorno ancora più speciale visitando i mercati locali, scoprendo prodotti freschi e acquistando souvenir unici!</p> </div>
+        <section class="checkin-section">
+            <button class="checkin-toggle">
+                <h3>Check-In<br>- Google Account Required -</h3>
+            </button>
+                        <div class="checkin-content">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdGpJ45gzBkQlVEyEJWCl5Ed1t2KN_qx1S9hidNMNTiODLqTA/viewform?embedded=true"
+                        width="100%" height="1000" frameborder="0" marginheight="0" marginwidth="0">
+                    Loading…
+                </iframe>
             </div>
         </section>
         
 
-        <!-- Map Section -->
+
         <footermap>
             <div class="map-container">
                 <!-- Embed Google Map iframe -->
@@ -63,7 +56,7 @@
             </div>
         </footermap>
 
-        <!-- Footer Section -->
+        <!-- Footer -->
         <footer>
             <div class="footer-icons">
                 <div class="icon-box">
@@ -88,3 +81,14 @@
     </div>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const section = document.querySelector('.checkin-section');
+        const toggle = section.querySelector('.checkin-toggle');
+
+        toggle.addEventListener('click', () => {
+            section.classList.toggle('open');
+        });
+    });
+</script>

@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #faf0d7;
 }
 
+h5 {
+    font-family: 'Merriweather', serif;
+}
+
 p {
     font-family: 'Playfair Display', serif;
     color: #744526;
@@ -858,4 +862,129 @@ h5 {
         vertical-align: middle;
         width: 25px;
     }
+}
+
+/****************************************************************************/
+/*CHECK-IN*/
+/****************************************************************************/
+
+/****************************************************************************/
+/* CHECK-IN SECTION */
+/****************************************************************************/
+
+.checkin-section {
+    background: #ffffee;
+    border-radius: 10px;
+    padding: 40px 30px;
+    margin: 30px auto;
+    max-width: 100%;
+    color: #faf0d7;
+    text-align: center;
+    transition: background 0.4s ease; /* smooth background change */
+}
+
+.checkin-section.open {
+    background: #fdf9ef;
+}
+
+
+.checkin-toggle {
+    background-color: #404927;
+    color: #faf0d7;
+    font-size: 22px;
+    font-weight: 500;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: block;
+}
+
+.checkin-toggle:hover {
+    background-color: #E8BA67;
+    color: #2f2f2f;
+}
+
+.checkin-content {
+    margin-top: 30px;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.checkin-section.open .checkin-content {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .checkin-toggle {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+    .checkin-section {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkin-toggle {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}
+
+
+/****************************************************************************/
+/* SERVICES */
+/****************************************************************************/
+
+
+.services {
+    margin-top: 30px;
+    padding: 30px;
+    background-color: #ffffee;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.services h2 {
+    font-size: 28px;
+    color: #744526;
+    margin-bottom: 20px;
+}
+
+.service-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.service-item {
+    width: 140px;
+    text-align: center;
+    padding: 10px;
+    color: #744526;
+}
+
+.service-item i {
+    font-size: 30px;
+    color: #E8BA67;
+    margin-bottom: 10px;
+}
+
+.service-item p {
+    font-size: 16px;
+    margin: 0;
+    color: #744526;
 }
