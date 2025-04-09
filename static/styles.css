@@ -20,7 +20,7 @@ body {
     margin-bottom: 2%;
     border-radius: 5px;
 }
-@media (max-width: 1800px) {
+@media (max-width: 2100px) {
     body {
         margin-left: 2%;
         margin-right: 2%;
@@ -130,7 +130,7 @@ header h1 {
     font-weight: 500;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1300px) {
     header { 
         flex-direction: column; 
         padding: 10px; 
