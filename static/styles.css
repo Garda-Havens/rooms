@@ -499,6 +499,14 @@ footermap .map-container {
     text-align: center;
 }
 
+footermap .map-wrapper {
+    height: 550px;
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+}
+
+
 footermap iframe {
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
