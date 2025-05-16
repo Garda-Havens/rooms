@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
+    <title>Garda Havens</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="static/header.css">
+    <link rel="stylesheet" href="static/footer.css">
+    <link rel="stylesheet" href="static/homepage.css">
+    <link rel="stylesheet" href="static/rooms.css">
+    <link rel="stylesheet" href="static/booknow.css">
+    <link rel="stylesheet" href="static/guidebook.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="https://garda-havens.github.io/rooms/logo.png"/>
+</head>
+<body>
+            <header>
+                <div class="header-logo-title">
+                    <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
+                    <h1>Garda Havens</h1>
+                </div>
+                <!-- Hamburger Icon for mobile view -->
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <!-- Navigation Menu -->
+                <nav>
+                    <ul>
+                        <li><a href="index-it.html">Home</a></li>
+                        <li><a href="rooms-it.html">Camere</a></li>
+                        <li><a href="booknow-it.html">Prenota Ora</a></li>
+                        <li><a href="guidebook-it.html">Guida</a></li>
+
+                        <li>
+                            <a href="guidebook.html" id="lang-switch">
+                                <img src="static/uk.png" alt="Italian Flag">
+                            </a>
+                        </li>
+                    </ul>            
+                </nav>                        
+            </header>
+
+            <script>
+                // Toggle menu visibility when hamburger is clicked
+                const menuToggle = document.querySelector('.menu-toggle');
+                const nav = document.querySelector('header nav');
+            
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('open');
+                    nav.classList.toggle('menu-active');
+                });
+            </script>
+
+
+            <section class="guidebook-intro">
+                <h2>La Tua Guida di Viaggio Personalizzata</h2>
+                <p>
+                    Pianifica il tuo viaggio con facilità — Tutto ciò di cui hai bisogno è qui.
+                </p>
+            </section>
+
+            <section class="ticket-box">
+                <h2>Acquista Qui i Tuoi Biglietti</h2>
+                <p>Scansiona il codice QR qui sotto oppure clicca sul logo per acquistare biglietti scontati per le attrazioni locali.</p>
+                <div class="ticket-content">
+                    <div class="logo-section">
+                        <a href="https://gardahavens.gardaway.it" target="_blank" rel="noopener noreferrer">
+                        <img src="static/gardawaylogo.png" alt="Ticket Provider Logo" class="ticket-img">
+                        </a>
+                    </div>
+                    <div class="qr-section">
+                        <a href="#" target="_blank">
+                        <img src="static/qr.png" alt="QR Code" class="ticket-img">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                        <div class="link-row">
+                            <!-- First 4 Category Links -->
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/category/gardaland">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/2d10467eff14bea66ac2204affe04312.jpeg')">
+                                        <h3>Gardaland</h3>
+                                    </div>
+                                </a>
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/category/amusement-parks">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/de99d8a3c9c3e47b533bb19c81524c7c.jpeg')">
+                                        <h3>Parchi</h3>
+                                    </div>
+                                </a>
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/category/rentals">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/c5f3c2bcdda326765cfe68e841bcca70.jpeg')">
+                                        <h3>Noleggi</h3>
+                                    </div>
+                                </a>
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/category/tour-experiences">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/db4d9eb54528a9c9f038644a1e1ec3dd.jpeg')">
+                                        <h3>Esperienze</h3>
+                                    </div>
+                                </a>
+
+                            <!-- Now the 4 "Best Sellers" inside the same container -->
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/box-office/villa-dei-cedri-parco-termale">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/d64cb7bd7b50d6d87d3024ee591e5af0.jpeg')">
+                                            <h3>Villa dei Cedri</h3>
+                                    </div>
+                                </a>
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/box-office/essenza-del-rovere">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/815a77b97709219e44767d2856bd04b8.jpeg')">
+                                            <h3>Degustazione in Cantina</h3>
+                                    </div>
+                                </a>
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/box-office/sigurta">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/89fdd4c2ea5674642a26b6c2dc237fc4.jpeg')">
+                                            <h3>Parco Giardino Sigurtà</h3>
+                                    </div>
+                                </a>
+                                <a class="link-item" href="https://gardahavens.gardaway.it/en/box-office/tour-sirmione-boat">
+                                    <div class="link-box" style="background-image: url('https://images.1sticket.com/d1425bd09eed59236bf2a6e1bf5225a1.webp')">
+                                            <h3>Tour in barca di Sirmione</h3>
+                                    </div>
+                                </a>
+                    </div>
+                </div>
+
+            </section>
+           
+            <section class="checkin-wrapper">
+                <!-- Existing Check-In Section -->
+                <div class="checkin-section">
+                    <h3 class="checkin-title">&mdash; Check-In &mdash;</h3>
+                    <div class="checkin-intro">
+                        <p><strong>Standard check-in takes place in person at the facility.</strong><br>
+                            If you'd like to speed up the process, you can choose one of the following fast check-in options:</p>
+                    </div>
+                    <div class="checkin-options">
+                        <div class="checkin-method">
+                            <ul>
+                                <li>
+                                    <a href="https://forms.gle/uT8kr5cTr4cC45xj6" target="_blank">
+                                        <i class="fas fa-edit"></i> Compila il modulo
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://forms.gle/6bAE48ykamP7vC4n8" target="_blank">
+                                        <i class="fas fa-id-card"></i> Carica il tuo documento
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://wa.me/393450233733" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Invia i documenti via WhatsApp
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW GUEST INFO SECTION -->
+            <div class="info-section">
+                <h3 class="info-title">Informazioni di Benvenuto</h3>
+                <div class="info-content">
+                    <p>Ecco cosa sapere per un soggiorno sereno e confortevole:</p>
+                    <ul>
+                        <li><i class="fas fa-sign-in-alt icon"></i> Verificheremo i dettagli del check-in al tuo arrivo.</li>
+                        <li><i class="fas fa-coins"></i> Tassa di soggiorno: €1 a persona/notte (dai 12 anni in su).</li>
+                        <li><i class="fas fa-mug-hot"></i> Area comune: caffè, tè, microonde e tavolo disponibili gratuitamente.</li>
+                        <li><i class="fas fa-key"></i> Tessera elettronica: avvicinala per accedere alle porte e attivare l’elettricità.</li>
+                        <li><i class="fas fa-bath"></i> Troverai asciugamani puliti nell’armadio.</li>
+                        <li><i class="fas fa-tv"></i> Le TV sono dotate di Firestick — accedi ai tuoi account streaming (ricordati di disconnetterti prima del check-out).</li>
+                        <li><i class="fas fa-smile"></i> Goditi il tuo soggiorno!</li>
+                        <li><i class="fas fa-sign-out-alt icon"></i> Lascia la tessera elettronica in camera al momento del check-out.</li>
+                    </ul>
+                </div>
+            </div>
+
+            </section>
+
+
+            <section class="footermap">
+                <div class="map-info">
+                    <h3>Cosa Troverai sulla Mappa</h3>
+                    <div class="mapservices-grid">
+                        <div class="mapservices-item"><i class="fas fa-parking"></i><p>Parcheggio</p></div>
+                        <div class="mapservices-item"><i class="fas fa-coffee"></i><p>Luoghi per la Colazione</p></div>
+                        <div class="mapservices-item"><i class="fas fa-utensils"></i><p>Ristoranti</p></div>
+                        <div class="mapservices-item"><i class="fas fa-map-marker-alt"></i><p>Punti di Interesse</p></div>
+                    </div>
+
+                </div>
+
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1ZZfx9XnBLM7wd856aIPyVcbSoTU4yk8&amp;ehbc=2E312F&amp;noprof=1"></iframe>
+                    <div class="map-overlay-banner"></div>
+                </div>
+            </section>
+  
+        <footer>
+            <div class="footer-icons">
+                <div class="icon-box">
+                    <h2>Garda Havens</h2>
+                    <h4>Rilassati, esplora, divertiti.</h4>    
+                </div>
+
+                <div class="icon-box">
+                    <h2>Contatti</h2>
+                    <p>Via Belvedere, 10</p>
+                    <p>Castelnuovo del Garda, Verona (VR), Italia</p>
+                    <p>Alessandro (IT, ENG): +39 3450233733</p>
+                    <p>Jenny (DE, GR, IT, ENG): +30 6974565068</p>
+                    <p><a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a></p>
+                </div>
+
+        
+                <div class="icon-box">
+                    <h2>Prenota Ora</h2>
+                    <p><a href="mailto:garda.havens@gmail.com">Scrivici</a></p>
+                    <p><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></p>
+                    <p><a href="booknow.html">Sito Web</a></p>
+                </div>
+
+
+                <div class="icon-box">
+                    <h2>Link Utili</h2>
+                    <ul class="footer-menu">
+                        <li><a href="index-it.html">Home</a></li>
+                        <li><a href="rooms.html">Camere</a></li>
+                        <li><a href="booknow.html">Prenota Ora</a></li>
+                        <li><a href="guidebook.html">Guida</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h5>&copy; 2025 Garda Havens. Tutti i diritti riservati. <br> CIN: IT023022C2FWABW3P7</h5>
+        </footer>
+        
+</body>
+</html>
+
+

@@ -1,0 +1,605 @@
+/****************************************************************************/
+/* SERVICES ROOMS*/
+/****************************************************************************/
+
+.services {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto 0.5rem; /* Centers the box horizontally */
+    width: 60%; /* Sets the width to 60% of the parent container */
+    background-color: #fef9e1;
+    align-items: center; /* Centers the content inside the box */
+    padding: 0 20%; /* Adds 20% padding on the left and right */
+    margin-top: 2rem;
+    font-family: 'Playfair Display', serif;
+
+}
+
+.services h2 {
+    font-size: 28px;
+    color: #744526;
+    margin-bottom: 20px;
+    font-weight: 400; /* Removes bold styling */
+}
+
+.service-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.service-item {
+    flex: 0 1 150px;           /* Prevents item from growing too large */
+    max-width: 150px;          /* Forces equal width */
+    min-width: 150px;
+    text-align: center;
+    padding: 10px;
+    color: #744526;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+
+.service-item i {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #E8BA67;
+}
+
+.service-item .fa-ban {
+    font-size: 30px;
+    color: #E8BA67; /* Color for the ban icon */
+    margin-left: 5px; /* Adjust spacing between the icons */
+}
+
+.service-item p {
+    font-size: 20px;
+    margin: 0;
+    color: #744526;
+}
+
+.service-item span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-item .fa-stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+  @media (max-width: 1024px) {
+    .services {
+      padding: 0%; /* Adds 20% padding on the left and right */
+      width: 90%; /* Sets the width to 60% of the parent container */
+
+    }
+  }
+  @media (max-width: 414px) {
+    .services {
+      padding: 0%; /* Adds 20% padding on the left and right */
+      width: 100%; /* Sets the width to 60% of the parent container */
+  
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .services h2 {
+      font-size: 24px;
+    }
+  
+    .service-item p {
+      font-size: 16px;
+    }
+
+    .service-item i {
+        font-size: 24px; /* Smaller icons on small screens */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .services h2 {
+        font-size: 18px;
+    }
+  
+    .service-item p {
+      font-size: 14px;
+    }
+
+    .service-item i {
+        font-size: 18px; /* Smaller icons on small screens */
+    }
+  }
+  
+  @media (max-width: 414px) {
+    .services h2 {
+        font-size: 14px;
+    }
+  
+    .service-item p {
+      font-size: 12px;
+    }
+
+    .service-item i {
+        font-size: 14px; /* Smaller icons on small screens */
+    }
+}
+
+
+
+/****************************************************************************/
+/* ROOMS SECTION */
+/****************************************************************************/
+
+.rooms {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 2%;
+    padding-inline: 20%;
+    margin: 1rem 0 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.room {
+    display: flex;
+    width: 100%;
+    background-color: #FFFFF0;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 1s ease;
+    position: relative;
+    min-height: 400px;
+}
+
+.room:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.room .slideshow-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+}
+
+.room img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.room img.zoom {
+    transform: scale(1.2);
+}
+
+.room-info {
+    padding: 20px;
+    width: 40%;
+    background-color: #FFFFF0 ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.room-info h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #E8BA67;
+}
+
+.room-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .price-details-toggle {
+    color: #E8BA67;
+    cursor: pointer;
+    margin-top: 0px;
+    font-size: 14px;
+    text-decoration: underline;
+    align-self: flex-end; /* Aligns to the right in a flex container */
+
+}
+
+.price-details-box {
+    display: none;
+    background-color: #fef9e1;
+    border: 1px solid #744526;
+    padding-inline: 4%;
+    padding-block: 2%;
+    margin-top: 8px;
+    border-radius: 5px;
+    color: #744526;
+    align-self: flex-end; /* Positions the box on the right */
+    width: fit-content;
+    max-width: 100%;
+    white-space: normal; /* Allow line wrapping */
+    text-align: left; /* Makes sure text inside aligns to the left */
+}
+
+
+.price-details-box ul {
+    list-style-type: none; /* Remove default bullet points */
+    padding-left: 0; /* Remove the left padding */
+    margin-bottom: 10px; /* Remove any margin */
+}
+
+.price-details-box ul p {
+    font-size: 16px;
+    font-style: normal;
+    text-align: left;
+    margin-bottom: 4px;
+}
+  
+.room-price {
+    font-size: 24px;
+  }
+
+.room-info p {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-style: italic;
+    text-align: justify;  /* Centers the h3 text */
+}
+
+/****************************************************************************/
+/* AMENITIES ROOMS*/
+/****************************************************************************/
+
+.amenities-section {
+    margin-bottom: 2rem;
+}
+
+.amenities-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #E8BA67;
+}
+
+.amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.amenity-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #744526;
+    padding: 0.5rem 0;
+}
+
+.amenity-icon {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+    color: #E8BA67;
+    flex-shrink: 0;
+}
+
+/****************************************************************************/
+/* SLIDESHOW ROOMS*/
+/****************************************************************************/
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/****************************************************************************/
+/* GALLERY MODAL ROOMS*/
+/****************************************************************************/
+
+/* Modal Styles */
+.gallery-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.gallery-modal .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+}
+
+.gallery-modal #caption {
+    margin: 10px auto;
+    text-align: center;
+    color: #ccc;
+    font-size: 18px;
+}
+
+/* Close Button */
+.gallery-modal .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #f1f1f1;
+    font-size: 35px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Open Gallery Button */
+.open-gallery {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    font-size: 20px;
+    color: #faf0d7;
+    background-color: rgba(116, 69, 38, 0.8);
+    border: none;
+    border-radius: 0;
+    transition: background-color 1s ease;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    z-index: 10;
+}
+
+/* Gallery Navigation Container */
+.gallery-modal .gallery-navigation {
+    position: relative;
+    margin: 20px auto 0 auto; /* Top margin from the image, auto center */
+    width: fit-content;
+    text-align: center;
+    z-index: 1001;
+}
+
+/* Navigation Buttons */
+.gallery-modal .gallery-navigation button {
+    background-color: rgba(116, 69, 38, 0.8);
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #faf0d7;
+    border-radius: 0px;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+    z-index: 1002;
+    font-family: 'Playfair Display', serif;
+
+}
+
+
+/* Hover Effects */
+.gallery-navigation button:hover,
+.open-gallery:hover {
+    background-color: rgba(116, 69, 38, 0.9);
+}
+
+
+/****************************************************************************/
+/* MEDIA QUERIES - ROOMS (Mobile First Approach) */
+/****************************************************************************/
+
+/* Base Styles — Mobile First (no media query) should be declared elsewhere */
+
+/* ≤414px — Small Mobile */
+@media (max-width: 414px) {
+  .room-info h3 {
+    font-size: 16px;
+  }
+
+  .room-info p,
+  .amenity-item {
+    font-size: 12px;
+  }
+
+  .price-details-box ul p {
+    font-size: 12px;
+  }
+
+  .amenity-item span {
+    font-size: 0.75rem;
+  }
+
+  .price-details-toggle {
+    font-size: 11px;
+  }
+
+  .open-gallery,
+  .gallery-navigation button {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+/* ≤768px — Mobile */
+@media (max-width: 768px) {
+  .rooms {
+    justify-content: center;
+  }
+
+  .amenities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .room-info h3 {
+    font-size: 18px;
+  }
+
+  .room-info p,
+  .amenity-item {
+    font-size: 14px;
+  }
+
+  .price-details-box ul p {
+    font-size: 14px;
+  }
+
+  .amenity-item span {
+    font-size: 0.8125rem;
+  }
+
+  .price-details-toggle {
+    font-size: 12px;
+  }
+
+  .open-gallery,
+  .gallery-navigation button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+
+/* ≤1024px — Tablet */
+@media (max-width: 1024px) {
+  .slideshow-container {
+    height: auto;
+  }
+
+  .room-info h3 {
+    font-size: 22px;
+  }
+
+  .room-info p,
+  .amenity-item {
+    font-size: 15px;
+  }
+
+  .price-details-box ul p {
+    font-size: 14px;
+  }
+
+  .amenity-item span {
+    font-size: 0.875rem;
+  }
+
+  .price-details-toggle {
+    font-size: 13px;
+  }
+
+  .open-gallery,
+  .gallery-navigation button {
+    font-size: 16px;
+    padding: 12px 25px;
+  }
+}
+
+/* ≤1366px — Small Desktop */
+@media (max-width: 1366px) {
+  .room {
+    flex-direction: column;
+  }
+
+  .room-info {
+    width: 100%;
+  }
+
+  .room-info h3 {
+    font-size: 24px;
+  }
+
+  .room-info p,
+  .amenity-item {
+    font-size: 16px;
+  }
+
+  .room-info i,
+  .room-info svg,
+  .room-info img.icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .slideshow-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .slide.active {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .room img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+/* ≤1920px — Large Desktop */
+@media (max-width: 1920px) {
+  .rooms {
+    padding-inline: 5%;
+  }
+}

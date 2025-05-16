@@ -1,0 +1,569 @@
+/****************************************************************************/
+/* GUIDEBOOK */
+/****************************************************************************/
+.guidebook-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fef9e1;
+    padding: 2rem 10%;
+    margin: 0rem auto;
+    width: 60%;
+    text-align: center;
+    color: #744526;
+}
+
+.guidebook-intro h2 {
+    font-size: 36px;
+    margin-bottom: 1rem;
+    color: #E8BA67;
+    font-family: 'Playfair Display', serif;
+}
+
+.guidebook-intro p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/****************************************************************************/
+/* Tickets GENERAL */
+/****************************************************************************/
+
+.ticket-box {
+    background-color: #FFFFF0;
+    padding: 1rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);    
+    margin: auto;
+    width: 60%;
+    text-align: center;
+    box-sizing: border-box; 
+
+}
+
+.ticket-box h2 {
+    font-size: 30px;
+    margin-bottom: 1rem;
+    color: #E8BA67;
+
+}
+
+.ticket-box p {
+    font-size: 18px;
+    margin-bottom: 2rem;
+}
+
+.ticket-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.ticket-img {
+    max-width: 180px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.ticket-img:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 1750px) {
+    .ticket-box {
+        width: 90%;
+        padding: 1rem;
+
+    }
+
+    .ticket-img {
+        max-width: 140px;
+    }
+}
+
+/****************************************************************************/
+/* Tickets PARKS */
+/****************************************************************************/
+/* Main content area */
+/* Main content area */
+.main-content {
+    background-color: #FFFFF0;
+}
+
+/* Link Container */
+.link-container {
+    padding-top: 30px;
+}
+
+/* Grid Layout for Boxes */
+.link-row {
+    display: grid;
+    gap: 20px;
+    padding: 0 0px;
+    grid-template-columns: repeat(1, 1fr); /* default mobile */
+}
+
+/* Responsive breakpoints */
+@media (min-width: 768px) {
+    .link-row {
+        grid-template-columns: repeat(2, 1fr); /* small screens */
+    }
+}
+
+@media (min-width: 1920px) {
+    .link-row {
+        grid-template-columns: repeat(4, 1fr); /* large+ screens, max 4 per row */
+    }
+}
+
+/* Each Tile Link */
+.link-item {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}
+
+/* Tile Box Style */
+.link-box {
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    display: flex;
+    flex-direction: column;      /* Stack vertically */
+    justify-content: flex-start; /* Align to top */
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.link-box:hover {
+    transform: scale(1.05);
+}
+
+/* Box Title */
+.link-box h3 {
+    color: #FFFFF0;
+    font-size: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0;
+    width: 100%;          /* Stretch to full width of .link-box */
+    text-align: center;
+}
+
+/****************************************************************************/
+/* CHECK-IN SECTION */
+/****************************************************************************/
+.checkin-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 1%;
+    margin: auto;
+    flex-wrap: wrap;
+    width: 60%;
+    box-sizing: border-box;
+    margin-top: 1rem;
+}
+
+.info-section,
+.checkin-section {
+    background-color: #FFFFF0;
+    border-radius: 3px;
+    padding: 2rem;
+    color: #744526;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Playfair Display', serif;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+.info-section {
+    flex: 1 1 58%; /* Adjust flex basis to 48% for a more flexible layout */
+}
+
+.checkin-section {
+    flex: 1 1 38%;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Vertically center content */
+    align-items: center; /* Horizontally center content */
+}
+
+
+.info-title, .checkin-title {
+    font-size: 30px;
+    margin-bottom: 1.5rem;
+    color: #E8BA67;
+    text-align: center;
+}
+
+.info-content ul, .checkin-options {
+    padding-left: 0rem;
+    list-style-type: none;
+    font-size: 1rem;
+    line-height: 1.6;
+    width: 100%;
+}
+
+.info-content li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+.info-content i.fas {
+    color: #744526;
+    min-width: 20px;
+    margin-top: 3px;
+}
+
+
+.checkin-intro {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    color: #404927;
+    line-height: 1.5;
+}
+
+.checkin-options h4, .checkin-method h5 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #404927;
+}
+
+.checkin-method ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.checkin-method li {
+    margin-bottom: 0.75rem;
+}
+
+.checkin-method a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    background-color: #e8ba67;
+    color: #1a1a1a;
+    padding: 0.6rem 0;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 500;
+}
+
+.checkin-method a:hover {
+    background-color: #d8a550;
+    color: #fff;
+}
+
+.checkin-method p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    color: #1a1a1a;
+}
+
+.checkin-method i.fas, .checkin-method i.fab, .info-content i.fas  {
+    margin-right: 8px;
+    color: #744526;
+}
+
+/* Responsive */
+@media (max-width: 1750px) {
+    .checkin-wrapper {
+        width: 90%;
+    }
+}
+@media (max-width: 1024px) {
+    .checkin-wrapper {
+        flex-direction: column;
+        align-items: center; /* Optional: center the stacked sections horizontally */
+        gap: 1rem;
+    }
+
+    .info-section,
+    .checkin-section {
+        flex: none;
+        width: 100%;
+    }
+}
+
+
+/****************************************************************************/
+/* FOOTERMAP */
+/****************************************************************************/
+.footermap {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    flex-wrap: wrap;
+    width: 60%;
+    box-sizing: border-box;
+    background-color: #FFFFF0;
+    padding: 1.5rem;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+
+}
+
+.map-wrapper {
+    position: relative;
+    width: 100%; /* Make sure the map wrapper takes full available width of footermap */
+    height: 400px; /* Set a fixed height for the map */
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.map-wrapper iframe {
+    width: 100%; /* Full width inside the wrapper */
+    height: 100%; /* Full height inside the wrapper */
+    border: none;
+    border-radius: 3px;
+    transition: transform 0.3s ease;
+}
+
+.map-overlay-banner {
+    position: absolute;
+    top: 0; /* Now it's at the top */
+    left: 0;
+    width: 100%;
+    height: 58px; /* Adjust based on how much of the banner you want to mask */
+    /* background: rgba(232, 186, 103, 0.75); /* warm golden (like #E8BA67), semi-opaque overlay */
+    /* background: rgba(254, 249, 225, 0.95); /* light cream (like #FEF9E1), nearly opaque — high coverage */
+    /* background: linear-gradient(to bottom, rgba(254, 249, 225, 0.95), rgba(254, 249, 225, 0)); /* gradient cream fade, very soft top to transparent */
+    /*background: linear-gradient(to bottom, rgba(254, 249, 225, 0.95), rgba(139, 84, 50, 0)); /* gradient cream fade, very soft top to transparent */
+    /* background: linear-gradient(to bottom, rgba(254, 249, 225, 1), rgba(254, 249, 225, 0)); /* full-opacity cream fading to transparent — strong masking */
+    /* background: rgba(20, 20, 20, 0.6); /* dark neutral gray (near black), moderate transparency */
+    background: rgba(255, 98, 0, 0.2); /* soft brown, low opacity — warm tint without full masking */
+    /* background: rgba(0, 0, 0, 0.8); /* solid black overlay, high coverage — heavy dimming */
+    /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)); /* subtle black fade — light dimming effect */
+    /* background: rgba(20, 20, 20, 0.6); /* (duplicate) dark gray overlay, soft black effect */
+    /*background: linear-gradient(
+        to bottom,
+        rgba(153, 93, 50, 0.5)
+    );*/
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    line-height: 40px; /* vertically center text */
+    z-index: 2;
+    pointer-events: none; /* allows map interaction below */
+    border-bottom: 1px solid #ccc; /* optional: for added separation effect */
+}
+
+/* MAP INFO SECTION */
+.footermap .map-info {
+    border-radius: 3px;
+    color: #744526;
+    font-family: 'Playfair Display', serif;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.footermap .map-info h3 {
+    font-size: 30px;
+    margin-bottom: 1.5rem;
+    color: #E8BA67;
+    text-align: center;
+}
+
+/* Responsive styling */
+
+@media (max-width: 1750px) {
+    .footermap {
+        width: 90%; /* On smaller screens, let the footermap take 90% width */
+    }
+
+    .map-wrapper {
+        height: 350px; /* Reduce map height on smaller screens */
+    }
+}
+
+/****************************************************************************/
+/* SERVICES MAPS*/
+/****************************************************************************/
+
+.mapservices-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+
+.mapservices-item {
+    text-align: center;
+    padding: 10px;
+    color: #744526;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mapservices-item i {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #744526;
+}
+
+.mapservices-item p {
+    font-size: 20px;
+    margin: 0;
+    color: #744526;
+}
+
+.mapservices-item span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mapservices-item .fa-stack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media (max-width: 1366px) {
+  .info-title, .checkin-title, .ticket-box h2, .guidebook-intro h2 {
+    font-size: 32px;
+  }
+  h3, h4 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .info-title, .checkin-title, .ticket-box h2, .guidebook-intro h2 {
+    font-size: 28px;
+  }
+  h3, h4 {
+    font-size: 24px;
+  }
+  p, li {
+    font-size: 16px;
+  }
+  .map-wrapper {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-title, .checkin-title, .ticket-box h2, .guidebook-intro h2 {
+    font-size: 24px;
+  }
+  h3, h4 {
+    font-size: 20px;
+  }
+  p, li {
+    font-size: 14px;
+  }
+  .map-wrapper {
+    height: 250px;
+  }
+  i.fas, i.fab, .mapservices-item i {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 414px) {
+  .info-title, .checkin-title, .ticket-box h2, .guidebook-intro h2 {
+    font-size: 20px;
+  }
+  h3, h4 {
+    font-size: 18px;
+  }
+  p, li {
+    font-size: 12px;
+  }
+  i.fas, i.fab, .mapservices-item i {
+    font-size: 20px;
+  }
+}
+
+
+@media (max-width: 1366px) {
+  .footermap .map-info h3 {
+    font-size: 32px; /* matching closer to your h3, h4 at 28px but a bit bigger */
+  }
+  .footermap .mapservices-item p {
+    font-size: 20px; /* keep it consistent with default */
+  }
+  .footermap .mapservices-item i {
+    font-size: 30px; /* same as default */
+  }
+}
+
+@media (max-width: 1024px) {
+  .footermap .map-info h3 {
+    font-size: 28px; /* reduced slightly */
+  }
+  .footermap .mapservices-item p {
+    font-size: 18px; /* slight decrease from 20px */
+  }
+  .footermap .mapservices-item i {
+    font-size: 26px; /* scale down from 30px */
+  }
+}
+
+@media (max-width: 768px) {
+  .footermap .map-info h3 {
+    font-size: 24px; /* smaller for tablet/smaller screen */
+  }
+  .footermap .mapservices-item p {
+    font-size: 16px; /* smaller for better readability */
+  }
+  .footermap .mapservices-item i {
+    font-size: 22px; /* smaller icons */
+  }
+}
+
+@media (max-width: 414px) {
+  .footermap .map-info h3 {
+    font-size: 20px; /* smallest heading on mobile */
+  }
+  .footermap .mapservices-item p {
+    font-size: 14px; /* smallest paragraph */
+  }
+  .footermap .mapservices-item i {
+    font-size: 18px; /* smallest icons */
+  }
+}
+
+
+@media (max-width: 1366px) {
+  .link-box h3 {
+    font-size: 30px; /* base size */
+  }
+}
+
+@media (max-width: 1024px) {
+  .link-box h3 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .link-box h3 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 414px) {
+  .link-box h3 {
+    font-size: 18px;
+  }
+}

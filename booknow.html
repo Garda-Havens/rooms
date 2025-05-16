@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
+    <title>Garda Havens</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="static/header.css">
+    <link rel="stylesheet" href="static/footer.css">
+    <link rel="stylesheet" href="static/homepage.css">
+    <link rel="stylesheet" href="static/rooms.css">
+    <link rel="stylesheet" href="static/booknow.css">
+    <link rel="stylesheet" href="static/guidebook.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="https://garda-havens.github.io/rooms/logo.png"/>
+</head>
+<body>
+    <div class="container">
+            <header>
+                <div class="header-logo-title">
+                    <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
+                    <h1>Garda Havens</h1>
+                </div>
+                <!-- Hamburger Icon for mobile view -->
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <!-- Navigation Menu -->
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="booknow.html">Book Now</a></li>
+                        <li><a href="guidebook.html">Guidebook</a></li>
+
+                        <li>
+                            <a href="booknow-it.html" id="lang-switch">
+                                <img src="static/it.png" alt="Italian Flag">
+                            </a>
+                        </li>
+                    </ul>            
+                </nav>                        
+            </header>
+
+            <script>
+                // Toggle menu visibility when hamburger is clicked
+                const menuToggle = document.querySelector('.menu-toggle');
+                const nav = document.querySelector('header nav');
+            
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('open');
+                    nav.classList.toggle('menu-active');
+                });
+            </script>
+
+        <div class="booking-header">
+            <h1>Reserve Your Stay</h1>
+            <p>Check availability and secure your perfect retreat by Lake Garda.</p>
+        </div>
+        
+
+        <section>
+            <div class="form-container">
+                <form class="rental-form" action="https://formspree.io/f/mpwdjdqn" method="POST">
+                            <!-- First Row: Check-in, Check-out -->
+                    <div class="section-title">Check Availability</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkinDate">Check-in Date *</label>
+                            <input type="date" name="checkinDate" id="checkinDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkoutDate">Check-out Date *</label>
+                            <input type="date" name="checkoutDate" id="checkoutDate" required>
+                        </div>
+                    </div>
+
+                    <!-- Second Row: Adults & Children -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adults">Adults *</label>
+                            <div class="custom-select" data-name="adults">
+                                <div class="select-selected">2 Adults</div>
+                                <div class="select-items select-hide">
+                                    <div>1 Adult</div>
+                                    <div>2 Adults</div>
+                                    <div>3 Adults</div>
+                                    <div>4 Adults</div>
+                                    <div>5 Adults</div>
+                                    <div>6 Adults</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="adults" value="2 Adults">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="children">Children</label>
+                            <div class="custom-select" data-name="children">
+                                <div class="select-selected">No Children</div>
+                                <div class="select-items select-hide">
+                                    <div>No Children</div>
+                                    <div>1 Child</div>
+                                    <div>2 Children</div>
+                                    <div>3 Children</div>
+                                    <div>4 Children</div>
+                                    <div>5 Children</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="children" value="No Children">
+                        </div>
+                    </div>
+
+                    <!-- Third Row: Room Type -->
+                    <div class="form-group">
+                        <label for="roomType">Accommodation Type *</label>
+                        <div class="custom-select" data-name="roomType">
+                            <div class="select-selected">Room 1</div>
+                            <div class="select-items select-hide">
+                                <div>Room 1</div>
+                                <div>Room 2</div>
+                                <div>Room 3</div>
+                                <div>Room 4</div>
+                                <div>Room 5</div>
+                                <div>Room 6</div>
+
+                            </div>
+                        </div>
+                        <input type="hidden" name="roomType" value="Suite 1">
+                    </div>
+
+                    <!-- Your Details Section -->
+                    <div class="section-title">Your Details</div>                    
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" name="firstName" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" name="lastName" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" name="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" name="phone" id="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialRequests">Special Requests</label>
+                        <textarea name="specialRequests" id="specialRequests"></textarea>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label for="terms">
+                            <input type="checkbox" name="terms" id="terms" required> I agree to the terms and conditions *
+                        </label>
+                    </div>-->
+
+                    <button type="submit">Check Availability</button>
+                </form>
+ 
+                <script>
+                    document.querySelectorAll(".custom-select").forEach(selectWrapper => {
+                        const selected = selectWrapper.querySelector(".select-selected");
+                        const optionsList = selectWrapper.querySelector(".select-items");
+                        const hiddenInput = selectWrapper.nextElementSibling;
+                    
+                        selected.addEventListener("click", () => {
+                            closeAllSelects(selectWrapper);
+                            optionsList.classList.toggle("select-hide");
+                            selected.classList.toggle("select-arrow-active");
+                        });
+                    
+                        optionsList.querySelectorAll("div").forEach(option => {
+                            option.addEventListener("click", () => {
+                                selected.innerText = option.innerText;
+                                hiddenInput.value = option.innerText;
+                                optionsList.classList.add("select-hide");
+                            });
+                        });
+                    });
+                    
+                    function closeAllSelects(current) {
+                        document.querySelectorAll(".custom-select").forEach(select => {
+                            if (select !== current) {
+                                select.querySelector(".select-items").classList.add("select-hide");
+                            }
+                        });
+                    }
+                    
+                    document.addEventListener("click", function(e) {
+                        if (!e.target.closest(".custom-select")) {
+                            closeAllSelects();
+                        }
+                    });
+                </script>
+
+                <div class="side-boxes">
+                <!-- WhatsApp Booking -->
+                <div class="info-box">
+                        <h3>Book on WhatsApp</h3>
+                        <p>Send us a message with your reservation details:</p>
+                        <p>
+                            <i class="fas fa-sign-in-alt icon"></i>Check-in <br>
+                            <i class="fas fa-sign-out-alt icon"></i>Check-out<br>
+                            <i class="fas fa-users icon"></i>Number of Adults and Children<br>
+                            <i class="fas fa-user icon"></i>Your Full Name<br><br>
+                            <span class="confirm-text">We'll confirm availability and help you complete your booking.</span>
+                        </p>                        
+                        <a href="https://wa.me/393450233733" target="_blank" class="whatsapp-btn-book">
+                            <i class="fab fa-whatsapp whatsapp-icon"></i> Chat on WhatsApp
+                        </a>                        
+                    </div>
+
+                    <!-- Book via Call -->
+                    <div class="info-box">
+                        <h3>Book via Call</h3>
+                        <p>
+                            Prefer to speak with us? Give us a call and book your stay directly.<br><br>
+                            <strong>Phone:</strong> <a href="tel:+393450233733" class="contact-link">+39 3450233733</a>
+                        </p>
+                    </div>
+
+                    <!-- Book via Email -->
+                    <div class="info-box">
+                        <h3>Book via Email</h3>
+                        <p>
+                            Send us your booking details and we’ll get back to you shortly.<br><br>
+                            <strong>Email:</strong> <a href="mailto:garda.havens@gmail.com" class="contact-link">garda.havens@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+   
+  
+
+   
+  
+        <footer>
+            <div class="footer-icons">
+                <div class="icon-box">
+                    <h2>Garda Havens</h2>
+                    <h4>Relax, explore, enjoy.</h4>    
+                </div>
+
+                <div class="icon-box">
+                    <h2>Contact</h2>
+                    <p>Via Belvedere, 10</p>
+                    <p>Castelnuovo del Garda, Verona (VR), Italy</p>
+                    <p>Alessandro (IT, ENG): +39 3450233733</p>
+                    <p>Jenny (DE, GR, IT, ENG): +30 6974565068</p>
+                    <p><a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a></p>
+                </div>
+
+        
+                <div class="icon-box">
+                    <h2>Book Now</h2>
+                    <p><a href="mailto:garda.havens@gmail.com">Email Us</a></p>
+                    <p><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></p>
+                    <p><a href="booknow.html">Website</a></p>
+                </div>
+
+
+                <div class="icon-box">
+                    <h2>Links</h2>
+                    <ul class="footer-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="booknow.html">Book Now</a></li>
+                        <li><a href="guidebook.html">Guidebook</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h5>&copy; 2025 Garda Havens. All rights reserved. <br> CIN: IT023022C2FWABW3P7</h5>
+        </footer>
+        
+    </div>
+</body>
+</html>
+
+

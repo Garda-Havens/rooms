@@ -1,95 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
-        <title>Garda Havens</title>
-        <link rel="stylesheet" href="static/styles.css">
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!-- <link rel="icon" href="static/logonobgfavicon.png" type="image/png"> 
-        <link rel="icon" type="image/png" href="logo-copy.png" />
-        <link rel="apple-touch-icon" href="logo-copy.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="logo-copy.png" />-->
-        <link rel="icon" href="https://garda-havens.github.io/rooms/logo.svg" type="image/svg+xml">
-        <link rel="icon" href="https://garda-havens.github.io/rooms/logo.png" type="image/png" sizes="192x192">
-        <link rel="icon" href="https://garda-havens.github.io/rooms/logo.ico" sizes="32x32">
-        <link rel="apple-touch-icon" href="https://garda-havens.github.io/rooms/logo.png"/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
+    <title>Garda Havens</title>
 
-    </head>
+    <!-- Styles -->
+    <link rel="stylesheet" href="static/header.css">
+    <link rel="stylesheet" href="static/footer.css">
+    <link rel="stylesheet" href="static/homepage.css">
+    <link rel="stylesheet" href="static/rooms.css">
+    <link rel="stylesheet" href="static/booknow.css">
+    <link rel="stylesheet" href="static/guidebook.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="https://garda-havens.github.io/rooms/logo.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="https://garda-havens.github.io/rooms/logo.png"/>
+</head>
 <body>
     <div class="container">
-        <header>
-            <div class="header-logo-title">
-                <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
-                <h1>Garda Havens</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="rooms.html">Rooms</a></li>
-                    <li><a href="prices.html">Prices & Services</a></li>
-                    <li><a href="check-in.html">Check-In</a></li>
-                    <li>
-                        <a href="index-it.html" id="lang-switch">
-                            <img src="static/it.png" alt="Italian Flag">
-                        </a>
-                    </li>
-                </ul>            
-            </nav>                        
-        </header>
+            <header>
+                <div class="header-logo-title">
+                    <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
+                    <h1>Garda Havens</h1>
+                </div>
+                <!-- Hamburger Icon for mobile view -->
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <!-- Navigation Menu -->
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="booknow.html">Book Now</a></li>
+                        <li><a href="guidebook.html">Guidebook</a></li>
 
-        <!-- Logo Section -->
-        <div class="logo">
-            <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
-        </div>
+                        <li>
+                            <a href="index-it.html" id="lang-switch">
+                                <img src="static/it.png" alt="Italian Flag">
+                            </a>
+                        </li>
+                    </ul>            
+                </nav>                        
+            </header>
 
-        <!-- Hero Section -->
-        <section 
-            class="hero" 
-            style="background: url('static/front22.jpg') center/cover no-repeat;">
+            <script>
+                // Toggle menu visibility when hamburger is clicked
+                const menuToggle = document.querySelector('.menu-toggle');
+                const nav = document.querySelector('header nav');
+            
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('open');
+                    nav.classList.toggle('menu-active');
+                });
+            </script>
+    
+         <!-- Hero Section -->
+        <section class="hero" style="background-image: url('static/front22.jpg');">
+            <div class="hero-overlay"></div>
             <h2>Welcome to Garda Havens</h2>
             <h3>Find the perfect room for your needs.</h3>
-            <p></p>
             <a href="rooms.html" class="btn">Browse Rooms</a>
         </section>
 
-        <!-- Map Section -->
-        <footermap>
-            <div class="map-container">
-                <!-- Embed Google Map iframe -->
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11195.970260688371!2d10.712896290130246!3d45.44980593717816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4781e99c75ec9e77%3A0x1a4f368651ec54d4!2sGarda%20Havens!5e0!3m2!1sen!2sit!4v1731749765168!5m2!1sen!2sit" 
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </footermap>
+        <section class="whatsapp">
+            <h2>Need assistance or want to make a booking? <br>Contact us via WhatsApp <i class="fab fa-whatsapp" style="color: #25D366;"></i></h2>         
+            <a href="https://wa.me/393450233733" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </section>
+        
+        <div class="logo">
+            <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
+        </div>
+    
+        <!-- Ticket Section 
 
-        <!-- Footer Section -->
+        <div class="promo-section">
+            <div class="promo-left">
+                <img src="static/locandina.jpg" alt="Flyer" class="promo-flyer">
+            </div>
+            <div class="promo-content">
+                <div class="promo-text">
+                    <h2>Discount Tickets</h2>
+                    <p>Unlock exclusive discounts on the best local experiences, including reduced tickets for top amusement parks, savings on boat tours and lake cruises, discounts for guided excursions and nature tours, and special offers on local cultural attractions.</p>
+                    <p style="margin-top: 1rem;">Ask us how to get your discounted tickets!</p>     
+                </div>  
+              <div class="promo-qr">
+                <img src="static/qr.png" alt="QR Code" class="promo-qr-code">
+            </div>
+            </div>
+        </div>-->
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2>What Our Guests Say</h2>
+            <div class="testimonial-grid">
+          
+              <!-- Review 1 -->
+              <div class="testimonial-item">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  "Perfect location, close to everything yet peaceful. Very clean accommodations with all comforts. The hosts were very kind and helpful."
+                </p>
+                <p class="testimonial-author"><strong>— Marta Anna, May 2025</strong></p>
+              </div>
+          
+              <!-- Review 2 -->
+              <div class="testimonial-item">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  "What a warm welcome from our hosts! Thank you for your kindness. The room was spotless, and we loved chatting in French, English, Italian, or Greek!"
+                </p>
+                <p class="testimonial-author"><strong>— Tiphaine, April 2025</strong></p>
+              </div>
+          
+              <!-- Review 3 -->
+              <div class="testimonial-item">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">
+                  "The accommodation was extremely clean and tidy. The hosts were super nice and helpful with everything. Highly recommended!"
+                </p>
+                <p class="testimonial-author"><strong>— Simone, April 2025</strong></p>
+              </div>
+          
+            </div>
+          
+            <button class="show-all-reviews" onclick="toggleAllReviews()">
+                Show All Reviews
+              </button>
+          
+            <div id="all-reviews-box" class="all-reviews hidden">
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Recommended without hesitation. Kind and attentive hosts, beautifully detailed room, clean and unique." <br><strong>— Angela, April 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Everything perfect! Thank you!" <br><strong>— Martina, April 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Very positive experience! Warm and perfect welcome. Clean and fully renovated." <br><strong>— Nicoletta, April 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"New, clean, warm home with comfy beds and flexible check-in. Great hosts and location." <br><strong>— Giulio, Jan 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Great stay, great host." <br><strong>— Valentina, Jan 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Beautiful, modern lodging. Friendly hosts. Great location near Gardaland." <br><strong>— Alessandro, Jan 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Friendly hosts, new and well-organized structure. Recommended for families." <br><strong>— Alessandra, Jan 2025</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Everything was perfect." <br><strong>— Leonardo, Dec 2024</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"It was wonderful. Everything impeccable. Thanks to our hosts!" <br><strong>— Mayara, Dec 2024</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Peaceful, newly renovated spot. Very clean and organized. Host was responsive." <br><strong>— Federico, Nov 2024</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"All perfect!" <br><strong>— Patrizia, Nov 2024</strong></p>
+              </div>
+              <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Brand new, clean, spacious and exactly where we needed it." <br><strong>— Brock, Nov 2024</strong></p>
+              </div>
+            </div>
+        </section>
+
+        <script>
+            function toggleAllReviews() {
+              const box = document.getElementById("all-reviews-box");
+              const button = document.querySelector(".show-all-reviews");
+            
+              if (box.classList.contains("hidden")) {
+                box.classList.remove("hidden");
+                button.textContent = "Hide Reviews";
+              } else {
+                box.classList.add("hidden");
+                button.textContent = "View All Reviews";
+              }
+            }
+        </script>
+            
         <footer>
             <div class="footer-icons">
                 <div class="icon-box">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Via Belvedere, 10</p>
-                    <p>Castelnuovo del Garda</p>
-                    <p>Verona (VR), Italy</p>
+                    <h2>Garda Havens</h2>
+                    <h4>Relax, explore, enjoy.</h4>    
                 </div>
+
                 <div class="icon-box">
-                    <i class="fas fa-phone-alt"></i>
+                    <h2>Contact</h2>
+                    <p>Via Belvedere, 10</p>
+                    <p>Castelnuovo del Garda, Verona (VR), Italy</p>
                     <p>Alessandro (IT, ENG): +39 3450233733</p>
                     <p>Jenny (DE, GR, IT, ENG): +30 6974565068</p>
                     <p><a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a></p>
                 </div>
+
+        
                 <div class="icon-box">
-                    <i class="fab fa-instagram"></i>
-                    <p><a href="https://www.instagram.com/gardahavens" target="_blank">Follow us on Instagram</a></p>
+                    <h2>Book Now</h2>
+                    <p><a href="mailto:garda.havens@gmail.com">Email Us</a></p>
+                    <p><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></p>
+                    <p><a href="booknow.html">Website</a></p>
+                </div>
+
+
+                <div class="icon-box">
+                    <h2>Links</h2>
+                    <ul class="footer-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="booknow.html">Book Now</a></li>
+                        <li><a href="guidebook.html">Guidebook</a></li>
+                    </ul>
                 </div>
             </div>
-            <h5>&copy; 2025 Garda Havens. All rights reserved. <br>  CIN: IT023022C2FWABW3P7</h5>
+            <h5>&copy; 2025 Garda Havens. All rights reserved. <br> CIN: IT023022C2FWABW3P7</h5>
         </footer>
+        
     </div>
 </body>
 </html>
+
+

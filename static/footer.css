@@ -1,0 +1,218 @@
+/****************************************************************************/
+/*FOOTER*/
+/****************************************************************************/
+
+footer {
+    background-color: #faf0d7;
+    color: #ffffee;
+    text-align: center;
+    padding-block: 1rem;  /* Ensure no padding */
+    position: relative;
+    overflow: hidden;
+    max-width: 100%; /* Fixed/max width */
+    margin-bottom: 0; /* Ensure no space after footer */
+    padding-inline: 20%;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 2rem;
+}
+
+footer p {
+    font-size: 12px;
+    color: #744526;
+    line-height: 1.2; /* controls line spacing *within* a paragraph */
+    margin: 0 0 6px 0; /* controls spacing *between* paragraphs */
+}
+
+footer p,
+footer h4,
+footer .footer-menu li {
+    margin: 0 0 6px 0; /* controls spacing *between* paragraphs */
+}
+
+footer h4 {
+    font-size: 16px;
+    color: #744526;
+    margin: 0 0 6px 0; /* Adjust this to reduce gap between headings */
+}
+
+footer .footer-menu li {
+    margin-bottom: 6px; /* Adjust spacing between list items */
+}
+
+
+footer a {
+    color: #744526;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-icons {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between; /* ← Key for full-width spanning */
+    align-items: flex-start;
+    gap: 40px;
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.icon-box {
+    flex: 0 1 auto; /* ← allow natural size */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.icon-box i {
+    align-self: center; /* centers the icon only */
+    font-size: 40px;
+    color: #744526;
+    margin-top: 20px;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.icon-box i:hover {
+    color: #E8BA67;
+    transform: scale(1.1);
+}
+
+.icon-box p {
+    font-size: 16px;
+    color: #744526;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+
+.footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-menu li {
+    margin-bottom: 10px;
+    text-align: left;
+
+}
+
+.footer-menu a {
+    font-size: 16px;
+    color: #744526;
+    text-decoration: none;
+}
+
+.icon-box h2 {
+    color: #744526;
+    text-align: left;
+}
+
+.icon-box h4 {
+    color: #744526;
+    text-align: left;
+    font-size: 16px;
+}
+
+.footer-underline {
+    width: 100px;
+    height: 1px;
+    background-color: #744526;
+    margin: 10px 0 20px 0;
+    margin-left: 0; /* or e.g., 20px if desired */
+    border-radius: 0px;
+}
+
+.footer-menu a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile: 4 blocks stacked vertically */
+
+@media (max-width: 1750px) {
+    footer {
+        padding-inline: 5%;
+    }
+}
+@media (max-width: 1200px) {
+    .footer-icons {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .icon-box {
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .icon-box h2,
+    .icon-box h4,
+    .icon-box p {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .footer-menu li {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .icon-box h2 {
+        font-size: 18px;
+    }
+
+    .icon-box h4,
+    .icon-box p,
+    .footer-menu a {
+        font-size: 14px;
+    }
+
+    h5 {
+        font-size: 10px;
+    }
+}
+
+
+
+.icon-box a {
+    color: #744526;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.icon-box i:hover {
+    color: #E8BA67; /* Change icon color on hover */
+    transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+
+.icon-box p:hover {
+    color: #E8BA67; /* Change text color on hover */
+}
+
+.icon-box a:hover {
+    color: #E8BA67; /* Change link color on hover */
+    text-decoration: underline; /* Underline text on hover */
+}
+
+h5 {
+    font-size: 11px;
+    color: #744526;
+    font-family: 'Merriweather', serif;
+
+}
