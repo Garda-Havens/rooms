@@ -172,7 +172,7 @@ header nav ul li a:not(#lang-switch):hover {
         display: block;
         position: absolute;
         top: 50%; /* This places it halfway down the screen */
-        right: 10px; /* Adjust this value for right alignment */
+        right: 15px; /* Adjust this value for right alignment */
         transform: translateY(-50%); /* Centers it vertically */
         cursor: pointer;
     }
