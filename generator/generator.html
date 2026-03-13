@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="GH Generator">
+  <link rel="apple-touch-icon" href="icon.png">
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('Service Worker registrato'))
+      .catch(err => console.log('Service Worker fallito:', err));
+  }
+  </script>
+  <title>Garda Havens – Generatore messaggi</title>
+<style>
+  :root { font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial; }
+  body { margin: 0; background:#f6f6f7; color:#111; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 18px; }
+  .card { background:#fff; border:1px solid #e6e6e8; border-radius:14px; padding:16px; box-shadow: 0 1px 0 rgba(0,0,0,.03); }
+  h1 { font-size: 20px; margin: 0 0 12px; }
+  h2 { font-size: 16px; margin: 18px 0 10px; }
+
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid3 { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  label { display:block; font-size: 12px; color:#444; margin-bottom:6px; }
+  input, select, textarea {
+    width:100%; box-sizing:border-box; padding:10px 10px; border-radius:10px;
+    border:1px solid #d9d9dd; background:#fff; font-size: 14px;
+  }
+  textarea { min-height: 64px; resize: vertical; }
+
+  /* --- ROOMS GRID: only 3x2, 2x3, 6x1 --- */
+  .rooms {
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columns => 3x2 */
+    gap: 10px;
+    align-items: stretch; /* make all items same height per row */
+  }
+
+  .pill {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 12px;
+    border:1px solid #d9d9dd;
+    border-radius:999px;
+    background:#fff;
+    height: 100%;                 /* fill the grid cell */
+    box-sizing: border-box;
+  }
+  .pill input { width:auto; }
+
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  button {
+    padding:10px 12px; border-radius:12px; border:1px solid #d9d9dd;
+    background:#111; color:#fff; font-size:14px; cursor:pointer;
+  }
+  button.secondary { background:#fff; color:#111; }
+  .muted { color:#666; font-size: 13px; }
+  .out { white-space: pre-wrap; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; }
+  .msgCard { display:grid; grid-template-columns: 1fr; gap:10px; }
+  .msgHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .tag { font-size:12px; color:#444; background:#f0f0f3; padding:6px 10px; border-radius:999px; }
+  .ok { color:#0a7a2f; }
+  .warn { color:#a15a00; }
+
+  /* Existing responsive rule for grids */
+  @media (max-width: 760px) { .grid, .grid3 { grid-template-columns: 1fr; } }
+
+  /* Rooms: 2 columns => 2x3 */
+  @media (max-width: 900px) {
+    .rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* Rooms: 1 column => 6x1 */
+  @media (max-width: 520px) {
+    .rooms { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+  <div id="accessOverlay" style="
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,1); /* sfondo grigio semitrasparente */
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+  ">
+    <div style="
+        width:400px; max-width:90%;
+        background:#fff;
+        border:1px solid #e6e6e8;
+        border-radius:14px;
+        padding:20px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.15);
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    ">
+      <h2>Accesso Privato</h2>
+      <input id="accessCode" type="password" placeholder="Inserisci codice" style="padding:10px;font-size:16px;margin-bottom:12px;width:100%;">
+      <button id="checkAccess" style="width:100%;">Accedi</button>
+      <p class="muted" style="margin-top:8px;">Solo uso personale</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="card">
+      <h1>Generatore messaggi disponibilità – Garda Havens</h1>
+
+      <h2>1) Seleziona camere</h2>
+      <div class="rooms" id="rooms"></div>
+
+      <h2>2) Dati prenotazione</h2>
+      <div class="grid">
+        <div>
+          <label>Numero ospiti</label>
+          <select id="guests">
+            <option value="1">1 ospite</option>
+            <option value="2">2 ospiti</option>
+            <option value="3" selected>3 ospiti</option>
+            <option value="4">4 ospiti</option>
+            <option value="5">5 ospiti</option>
+            <option value="6">6 ospiti</option>
+          </select>
+        </div>
+        <div>
+          <label>Nome ospite (opzionale)</label>
+          <input id="guestName" placeholder="es. Marco" />
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>Check-in</label>
+          <input id="checkin" type="date" />
+        </div>
+        <div>
+          <label>Check-out</label>
+          <input id="checkout" type="date" />
+        </div>
+      </div>
+
+      <div class="grid3" style="margin-top:12px;">
+        <div>
+          <label>Sconto soggiorno lungo (€/notte) – automatico</label>
+          <input id="discountPerNight" type="number" min="0" step="10" value="10" />
+          <div class="muted" style="margin-top:6px;">Auto: ≥ 2 notti → 10€, altrimenti 0€</div>
+        </div>
+
+        <div>
+          <label>Emoji (opzionale)</label>
+          <input id="emoji" placeholder="es. 😊" value="😊" />
+        </div>
+
+        <div>
+          <label>Firma</label>
+          <input id="signature" value="Garda Havens" />
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div>
+          <label>Extra sconto</label>
+          <select id="extraDiscountType">
+            <option value="none" selected>Nessuno</option>
+            <option value="bundle">Sconto per prenotazione congiunta</option>
+            <option value="custom">Sconto personalizzato</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Importo sconto personalizzato (€/notte)</label>
+          <input id="customDiscountPerNight" type="number" min="0" step="10" placeholder="es. 10" value="0" />
+          <div class="muted" style="margin-top:6px;">Usato solo se selezioni “Sconto personalizzato”.</div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div>
+          <label>Lingua output</label>
+          <select id="langToggle" title="Seleziona lingua output">
+            <option value="both">Italiano + English</option>
+            <option value="it" selected>Solo Italiano</option>
+            <option value="en">Solo English</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label>Nota extra (opzionale)</label>
+        <textarea id="extra"></textarea>
+      </div>
+
+      <div class="row" style="margin-top:14px;">
+        <button id="generate">Genera messaggi</button>
+        <span class="muted" id="summary"></span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="msgHeader">
+        <h2 style="margin:0;">Output</h2>
+        <p></p>
+        <span class="muted" id="priceHint"></span>
+      </div>
+      <div class="msgCard" id="outputs"></div>
+    </div>
+  </div>
+
+<script>
+
+  const ACCESS_KEY = "fimka8-pibsev-fohbEd"; // scegli un codice sicuro ma semplice
+
+  if(localStorage.getItem("ghAccess") === ACCESS_KEY) {
+  document.getElementById("accessOverlay").style.display = "none";
+  }
+
+  function checkAccess() {
+    const val = document.getElementById("accessCode").value;
+    if(val === ACCESS_KEY) {
+      localStorage.setItem("ghAccess", ACCESS_KEY);
+      document.getElementById("accessOverlay").style.display = "none";
+    } else {
+      alert("Codice errato ❌");
+    }
+  }
+
+  document.getElementById("checkAccess").addEventListener("click", checkAccess);
+
+  // opzionale: invio anche con Enter
+  document.getElementById("accessCode").addEventListener("keypress", (e) => {
+    if(e.key === "Enter") checkAccess();
+  });
+/**
+ * Prezzi (€/notte) per numero ospiti, presi dalla pagina Rooms:
+ * Room 1: 1=80,2=90,3=120,4=150
+ * Room 2: 1=90,2=100,3=120,4=150,5=170,6=190
+ * Room 3: 1=80,2=90,3=120,4=150
+ * Room 4: 1=80,2=90,3=120
+ * Room 5: 1=80,2=90,3=120,4=140
+ * Room 6: 1=80,2=90,3=120,4=140
+ */
+const ROOMS = [
+  { id: 1, name: "Room 1", type: "Quadruple", prices: {1:80,2:90,3:120,4:150} },
+  { id: 2, name: "Room 2", type: "Sestuple",  prices: {1:90,2:100,3:120,4:150,5:170,6:190} },
+  { id: 3, name: "Room 3", type: "Quadruple", prices: {1:80,2:90,3:120,4:150} },
+  { id: 4, name: "Room 4", type: "Triple",    prices: {1:80,2:90,3:120} },
+  { id: 5, name: "Room 5", type: "Quadruple", prices: {1:80,2:90,3:120,4:140} },
+  { id: 6, name: "Room 6", type: "Quadruple", prices: {1:80,2:90,3:120,4:140} },
+];
+
+const $ = (id) => document.getElementById(id);
+
+function setDefaultDates() {
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  const formatISO = (d) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  $("checkin").value = formatISO(today);
+  $("checkout").value = formatISO(tomorrow);
+}
+
+function formatEuro(n) {
+  const v = Math.round(Number(n) * 100) / 100;
+  return "€" + v.toLocaleString("it-IT", {
+    minimumFractionDigits: (v % 1 ? 2 : 0),
+    maximumFractionDigits: 2
+  });
+}
+
+function formatDateIT(iso) {
+  if (!iso) return "";
+  const [y,m,d] = iso.split("-").map(Number);
+  const dd = String(d).padStart(2,"0");
+  const mm = String(m).padStart(2,"0");
+  return `${dd}/${mm}/${y}`;
+}
+function formatDateENFromISO(iso) { return formatDateIT(iso); }
+
+function nightsBetween(checkinISO, checkoutISO) {
+  if (!checkinISO || !checkoutISO) return 0;
+  const a = new Date(checkinISO + "T00:00:00");
+  const b = new Date(checkoutISO + "T00:00:00");
+  const ms = b - a;
+  return Math.max(0, Math.round(ms / (1000*60*60*24)));
+}
+
+function pluralIT(n) { return n === 1 ? "notte" : "notti"; }
+function pluralEN(n) { return n === 1 ? "night" : "nights"; }
+
+function joinRoomList(ids) {
+  const sorted = [...ids].sort((a,b)=>a-b);
+  return sorted.join(", ");
+}
+
+function getSelectedRooms() {
+  const checks = [...document.querySelectorAll('input[name="roomCheck"]:checked')];
+  return checks.map(c => Number(c.value));
+}
+
+function priceForRoom(roomId, guests) {
+  const room = ROOMS.find(r => r.id === roomId);
+  if (!room) return null;
+  return room.prices[guests] ?? null;
+}
+
+function allSame(arr) {
+  if (arr.length === 0) return true;
+  return arr.every(x => x === arr[0]);
+}
+
+function autoSetDiscount() {
+  const nights = nightsBetween($("checkin").value, $("checkout").value);
+  $("discountPerNight").value = (nights >= 2) ? "10" : "0";
+}
+
+function syncCustomDiscountUI() {
+  const t = $("extraDiscountType").value;
+  const input = $("customDiscountPerNight");
+  input.disabled = (t !== "custom");
+  if (t !== "custom") input.value = "0";
+}
+
+function renderRooms() {
+  const host = $("rooms");
+  host.innerHTML = "";
+  ROOMS.forEach(r => {
+    const pill = document.createElement("label");
+    pill.className = "pill";
+    const checkedDefault = false;    
+    pill.innerHTML = `
+      <input type="checkbox" name="roomCheck" value="${r.id}" ${checkedDefault ? "checked" : ""} />
+      <div>
+        <div><strong>Camera ${r.id}</strong> <span class="tag">${r.type}</span></div>
+        <div class="muted" style="font-size:12px;">
+          ${formatEuro(Math.min(...Object.values(r.prices)))}–${formatEuro(Math.max(...Object.values(r.prices)))}/notte
+        </div>
+      </div>
+    `;
+    host.appendChild(pill);
+  });
+}
+
+/** calcola sconti in modo centralizzato (niente variabili non definite) */
+function computeDiscounts(discountPerNight, extraDiscountType, customDiscountPerNight) {
+  const bundleDiscountPerNight = 10; // valore sconto "prenotazione congiunta"
+
+  const extraDiscountPerNight =
+    extraDiscountType === "custom" ? Math.max(0, customDiscountPerNight)
+    : extraDiscountType === "bundle" ? bundleDiscountPerNight
+    : 0;
+
+  const longStay = Math.max(0, discountPerNight);
+  const totalDiscountPerNight = longStay + extraDiscountPerNight;
+
+  const discountLinesIT = [];
+  if (longStay > 0) discountLinesIT.push(`Sconto soggiorno lungo: ${formatEuro(longStay)} a notte`);
+  if (extraDiscountPerNight > 0) {
+    const label = (extraDiscountType === "bundle") ? "Sconto prenotazione congiunta" : "Sconto personalizzato";
+    discountLinesIT.push(`${label}: ${formatEuro(extraDiscountPerNight)} a notte`);
+  }
+
+  const discountLinesEN = [];
+  if (longStay > 0) discountLinesEN.push(`Long-stay discount: ${formatEuro(longStay)} per night`);
+  if (extraDiscountPerNight > 0) {
+    const label = (extraDiscountType === "bundle") ? "Joint booking discount" : "Custom discount";
+    discountLinesEN.push(`${label}: ${formatEuro(extraDiscountPerNight)} per night`);
+  }
+
+  return {
+    extraDiscountPerNight,
+    totalDiscountPerNight,
+    discountLineIT: discountLinesIT.length ? discountLinesIT.join("\n") : "",
+    discountLineEN: discountLinesEN.length ? discountLinesEN.join("\n") : "",
+  };
+}
+
+function buildOutputs() {
+  const rooms = getSelectedRooms();
+  const guests = Number($("guests").value);
+  const checkin = $("checkin").value;
+  const checkout = $("checkout").value;
+  const nights = nightsBetween(checkin, checkout);
+
+  const discountPerNight = Number($("discountPerNight").value || 0);
+  const extraDiscountType = $("extraDiscountType").value; // none | bundle | custom
+  const customDiscountPerNight = Number($("customDiscountPerNight").value || 0);
+
+  const emoji = $("emoji").value.trim();
+  const signature = $("signature").value.trim() || "Garda Havens";
+  const extra = $("extra").value.trim();
+  const langToggle = $("langToggle").value; // it | en | both
+
+  // validation
+  if (!rooms.length) {
+    $("summary").innerHTML = `<span class="warn">Seleziona almeno una camera.</span>`;
+    $("outputs").innerHTML = "";
+    $("priceHint").textContent = "";
+    return;
+  }
+  if (!checkin || !checkout || nights <= 0) {
+    $("summary").innerHTML = `<span class="warn">Inserisci date valide (check-out dopo check-in).</span>`;
+    $("outputs").innerHTML = "";
+    $("priceHint").textContent = "";
+    return;
+  }
+
+  const prices = rooms.map(rid => priceForRoom(rid, guests));
+  const missing = prices.some(p => p === null);
+
+  const roomsStr = joinRoomList(rooms);
+  const ci = formatDateIT(checkin);
+  const co = formatDateIT(checkout);
+  const ciEN = formatDateENFromISO(checkin);
+  const coEN = formatDateENFromISO(checkout);
+
+  // compute discounts
+  const d = computeDiscounts(discountPerNight, extraDiscountType, customDiscountPerNight);
+  const discTotal = (!missing && d.totalDiscountPerNight > 0) ? d.totalDiscountPerNight * nights : 0;
+
+  // IT pricing
+  let priceLineIT = "";
+  let totalLineIT = "";
+  let priceHint = "";
+
+  if (missing) {
+    priceHint = "⚠️ Alcune camere non hanno prezzo per quel numero ospiti (controlla).";
+  } else if (allSame(prices)) {
+    const p = prices[0];
+    const full = p * nights;
+    const total = full - discTotal;
+
+    priceLineIT = `Prezzo: ${formatEuro(p)} a notte`;
+    totalLineIT = (discTotal > 0)
+      ? `Totale ${formatEuro(total)} invece di ${formatEuro(full)}${emoji ? " " + emoji : ""}`
+      : `Totale ${formatEuro(full)}${emoji ? " " + emoji : ""}`;
+
+    priceHint = `Prezzo per ${guests} ospiti: ${formatEuro(p)}/notte`;
+  } else {
+    const lines = rooms.map((rid, i) => `Camera ${rid}: ${formatEuro(prices[i])}/notte`);
+    priceLineIT = `Prezzo per notte:\n${lines.map(l => "• " + l).join("\n")}`;
+
+    const fullByRoom = rooms.map((rid,i) => ({ rid, full: prices[i] * nights }));
+    if (discTotal > 0) {
+      // stesso sconto a notte su ogni camera selezionata
+      const totals = fullByRoom.map(x => `• Camera ${x.rid}: ${formatEuro(x.full - discTotal)} (invece di ${formatEuro(x.full)})`).join("\n");
+      totalLineIT = `Totale (${nights} ${pluralIT(nights)}):\n${totals}${emoji ? "\n" + emoji : ""}`;
+    } else {
+      const totalsNoDisc = fullByRoom.map(x => `• Camera ${x.rid}: ${formatEuro(x.full)}`).join("\n");
+      totalLineIT = `Totale (${nights} ${pluralIT(nights)}):\n${totalsNoDisc}${emoji ? "\n" + emoji : ""}`;
+    }
+    priceHint = `Prezzi diversi tra camere selezionate`;
+  }
+
+  // EN pricing
+  const priceLineEN = (() => {
+    if (missing) return "Rate: to be confirmed for this number of guests.";
+    if (allSame(prices)) return `Rate: ${formatEuro(prices[0])} per night`;
+    const lines = rooms.map((rid, i) => `Room ${rid}: ${formatEuro(prices[i])}/night`);
+    return `Nightly rate:\n${lines.map(l => "• " + l).join("\n")}`;
+  })();
+
+  const totalLineEN = (() => {
+    if (missing) return "";
+    if (allSame(prices)) {
+      const full = prices[0] * nights;
+      const total = full - discTotal;
+      return (discTotal > 0)
+        ? `Total: ${formatEuro(total)} instead of ${formatEuro(full)}${emoji ? " " + emoji : ""}`
+        : `Total: ${formatEuro(full)}${emoji ? " " + emoji : ""}`;
+    } else {
+      const fullByRoom = rooms.map((rid,i) => ({ rid, full: prices[i] * nights }));
+      if (discTotal > 0) {
+        const totals = fullByRoom.map(x => `• Room ${x.rid}: ${formatEuro(x.full - discTotal)} (instead of ${formatEuro(x.full)})`).join("\n");
+        return `Total (${nights} ${pluralEN(nights)}):\n${totals}${emoji ? "\n" + emoji : ""}`;
+      } else {
+        const totals = fullByRoom.map(x => `• Room ${x.rid}: ${formatEuro(x.full)}`).join("\n");
+        return `Total (${nights} ${pluralEN(nights)}):\n${totals}${emoji ? "\n" + emoji : ""}`;
+      }
+    }
+  })();
+
+  const siteLineIT = `Puoi visitare www.gardahavens.com per consultare foto, listino prezzi e informazioni su biglietti convenzionati per le attrazioni locali.`;
+  const siteLineEN = `You can visit www.gardahavens.com to view photos, price list, and information about discounted tickets for local attractions.`;
+
+  $("priceHint").textContent = priceHint;
+  $("summary").innerHTML = `<span class="ok">OK</span> · Camere: ${roomsStr} · ${guests} ospiti · ${nights} ${pluralIT(nights)}`;
+
+  // ===== FORMAL IT/EN =====
+  const vFormalIT = [
+    "Buongiorno,",
+    "",
+    `confermiamo la disponibilità della Camera n. ${roomsStr} per ${guests} ospiti nel periodo ${ci}–${co} (${nights} ${pluralIT(nights)}).`,
+    "",
+    missing ? "Tariffa: da verificare per questo numero di ospiti." : priceLineIT,
+    (!missing && d.discountLineIT) ? d.discountLineIT : null,
+    "",
+    missing ? "" : totalLineIT,
+    extra ? "" : null,
+    extra ? `Informazioni aggiuntive: ${extra}` : null,
+    "",
+    siteLineIT,
+    "",
+    signature
+  ].filter(Boolean).join("\n");
+
+  const vFormalEN = [
+    "Good morning,",
+    "",
+    `we confirm the availability of Room no. ${roomsStr} for ${guests} guest(s) from ${ciEN} to ${coEN} (${nights} ${pluralEN(nights)}).`,
+    "",
+    priceLineEN,
+    (!missing && d.discountLineEN) ? d.discountLineEN : null,
+    "",
+    totalLineEN ? totalLineEN : null,
+    extra ? "" : null,
+    extra ? `Additional information: ${extra}` : null,
+    "",
+    siteLineEN,
+    "",
+    signature
+  ].filter(Boolean).join("\n");
+
+  // ===== SHORT CONFIRM IT/EN (quella che vuoi) =====
+  const vShortIT = [
+    `Prenotazione confermata ✅ Camera ${roomsStr} per ${guests} ospiti: ${ci}–${co} (${nights} ${pluralIT(nights)}).`,
+    `Totale: vedi dettaglio offerta. Info: www.gardahavens.com${emoji ? " " + emoji : ""}`,
+    signature
+  ].join("\n");
+
+  const vShortEN = [
+    `Booking confirmed ✅ Room ${roomsStr} for ${guests} guest(s): ${ciEN}–${coEN} (${nights} ${pluralEN(nights)}).`,
+    `Total: see offer details. Info: www.gardahavens.com${emoji ? " " + emoji : ""}`,
+    signature
+  ].join("\n");
+
+  const allOutputs = [
+    { title: "Offerta (IT)", text: vFormalIT, lang: "it" },
+    { title: "Offer (EN)",   text: vFormalEN, lang: "en" },
+    { title: "Conferma (IT)",   text: vShortIT,  lang: "it" },
+    { title: "Confirmation (EN)", text: vShortEN, lang: "en" },
+  ];
+
+  const outputs = (langToggle === "both")
+    ? allOutputs
+    : allOutputs.filter(o => o.lang === langToggle);
+
+  // render
+  const host = $("outputs");
+  host.innerHTML = "";
+  outputs.forEach((o, idx) => {
+    const box = document.createElement("div");
+    box.className = "card";
+    box.style.padding = "12px";
+    box.innerHTML = `
+      <div class="msgHeader">
+        <div><strong>${o.title}</strong></div>
+        <div class="row">
+          <button class="secondary" data-copy="${idx}">Copia</button>
+        </div>
+      </div>
+      <div class="out" id="out_${idx}"></div>
+    `;
+    host.appendChild(box);
+    $("out_" + idx).textContent = o.text;
+  });
+
+  // copy handlers
+  [...document.querySelectorAll("button[data-copy]")].forEach(btn => {
+    btn.onclick = async () => {
+      const idx = btn.getAttribute("data-copy");
+      const t = $("out_" + idx).textContent;
+      try {
+        await navigator.clipboard.writeText(t);
+        btn.textContent = "Copiato ✓";
+        setTimeout(()=>btn.textContent="Copia", 900);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = t;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        btn.textContent = "Copiato ✓";
+        setTimeout(()=>btn.textContent="Copia", 900);
+      }
+    };
+  });
+}
+
+// listeners
+$("generate").addEventListener("click", buildOutputs);
+$("langToggle").addEventListener("change", buildOutputs);
+
+$("checkin").addEventListener("change", () => { autoSetDiscount(); buildOutputs(); });
+$("checkout").addEventListener("change", () => { autoSetDiscount(); buildOutputs(); });
+
+$("extraDiscountType").addEventListener("change", () => { syncCustomDiscountUI(); buildOutputs(); });
+$("customDiscountPerNight").addEventListener("input", buildOutputs);
+$("guests").addEventListener("change", buildOutputs);
+
+// init
+renderRooms();
+setDefaultDates();   
+autoSetDiscount();
+syncCustomDiscountUI();
+buildOutputs();
+</script>
+</body>
+</html>
