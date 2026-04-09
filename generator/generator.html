@@ -59,6 +59,12 @@
       width:100%; box-sizing:border-box; padding:10px;
       border-radius:10px; border:1px solid #d9d9dd;
       background:#fff; font-size:14px;
+      min-width:0; /* prevent overflow in grid on iOS */
+    }
+    input[type="date"] {
+      -webkit-appearance: none;
+      appearance: none;
+      max-width: 100%;
     }
     textarea { min-height:64px; resize:vertical; }
 
@@ -154,7 +160,10 @@
 
       <!-- STEP 1: Camere -->
       <div class="section">
-        <h2>1 · Camere</h2>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <h2 style="margin:0;">1 · Camere</h2>
+          <button id="resetTop" class="secondary" style="font-size:12px;padding:6px 12px;color:#888;border-color:#ddd;">&#8635; Reset</button>
+        </div>
         <div class="rooms" id="rooms"></div>
       </div>
 
@@ -164,12 +173,34 @@
       <div class="section">
         <h2>2 · Ospiti &amp; Date</h2>
 
-        <!-- Single vs multi mode toggle -->
-        <div style="margin-bottom:10px;">
+        <!-- Single vs multi mode toggle + phone number -->
+        <div style="margin-bottom:10px; display:flex; flex-wrap:wrap; align-items:center; gap:10px;">
           <label class="toggle-pill">
             <input type="checkbox" id="multiBooking" />
             <span><strong>Gruppo multi-camera</strong> – ospiti divisi in più camere</span>
           </label>
+          <div style="display:flex; align-items:center; gap:0; border:1px solid #d9d9dd; border-radius:10px; overflow:hidden; background:#fff; flex-shrink:0;">
+            <select id="phonePrefix" style="width:auto; border:none; border-right:1px solid #d9d9dd; border-radius:0; padding:10px 8px; font-size:14px; background:#f9f9fb; min-width:80px;">
+              <option value="39">🇮🇹 +39</option>
+              <option value="49">🇩🇪 +49</option>
+              <option value="43">🇦🇹 +43</option>
+              <option value="41">🇨🇭 +41</option>
+              <option value="33">🇫🇷 +33</option>
+              <option value="34">🇪🇸 +34</option>
+              <option value="31">🇳🇱 +31</option>
+              <option value="44">🇬🇧 +44</option>
+              <option value="1">🇺🇸 +1</option>
+              <option value="7">🇷🇺 +7</option>
+              <option value="48">🇵🇱 +48</option>
+              <option value="420">🇨🇿 +420</option>
+              <option value="36">🇭🇺 +36</option>
+              <option value="custom">✏️ Altro...</option>
+            </select>
+            <input id="phonePrefixCustom" type="tel" placeholder="+xx"
+              style="display:none; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb;" />
+            <input id="phoneNumber" type="tel" placeholder="Numero WhatsApp"
+              style="border:none; border-radius:0; width:160px; padding:10px 10px; font-size:14px;" />
+          </div>
         </div>
 
         <!-- Single mode: one guest selector -->
@@ -279,6 +310,7 @@
       <!-- Generate button -->
       <div class="row">
         <button id="generate">Genera messaggi</button>
+        <button id="resetBottom" class="secondary" style="color:#888;border-color:#ddd;">&#8635; Reset</button>
         <span class="muted" id="summary"></span>
       </div>
     </div>
@@ -812,6 +844,31 @@ function buildOutputs() {
   renderOutputs(outputs);
 }
 
+function encodeWaText(str) {
+  // Use same encoding as api.whatsapp.com/send: encodeURIComponent then spaces as +
+  return encodeURIComponent(str).replace(/%20/g, '+');
+}
+
+function getWaNumber() {
+  const sel = $("phonePrefix").value;
+  const prefix = sel === "custom"
+    ? $("phonePrefixCustom").value.trim().replace(/\D/g, "")
+    : sel.trim();
+  const num = $("phoneNumber").value.trim().replace(/\D/g, "");
+  return num ? prefix + num : "";
+}
+
+// Show/hide custom prefix input
+$("phonePrefix").addEventListener("change", function() {
+  const custom = $("phonePrefixCustom");
+  if (this.value === "custom") {
+    custom.style.display = "block";
+    custom.focus();
+  } else {
+    custom.style.display = "none";
+  }
+});
+
 function renderOutputs(outputs) {
   const host = $("outputs");
   host.innerHTML = "";
@@ -822,7 +879,14 @@ function renderOutputs(outputs) {
     box.innerHTML = `
       <div class="msgHeader">
         <strong>${o.title}</strong>
-        <button class="secondary" data-copy="${idx}">Copia</button>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button class="secondary" data-copy="${idx}">Copia</button>
+          <button class="wa-btn" data-wa="${idx}" title="Invia su WhatsApp"
+            style="background:#25D366;color:#fff;border-color:#25D366;display:flex;align-items:center;gap:5px;padding:8px 12px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Invia
+          </button>
+        </div>
       </div>
       <div class="out" id="out_${idx}"></div>`;
     host.appendChild(box);
@@ -840,6 +904,17 @@ function renderOutputs(outputs) {
       }
       btn.textContent = "Copiato ✓";
       setTimeout(() => btn.textContent = "Copia", 900);
+    };
+  });
+
+  [...document.querySelectorAll("button[data-wa]")].forEach(btn => {
+    btn.onclick = () => {
+      const idx = btn.getAttribute("data-wa");
+      const t   = $(`out_${idx}`).textContent;
+      const num = getWaNumber();
+      if (!num) { alert("Inserisci un numero WhatsApp nel campo sopra."); return; }
+      const url = `https://api.whatsapp.com/send/?phone=${num}&text=${encodeWaText(t)}&type=phone_number&app_absent=0`;
+      window.open(url, "_blank");
     };
   });
 }
@@ -977,7 +1052,14 @@ function renderSnippets() {
     box.innerHTML = `
       <div class="msgHeader">
         <strong>${s.title[lang]}</strong>
-        <button class="secondary" data-snip="${idx}">Copia</button>
+        <div style="display:flex;gap:6px;flex-shrink:0;">
+          <button class="secondary" data-snip="${idx}">Copia</button>
+          <button class="wa-snip-btn" data-wasnip="${idx}" title="Invia su WhatsApp"
+            style="background:#25D366;color:#fff;border-color:#25D366;display:flex;align-items:center;gap:5px;padding:8px 12px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Invia
+          </button>
+        </div>
       </div>
       <div class="out" id="${sid}"></div>`;
     host.appendChild(box);
@@ -997,8 +1079,58 @@ function renderSnippets() {
       setTimeout(() => btn.textContent = "Copia", 900);
     };
   });
+
+  [...document.querySelectorAll("button[data-wasnip]")].forEach(btn => {
+    btn.onclick = () => {
+      const idx = btn.getAttribute("data-wasnip");
+      const t   = $(`snip_${idx}`).textContent;
+      const num = getWaNumber();
+      if (!num) { alert("Inserisci un numero WhatsApp nel campo sopra."); return; }
+      const url = `https://api.whatsapp.com/send/?phone=${num}&text=${encodeWaText(t)}&type=phone_number&app_absent=0`;
+      window.open(url, "_blank");
+    };
+  });
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════════════════════════════════ */
+function resetAll() {
+  // Uncheck all rooms
+  document.querySelectorAll('input[name="roomCheck"]').forEach(c => c.checked = false);
+  // Reset mode
+  $("multiBooking").checked = false;
+  syncModeUI();
+  // Reset guests
+  $("guests").value = "3";
+  $("guestName").value = "";
+  $("guestNameMulti").value = "";
+  // Reset dates
+  setDefaultDates();
+  autoSetDiscount();
+  // Reset discounts
+  $("extraDiscountType").value = "none";
+  syncCustomDiscountUI();
+  $("customDiscountPerNight").value = "0";
+  // Reset message prefs
+  $("langToggle").value = "it";
+  $("emoji").value = "😊";
+  $("signature").value = "Garda Havens";
+  $("extra").value = "";
+  // Reset phone
+  $("phonePrefix").value = "39";
+  $("phonePrefixCustom").style.display = "none";
+  $("phonePrefixCustom").value = "";
+  $("phoneNumber").value = "";
+  // Rebuild outputs
+  buildOutputs();
+  renderSnippets();
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+document.getElementById("resetTop").addEventListener("click", resetAll);
+document.getElementById("resetBottom").addEventListener("click", resetAll);
 renderRooms();
 setDefaultDates();
 autoSetDiscount();
