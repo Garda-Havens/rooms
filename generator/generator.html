@@ -354,10 +354,8 @@
 /* ═══════════════════════════════════════════════════════════════════════
    0. ACCESS GATE (Secure Version with Apps Script)
 ═══════════════════════════════════════════════════════════════════════ */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwE8WIxeWnXH_SNOlmvSsbL5VXcjrJms-xf7oLytzmRCqrzg1XoTMF_bqALedgmtr1g/exec";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVtPkiZ7LVZZ3CsflGMjnHIMd7D4o5m1MC0an7M7mURy750JVOjUmaCGS0SG99enJZ/exec";
-
-// Verifica se l'utente ha già effettuato l'accesso
 if (localStorage.getItem("ghAccess") === "granted") {
   document.getElementById("accessOverlay").style.display = "none";
 }
@@ -370,15 +368,10 @@ async function checkAccess() {
     return;
   }
 
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ key: val })
-    });
+  const url = `${SCRIPT_URL}?key=${encodeURIComponent(val)}`;
 
+  try {
+    const response = await fetch(url);
     const data = await response.json();
 
     if (data.success) {
@@ -387,23 +380,20 @@ async function checkAccess() {
     } else {
       alert("Codice errato ❌");
     }
-
   } catch (error) {
     console.error("Errore:", error);
     alert("Errore di connessione al server.");
   }
 }
 
-// Event listeners
 document.getElementById("checkAccess")
   .addEventListener("click", checkAccess);
 
 document.getElementById("accessCode")
-  .addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      checkAccess();
-    }
+  .addEventListener("keypress", e => {
+    if (e.key === "Enter") checkAccess();
   });
+
 /* ═══════════════════════════════════════════════════════════════════════
    1. DATA
 ═══════════════════════════════════════════════════════════════════════ */
