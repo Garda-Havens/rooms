@@ -352,27 +352,48 @@
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
-   0. ACCESS GATE
+   0. ACCESS GATE (Secure Version with Apps Script)
 ═══════════════════════════════════════════════════════════════════════ */
-const ACCESS_KEY = "fimka8-pibsev-fohbEd";
 
-if (localStorage.getItem("ghAccess") === ACCESS_KEY) {
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxcTrIE76pC0CsxLhdCQuz4ixhYabZNxetHmwic1XL4QfSG45YIDcz5bQvtx8Mznsni/exec";
+
+if (localStorage.getItem("ghAccess") === "granted") {
   document.getElementById("accessOverlay").style.display = "none";
 }
 
-function checkAccess() {
-  const val = document.getElementById("accessCode").value;
-  if (val === ACCESS_KEY) {
-    localStorage.setItem("ghAccess", ACCESS_KEY);
-    document.getElementById("accessOverlay").style.display = "none";
-  } else {
-    alert("Codice errato ❌");
+async function checkAccess() {
+  const val = document.getElementById("accessCode").value.trim();
+
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ key: val })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem("ghAccess", "granted");
+      document.getElementById("accessOverlay").style.display = "none";
+    } else {
+      alert("Codice errato ❌");
+    }
+  } catch (error) {
+    alert("Errore di connessione al server.");
+    console.error(error);
   }
 }
-document.getElementById("checkAccess").addEventListener("click", checkAccess);
-document.getElementById("accessCode").addEventListener("keypress", e => { if (e.key === "Enter") checkAccess(); });
 
+document.getElementById("checkAccess")
+  .addEventListener("click", checkAccess);
 
+document.getElementById("accessCode")
+  .addEventListener("keypress", e => {
+    if (e.key === "Enter") checkAccess();
+  });
 /* ═══════════════════════════════════════════════════════════════════════
    1. DATA
 ═══════════════════════════════════════════════════════════════════════ */
