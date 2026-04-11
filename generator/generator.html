@@ -128,6 +128,7 @@
 
     /* ─── Responsive ─────────────────────────────────────────────────── */
     @media (max-width:760px) { .grid, .grid3 { grid-template-columns:1fr; } }
+    @media (max-width:760px) { #guestPhoneRow { grid-template-columns:1fr; } }
     @media (max-width:900px) { .rooms { grid-template-columns:repeat(2, minmax(0,1fr)); } }
     @media (max-width:520px) { .rooms { grid-template-columns:1fr; } }
   </style>
@@ -173,38 +174,60 @@
       <div class="section">
         <h2>2 · Ospiti &amp; Date</h2>
 
-        <!-- Single vs multi mode toggle + phone number -->
-        <div style="margin-bottom:10px; display:flex; flex-wrap:wrap; align-items:center; gap:10px;">
+        <!-- Toggle multi-camera — riga separata -->
+        <div style="margin-bottom:10px;">
           <label class="toggle-pill">
             <input type="checkbox" id="multiBooking" />
             <span><strong>Gruppo multi-camera</strong> – ospiti divisi in più camere</span>
           </label>
-          <div style="display:flex; align-items:center; gap:0; border:1px solid #d9d9dd; border-radius:10px; overflow:hidden; background:#fff; flex-shrink:0;">
-            <select id="phonePrefix" style="width:auto; border:none; border-right:1px solid #d9d9dd; border-radius:0; padding:10px 8px; font-size:14px; background:#f9f9fb; min-width:80px;">
-              <option value="39">🇮🇹 +39</option>
-              <option value="49">🇩🇪 +49</option>
-              <option value="43">🇦🇹 +43</option>
-              <option value="41">🇨🇭 +41</option>
-              <option value="33">🇫🇷 +33</option>
-              <option value="34">🇪🇸 +34</option>
-              <option value="31">🇳🇱 +31</option>
-              <option value="44">🇬🇧 +44</option>
-              <option value="1">🇺🇸 +1</option>
-              <option value="7">🇷🇺 +7</option>
-              <option value="48">🇵🇱 +48</option>
-              <option value="420">🇨🇿 +420</option>
-              <option value="36">🇭🇺 +36</option>
-              <option value="custom">✏️ Altro...</option>
-            </select>
-            <input id="phonePrefixCustom" type="tel" placeholder="+xx"
-              style="display:none; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb;" />
-            <input id="phoneNumber" type="tel" placeholder="Numero WhatsApp"
-              style="border:none; border-radius:0; width:160px; padding:10px 10px; font-size:14px;" />
-          </div>
         </div>
 
-        <!-- Single mode: one guest selector -->
-        <div id="singleGuestRow" class="grid">
+        <!-- Nome ospite + telefono: 2 colonne desktop, 1 colonna mobile -->
+        <div class="grid" style="margin-bottom:10px;">
+
+          <!-- Nome ospite (single o multi) -->
+          <div>
+            <div id="singleNameCol">
+              <label>Nome ospite (opzionale)</label>
+              <input id="guestName" placeholder="es. Marco" />
+            </div>
+            <div id="multiNameCol" style="display:none;">
+              <label>Nome ospite / gruppo (opzionale)</label>
+              <input id="guestNameMulti" placeholder="es. Famiglia Rossi" />
+            </div>
+          </div>
+
+          <!-- Telefono -->
+          <div>
+            <label>Numero WhatsApp</label>
+            <div style="display:flex; align-items:center; gap:0; border:1px solid #d9d9dd; border-radius:10px; overflow:hidden; background:#fff;">
+              <select id="phonePrefix" style="width:auto; border:none; border-right:1px solid #d9d9dd; border-radius:0; padding:10px 8px; font-size:14px; background:#f9f9fb; min-width:80px;">
+                <option value="39">🇮🇹 +39</option>
+                <option value="49">🇩🇪 +49</option>
+                <option value="43">🇦🇹 +43</option>
+                <option value="41">🇨🇭 +41</option>
+                <option value="33">🇫🇷 +33</option>
+                <option value="34">🇪🇸 +34</option>
+                <option value="31">🇳🇱 +31</option>
+                <option value="44">🇬🇧 +44</option>
+                <option value="1">🇺🇸 +1</option>
+                <option value="7">🇷🇺 +7</option>
+                <option value="48">🇵🇱 +48</option>
+                <option value="420">🇨🇿 +420</option>
+                <option value="36">🇭🇺 +36</option>
+                <option value="custom">✏️ Altro...</option>
+              </select>
+              <input id="phonePrefixCustom" type="tel" placeholder="+xx"
+                style="display:none; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb;" />
+              <input id="phoneNumber" type="tel" placeholder="Numero"
+                style="border:none; border-radius:0; min-width:0; flex:1; padding:10px 10px; font-size:14px;" />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Single mode: numero ospiti -->
+        <div id="singleGuestRow" style="margin-bottom:10px;">
           <div>
             <label>Numero ospiti</label>
             <select id="guests">
@@ -216,20 +239,10 @@
               <option value="6">6 ospiti</option>
             </select>
           </div>
-          <div>
-            <label>Nome ospite (opzionale)</label>
-            <input id="guestName" placeholder="es. Marco" />
-          </div>
         </div>
 
         <!-- Multi mode: per-room selectors (rendered dynamically) -->
         <div id="multiGuestSection" style="display:none;">
-          <div class="grid" style="margin-bottom:10px;">
-            <div>
-              <label>Nome ospite / gruppo (opzionale)</label>
-              <input id="guestNameMulti" placeholder="es. Famiglia Rossi" />
-            </div>
-          </div>
           <div class="muted" style="margin-bottom:6px;">Seleziona quanti ospiti per ciascuna camera scelta:</div>
           <div class="multi-guest-grid" id="multiGuestsGrid"></div>
         </div>
@@ -368,6 +381,49 @@ const ROOMS = [
   { id:6, name:"Room 6", type:"Quadruple", prices:{1:80,  2:90,  3:120, 4:140}              },
 ];
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   1b. GOOGLE CALENDAR IDs PER CAMERA
+═══════════════════════════════════════════════════════════════════════ */
+const ROOM_CALENDAR_IDS = {
+  1: "8892a71de4d69d7d36d1a35f88a4693cf181fd71bbe83159f637799c68948d19@group.calendar.google.com",
+  2: "ef15a5a18e11826061e263752d1f8ab808d73836fdc5cd47ba3375e0d509844e@group.calendar.google.com",
+  3: "0b560c9f3cbde46c1986c2542f1f2f6e7304501e8d20b46ca49d4baad54404ee@group.calendar.google.com",
+  4: "816dfb3a5099d36c38b8fe921316aad331436c17b053de5bd49e10947bd40fd7@group.calendar.google.com",
+  5: "366ba61c19bbe40bf70dc9802e94a7bcf74edffd527970f2d0cc6e28b76bd39f@group.calendar.google.com",
+  6: "aebdd3bd07c6a59462baeef06e13fcb993f04ffadad12f8adc69bf8734601f84@group.calendar.google.com",
+};
+
+/**
+ * Builds a Google Calendar "add event" URL.
+ * @param {number} roomId
+ * @param {string} guestName  - Nome ospite (may be empty)
+ * @param {string} phone      - Full phone number with prefix (may be empty)
+ * @param {string} checkin    - ISO date string YYYY-MM-DD
+ * @param {string} checkout   - ISO date string YYYY-MM-DD
+ */
+function buildGCalUrl(roomId, guestName, phone, checkin, checkout) {
+  const calId = ROOM_CALENDAR_IDS[roomId];
+  if (!calId || !checkin || !checkout) return null;
+
+  // All-day event dates for GCal: YYYYMMDD
+  const startDate = checkin.replace(/-/g, "");
+  const endDate   = checkout.replace(/-/g, "");
+
+  // Event title: "Nome + telefono" or fallback
+  const namePart  = guestName || "Ospite";
+  const phonePart = phone ? ` ${phone}` : "";
+  const title     = `${namePart}${phonePart}`;
+
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text:   title,
+    dates:  `${startDate}/${endDate}`,
+    src:    calId,
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
 
 /* ═══════════════════════════════════════════════════════════════════════
    2. HELPERS
@@ -512,6 +568,8 @@ function syncModeUI() {
   const multi = isMultiMode();
   $("singleGuestRow").style.display  = multi ? "none" : "";
   $("multiGuestSection").style.display = multi ? "" : "none";
+  $("singleNameCol").style.display   = multi ? "none" : "";
+  $("multiNameCol").style.display    = multi ? "" : "none";
   if (multi) {
     renderMultiGuestSelectors(getSelectedRooms());
   }
@@ -664,8 +722,8 @@ function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, em
   return { messages: [
     { title:"Offerta (IT)",        text:formalIT, lang:"it" },
     { title:"Offer (EN)",          text:formalEN, lang:"en" },
-    { title:"Conferma (IT)",       text:shortIT,  lang:"it" },
-    { title:"Confirmation (EN)",   text:shortEN,  lang:"en" },
+    { title:"Conferma (IT)",       text:shortIT,  lang:"it",  gcal:{ rooms, checkin, checkout } },
+    { title:"Confirmation (EN)",   text:shortEN,  lang:"en",  gcal:{ rooms, checkin, checkout } },
   ], priceHint };
 }
 
@@ -779,8 +837,8 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
   return { messages: [
     { title:"Offerta Gruppo (IT)",       text:formalIT, lang:"it" },
     { title:"Group Offer (EN)",          text:formalEN, lang:"en" },
-    { title:"Conferma Gruppo (IT)",      text:shortIT,  lang:"it" },
-    { title:"Group Confirmation (EN)",   text:shortEN,  lang:"en" },
+    { title:"Conferma Gruppo (IT)",      text:shortIT,  lang:"it",  gcal:{ rooms, checkin, checkout } },
+    { title:"Group Confirmation (EN)",   text:shortEN,  lang:"en",  gcal:{ rooms, checkin, checkout } },
   ], priceHint };
 }
 
@@ -873,13 +931,39 @@ function renderOutputs(outputs) {
   const host = $("outputs");
   host.innerHTML = "";
   outputs.forEach((o, idx) => {
+    // Build GCal button HTML if this is a conferma message
+    let gcalBtnHTML = "";
+    if (o.gcal) {
+      const { rooms, checkin, checkout } = o.gcal;
+      const guestName = getGuestName();
+      const phone     = getWaNumber();
+      const urls = rooms.map(rid => buildGCalUrl(rid, guestName, phone, checkin, checkout)).filter(Boolean);
+
+      if (urls.length === 1) {
+        gcalBtnHTML = `
+          <button class="gcal-btn" data-gcal-idx="${idx}"
+            style="background:#4285F4;color:#fff;border-color:#4285F4;display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:13px;"
+            title="Aggiungi a Google Calendar">
+            📅 Google Cal
+          </button>`;
+      } else if (urls.length > 1) {
+        gcalBtnHTML = `
+          <button class="gcal-btn" data-gcal-idx="${idx}"
+            style="background:#4285F4;color:#fff;border-color:#4285F4;display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:13px;"
+            title="Aggiungi a Google Calendar (${urls.length} camere)">
+            📅 Google Cal (${urls.length})
+          </button>`;
+      }
+    }
+
     const box = document.createElement("div");
     box.className = "card";
     box.style.padding = "12px";
     box.innerHTML = `
       <div class="msgHeader">
         <strong>${o.title}</strong>
-        <div style="display:flex;gap:6px;flex-shrink:0;">
+        <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;">
+          ${gcalBtnHTML}
           <button class="secondary" data-copy="${idx}">Copia</button>
           <button class="wa-btn" data-wa="${idx}" title="Invia su WhatsApp"
             style="background:#25D366;color:#fff;border-color:#25D366;display:flex;align-items:center;gap:5px;padding:8px 12px;">
@@ -891,6 +975,12 @@ function renderOutputs(outputs) {
       <div class="out" id="out_${idx}"></div>`;
     host.appendChild(box);
     $(`out_${idx}`).textContent = o.text;
+
+    // Store gcal data on the button for click handler
+    if (o.gcal) {
+      const btn = box.querySelector(".gcal-btn");
+      if (btn) btn._gcalData = o.gcal;
+    }
   });
 
   [...document.querySelectorAll("button[data-copy]")].forEach(btn => {
@@ -915,6 +1005,37 @@ function renderOutputs(outputs) {
       if (!num) { alert("Inserisci un numero WhatsApp nel campo sopra."); return; }
       const url = `https://api.whatsapp.com/send/?phone=${num}&text=${encodeWaText(t)}&type=phone_number&app_absent=0`;
       window.open(url, "_blank");
+    };
+  });
+
+  [...document.querySelectorAll("button.gcal-btn")].forEach(btn => {
+    btn.onclick = () => {
+      const { rooms, checkin, checkout } = btn._gcalData;
+      const guestName = getGuestName();
+      const phone     = getWaNumber();
+      const urls = rooms.map(rid => buildGCalUrl(rid, guestName, phone, checkin, checkout)).filter(Boolean);
+      if (!urls.length) return;
+
+      // Open all tabs synchronously inside the click event (browsers block async window.open)
+      const blocked = [];
+      urls.forEach((url, i) => {
+        const w = window.open(url, `_gcal_room_${i}`);
+        if (!w) blocked.push({ url, room: rooms[i] });
+      });
+
+      // If any popup was blocked, show fallback links inside the button's card
+      if (blocked.length) {
+        const card = btn.closest(".card");
+        let fallback = card.querySelector(".gcal-fallback");
+        if (!fallback) {
+          fallback = document.createElement("div");
+          fallback.className = "gcal-fallback";
+          fallback.style.cssText = "margin-top:8px;font-size:12px;color:#444;line-height:1.8;";
+          card.appendChild(fallback);
+        }
+        fallback.innerHTML = "⚠️ Alcuni tab sono stati bloccati. Apri manualmente:<br>" +
+          blocked.map(b => `<a href="${b.url}" target="_blank" style="color:#4285F4;display:block;">📅 Camera ${b.room}</a>`).join("");
+      }
     };
   });
 }
