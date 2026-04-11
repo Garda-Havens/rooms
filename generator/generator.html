@@ -61,6 +61,9 @@
       background:#fff; font-size:14px;
       min-width:0; /* prevent overflow in grid on iOS */
     }
+    @media (max-width:760px) {
+      input, select, textarea { font-size:16px; }
+    }
     input[type="date"] {
       -webkit-appearance: none;
       appearance: none;
@@ -129,6 +132,7 @@
     /* ─── Responsive ─────────────────────────────────────────────────── */
     @media (max-width:760px) { .grid, .grid3 { grid-template-columns:1fr; } }
     @media (max-width:760px) { #guestPhoneRow { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .gcal-row { grid-template-columns:1fr !important; } }
     @media (max-width:900px) { .rooms { grid-template-columns:repeat(2, minmax(0,1fr)); } }
     @media (max-width:520px) { .rooms { grid-template-columns:1fr; } }
   </style>
@@ -395,40 +399,84 @@ const ROOM_CALENDAR_IDS = {
 };
 
 /**
- * Builds a Google Calendar "add event" URL.
- * @param {number} roomId
- * @param {string} guestName  - Nome ospite (may be empty)
- * @param {string} phone      - Full phone number with prefix (may be empty)
- * @param {string} checkin    - ISO date string YYYY-MM-DD
- * @param {string} checkout   - ISO date string YYYY-MM-DD
+ * URL del tuo Google Apps Script — sostituisci dopo aver fatto il deploy.
+ * Distribuisci → Nuova distribuzione → App Web → copia l'URL qui sotto.
  */
-function buildGCalUrl(roomId, guestName, phone, checkin, checkout) {
-  const calId = ROOM_CALENDAR_IDS[roomId];
-  if (!calId || !checkin || !checkout) return null;
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz34SOMiHbEIIS30CwN8DgO1_qE8Lx7PqVvSG4iI_Z2ATyJZYZgHoTsyn53WB3vIPRL/exec";
 
-  // All-day event dates for GCal: YYYYMMDD
-  const startDate = checkin.replace(/-/g, "");
-  const endDate   = checkout.replace(/-/g, "");
+/**
+ * Chiama il backend Apps Script per creare l'evento sul calendario della camera.
+ * @param {HTMLElement} btn   - Il bottone cliccato (per feedback visivo)
+ * @param {number}  roomId
+ * @param {string}  guestName
+ * @param {string}  phone
+ * @param {string}  checkin   - YYYY-MM-DD
+ * @param {string}  checkout  - YYYY-MM-DD
+ */
+async function createCalendarEvent(btn, roomId, guestName, phone, checkin, checkout) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "INCOLLA_QUI_URL_APPS_SCRIPT") {
+    alert("⚙️ Configura prima APPS_SCRIPT_URL nel codice HTML.");
+    return;
+  }
 
-  // Event title: "Nome + telefono" or fallback
   const namePart  = guestName || "Ospite";
   const phonePart = phone ? ` ${phone}` : "";
   const title     = `${namePart}${phonePart}`;
 
-  const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text:   title,
-    dates:  `${startDate}/${endDate}`,
-    src:    calId,
-  });
+  // Feedback visivo
+  const original = btn.innerHTML;
+  btn.innerHTML   = "⏳ Salvo…";
+  btn.style.opacity = "0.7";
+  btn.style.pointerEvents = "none";
 
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  try {
+    const res  = await fetch(APPS_SCRIPT_URL, {
+      method:  "POST",
+      headers: { "Content-Type": "text/plain" }, // Apps Script richiede text/plain per evitare preflight CORS
+      body:    JSON.stringify({ roomId, title, checkin, checkout }),
+    });
+    const json = await res.json();
+
+    if (json.ok) {
+      btn.innerHTML     = "✅ Salvato";
+      btn.style.background = "#0a7a2f";
+      btn.style.borderColor = "#0a7a2f";
+    } else {
+      btn.innerHTML = "❌ Errore";
+      btn.style.background = "#c0392b";
+      btn.style.borderColor = "#c0392b";
+      console.error("Apps Script error:", json.error);
+    }
+  } catch (err) {
+    btn.innerHTML = "❌ Rete";
+    btn.style.background = "#c0392b";
+    btn.style.borderColor = "#c0392b";
+    console.error("Fetch error:", err);
+  } finally {
+    btn.style.opacity = "1";
+    // Ripristina dopo 3 secondi
+    setTimeout(() => {
+      btn.innerHTML = original;
+      btn.style.background = "#4285F4";
+      btn.style.borderColor = "#4285F4";
+      btn.style.pointerEvents = "auto";
+    }, 3000);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
    2. HELPERS
 ═══════════════════════════════════════════════════════════════════════ */
 const $ = id => document.getElementById(id);
+
+/** Returns time-based greeting in Rome timezone */
+function greeting(lang) {
+  const hour = new Date().toLocaleString("en-US", { timeZone: "Europe/Rome", hour: "numeric", hour12: false }) | 0;
+  if (lang === "en") {
+    return hour < 12 ? "Good morning," : hour < 18 ? "Good afternoon," : "Good evening,";
+  }
+  return hour < 12 ? "Buongiorno," : hour < 18 ? "Buon pomeriggio," : "Buonasera,";
+}
 
 function formatEuro(n) {
   const v = Math.round(Number(n) * 100) / 100;
@@ -676,7 +724,7 @@ function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, em
   const roomLabelEN  = rooms.length === 1 ? `Room no. ${roomsStr}` : `Rooms no. ${roomsStr}`;
 
   const formalIT = lines([
-    "Buongiorno,",
+    greeting("it"),
     `confermiamo la disponibilità ${roomLabelIT} per ${guestLabelIT} nel periodo ${ci}–${co} (${nights} ${pluralIT(nights)})${emoji ? " "+emoji : ""}.`,
     priceLineIT,
     d.discountLineIT || null,
@@ -689,7 +737,7 @@ function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, em
   ]);
 
   const formalEN = lines([
-    "Good morning,",
+    greeting("en"),
     `we confirm the availability of ${roomLabelEN} for ${guestLabelEN} from ${ciE} to ${coE} (${nights} ${pluralEN(nights)})${emoji ? " "+emoji : ""}.`,
     priceLineEN,
     d.discountLineEN || null,
@@ -793,7 +841,7 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
     : null;
 
   const formalIT = lines([
-    "Buongiorno,",
+    greeting("it"),
     `confermiamo la disponibilità delle Camere n. ${roomsStr} per il vostro gruppo (${totalGuests} ospiti in totale) nel periodo ${ci}–${co} (${nights} ${pluralIT(nights)})${emoji ? " "+emoji : ""}.`,
     "Dettaglio per camera:", ...roomLines("it"),
     d.discountLineIT || null,
@@ -806,7 +854,7 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
   ]);
 
   const formalEN = lines([
-    "Good morning,",
+    greeting("en"),
     `we confirm the availability of Rooms no. ${roomsStr} for your group (${totalGuests} guests in total) from ${ciE} to ${coE} (${nights} ${pluralEN(nights)})${emoji ? " "+emoji : ""}.`,
     "Room breakdown:", ...roomLines("en"),
     d.discountLineEN || null,
@@ -931,31 +979,6 @@ function renderOutputs(outputs) {
   const host = $("outputs");
   host.innerHTML = "";
   outputs.forEach((o, idx) => {
-    // Build GCal button HTML if this is a conferma message
-    let gcalBtnHTML = "";
-    if (o.gcal) {
-      const { rooms, checkin, checkout } = o.gcal;
-      const guestName = getGuestName();
-      const phone     = getWaNumber();
-      const urls = rooms.map(rid => buildGCalUrl(rid, guestName, phone, checkin, checkout)).filter(Boolean);
-
-      if (urls.length === 1) {
-        gcalBtnHTML = `
-          <button class="gcal-btn" data-gcal-idx="${idx}"
-            style="background:#4285F4;color:#fff;border-color:#4285F4;display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:13px;"
-            title="Aggiungi a Google Calendar">
-            📅 Calendar
-          </button>`;
-      } else if (urls.length > 1) {
-        gcalBtnHTML = `
-          <button class="gcal-btn" data-gcal-idx="${idx}"
-            style="background:#4285F4;color:#fff;border-color:#4285F4;display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:13px;"
-            title="Aggiungi a Google Calendar (${urls.length} camere)">
-            📅 Calendar (${urls.length})
-          </button>`;
-      }
-    }
-
     const box = document.createElement("div");
     box.className = "card";
     box.style.padding = "12px";
@@ -963,7 +986,6 @@ function renderOutputs(outputs) {
       <div class="msgHeader">
         <strong>${o.title}</strong>
         <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;">
-          ${gcalBtnHTML}
           <button class="secondary" data-copy="${idx}">Copia</button>
           <button class="wa-btn" data-wa="${idx}" title="Invia su WhatsApp"
             style="background:#25D366;color:#fff;border-color:#25D366;display:flex;align-items:center;gap:5px;padding:8px 12px;">
@@ -976,10 +998,32 @@ function renderOutputs(outputs) {
     host.appendChild(box);
     $(`out_${idx}`).textContent = o.text;
 
-    // Store gcal data on the button for click handler
+    // GCal buttons — one per room, below the message text
     if (o.gcal) {
-      const btn = box.querySelector(".gcal-btn");
-      if (btn) btn._gcalData = o.gcal;
+      const { rooms, checkin, checkout } = o.gcal;
+
+      const gcalRow = document.createElement("div");
+      gcalRow.className = "gcal-row";
+      gcalRow.style.cssText = `
+        display:grid;
+        grid-template-columns:repeat(${rooms.length}, 1fr);
+        gap:8px;
+        margin-top:10px;
+      `;
+
+      rooms.forEach(rid => {
+        const btn = document.createElement("button");
+        btn.style.cssText = "display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 10px;border-radius:12px;border:1px solid #4285F4;background:#4285F4;color:#fff;font-size:13px;cursor:pointer;";
+        btn.innerHTML = `📅 Camera ${rid}`;
+        btn.onclick = () => {
+          const guestName = getGuestName();
+          const phone     = getWaNumber();
+          createCalendarEvent(btn, rid, guestName, phone, checkin, checkout);
+        };
+        gcalRow.appendChild(btn);
+      });
+
+      if (gcalRow.children.length) box.appendChild(gcalRow);
     }
   });
 
@@ -1005,37 +1049,6 @@ function renderOutputs(outputs) {
       if (!num) { alert("Inserisci un numero WhatsApp nel campo sopra."); return; }
       const url = `https://api.whatsapp.com/send/?phone=${num}&text=${encodeWaText(t)}&type=phone_number&app_absent=0`;
       window.open(url, "_blank");
-    };
-  });
-
-  [...document.querySelectorAll("button.gcal-btn")].forEach(btn => {
-    btn.onclick = () => {
-      const { rooms, checkin, checkout } = btn._gcalData;
-      const guestName = getGuestName();
-      const phone     = getWaNumber();
-      const urls = rooms.map(rid => buildGCalUrl(rid, guestName, phone, checkin, checkout)).filter(Boolean);
-      if (!urls.length) return;
-
-      // Open all tabs synchronously inside the click event (browsers block async window.open)
-      const blocked = [];
-      urls.forEach((url, i) => {
-        const w = window.open(url, `_gcal_room_${i}`);
-        if (!w) blocked.push({ url, room: rooms[i] });
-      });
-
-      // If any popup was blocked, show fallback links inside the button's card
-      if (blocked.length) {
-        const card = btn.closest(".card");
-        let fallback = card.querySelector(".gcal-fallback");
-        if (!fallback) {
-          fallback = document.createElement("div");
-          fallback.className = "gcal-fallback";
-          fallback.style.cssText = "margin-top:8px;font-size:12px;color:#444;line-height:1.8;";
-          card.appendChild(fallback);
-        }
-        fallback.innerHTML = "⚠️ Alcuni tab sono stati bloccati. Apri manualmente:<br>" +
-          blocked.map(b => `<a href="${b.url}" target="_blank" style="color:#4285F4;display:block;">📅 Camera ${b.room}</a>`).join("");
-      }
     };
   });
 }
