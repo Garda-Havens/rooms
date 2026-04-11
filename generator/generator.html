@@ -355,14 +355,20 @@
    0. ACCESS GATE (Secure Version with Apps Script)
 ═══════════════════════════════════════════════════════════════════════ */
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxcTrIE76pC0CsxLhdCQuz4ixhYabZNxetHmwic1XL4QfSG45YIDcz5bQvtx8Mznsni/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVtPkiZ7LVZZ3CsflGMjnHIMd7D4o5m1MC0an7M7mURy750JVOjUmaCGS0SG99enJZ/exec";
 
+// Verifica se l'utente ha già effettuato l'accesso
 if (localStorage.getItem("ghAccess") === "granted") {
   document.getElementById("accessOverlay").style.display = "none";
 }
 
 async function checkAccess() {
   const val = document.getElementById("accessCode").value.trim();
+
+  if (!val) {
+    alert("Inserisci il codice di accesso.");
+    return;
+  }
 
   try {
     const response = await fetch(SCRIPT_URL, {
@@ -381,18 +387,22 @@ async function checkAccess() {
     } else {
       alert("Codice errato ❌");
     }
+
   } catch (error) {
+    console.error("Errore:", error);
     alert("Errore di connessione al server.");
-    console.error(error);
   }
 }
 
+// Event listeners
 document.getElementById("checkAccess")
   .addEventListener("click", checkAccess);
 
 document.getElementById("accessCode")
-  .addEventListener("keypress", e => {
-    if (e.key === "Enter") checkAccess();
+  .addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      checkAccess();
+    }
   });
 /* ═══════════════════════════════════════════════════════════════════════
    1. DATA
