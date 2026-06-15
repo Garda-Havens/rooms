@@ -125,16 +125,23 @@
     .warn { color:#a15a00; }
 
     /* ─── Output area ────────────────────────────────────────────────── */
-    .out { white-space:pre-wrap; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:13.5px; line-height:1.55; margin-top:10px; }
+    .out { white-space:pre-wrap; overflow-wrap:break-word; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:13.5px; line-height:1.55; margin-top:10px; }
     .msgCard   { display:grid; grid-template-columns:1fr; gap:10px; }
     .msgHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-bottom:2px; }
 
     /* ─── Responsive ─────────────────────────────────────────────────── */
     @media (max-width:760px) { .grid, .grid3 { grid-template-columns:1fr; } }
-    @media (max-width:760px) { #guestPhoneRow { grid-template-columns:1fr; } }
     @media (max-width:760px) { .gcal-row { grid-template-columns:1fr !important; } }
     @media (max-width:900px) { .rooms { grid-template-columns:repeat(2, minmax(0,1fr)); } }
     @media (max-width:520px) { .rooms { grid-template-columns:1fr; } }
+    @media (max-width:520px) {
+      .wrap { padding:10px; }
+      .card { padding:12px; border-radius:12px; }
+      h1 { font-size:17px; }
+      .msgHeader { flex-wrap:wrap; }
+      .msgHeader > *:last-child { width:100%; display:flex; justify-content:flex-end; }
+      .toggle-pill { width:100%; box-sizing:border-box; }
+    }
   </style>
 </head>
 
@@ -1103,61 +1110,6 @@ $("multiBooking").addEventListener("change", () => { syncModeUI(); buildOutputs(
 
 /* ── Static snippets ──────────────────────────────────────────────── */
 const SNIPPETS = [
-    {
-    title: { it: "Nessuna disponibilità", en: "No availability" },
-    text: {
-      it: `Buongiorno,
-
-grazie per averci contattato e per il suo interesse per Garda Havens!
-Purtroppo per le date da Lei indicate non abbiamo disponibilità.
-Restiamo a disposizione per qualsiasi ulteriore informazione.
-
-A presto,
-Garda Havens`,
-      en: `Good morning,
-
-thank you for reaching out and for your interest in Garda Havens!
-Unfortunately, we do not have availability for the dates you have requested.
-Feel free to contact us for any further information.
-
-Best regards,
-Garda Havens`
-    }
-  },
-  {
-    title: { it: "Pagamento", en: "Payment" },
-    text: {
-      it: `Il pagamento può essere effettuato con le seguenti modalità:
-
-• Contanti
-• PayPal: 00393450233733 (selezionare "Amici e familiari" per evitare commissioni)
-• Bonifico bancario:
-  IBAN: IT84S0357601601010004758384
-  Intestatario: Alessandro Barbazeni
-• POS (in arrivo)`,
-      en: `Payment can be made using the following methods:
-
-• Cash
-• PayPal: 00393450233733 (please select "Friends & Family" to avoid fees)
-• Bank transfer:
-  IBAN: IT84S0357601601010004758384
-  Account holder: Alessandro Barbazeni
-• POS / card reader (coming soon)`
-    }
-  },
-  {
-    title: { it: "Gardaland – Navetta", en: "Gardaland – Shuttle Bus" },
-    text: {
-      it: `Per Gardaland è disponibile una navetta gratuita che parte dal Gardaland Hotel.
-Gli orari sono consultabili qui: https://www.gardaland.it/media/ot0figvl/orari-navetta-2025.pdf
-
-Attenzione: la fermata si trova a circa 5 minuti a piedi dalla nostra struttura, su una strada non del tutto sicura — si consiglia prudenza, specialmente la sera o con bambini.`,
-      en: `A free shuttle bus to Gardaland is available, departing from the Gardaland Hotel.
-Timetable: https://www.gardaland.it/media/ot0figvl/orari-navetta-2025.pdf
-
-Please note: the bus stop is about a 5-minute walk from our property along a road that is not very pedestrian-friendly — we recommend being careful, especially in the evening or with children.`
-    }
-  },
   {
     title: { it: "Dove mangiare", en: "Where to eat" },
     text: {
@@ -1183,7 +1135,17 @@ Please note: the bus stop is about a 5-minute walk from our property along a roa
 
 🍕 Pizza asporto
 • Emygio's Pizzeria – pizza da asporto e consegna
-  https://maps.app.goo.gl/LtaLLKduq61wpAXt6`,
+  https://maps.app.goo.gl/LtaLLKduq61wpAXt6
+
+🛒 Supermercati
+• MD (~2 km)
+  https://maps.app.goo.gl/WK98uLEdgB23MaMY8
+• Migross Superstore (~3 km)
+  https://maps.app.goo.gl/3RBu9nL1uuUFuW4P8
+• Famila (~3 km)
+  https://maps.app.goo.gl/J7sWEzBpYXQaNWWm6
+• Eurospin (~3 km)
+  https://maps.app.goo.gl/w1e7HkFDpA7gfeoY9`,
       en: `🌅 Breakfast
 • La Torre Food & Sport – bar, breakfast, coffee (~1.5 km)
   https://maps.app.goo.gl/AoYKbj7r5eLZxo5KA
@@ -1206,7 +1168,82 @@ Please note: the bus stop is about a 5-minute walk from our property along a roa
 
 🍕 Pizza takeaway
 • Emygio's Pizzeria – pizza takeaway & delivery
-  https://maps.app.goo.gl/LtaLLKduq61wpAXt6`
+  https://maps.app.goo.gl/LtaLLKduq61wpAXt6
+
+🛒 Supermarkets
+• MD (~2 km)
+  https://maps.app.goo.gl/WK98uLEdgB23MaMY8
+• Migross Superstore (~3 km)
+  https://maps.app.goo.gl/3RBu9nL1uuUFuW4P8
+• Famila (~3 km)
+  https://maps.app.goo.gl/J7sWEzBpYXQaNWWm6
+• Eurospin (~3 km)
+  https://maps.app.goo.gl/w1e7HkFDpA7gfeoY9`
+    }
+  },
+  {
+    title: { it: "Nessuna disponibilità", en: "No availability" },
+    text: {
+      it: `Buongiorno,
+
+grazie per averci contattato e per il suo interesse per Garda Havens!
+Purtroppo per le date da voi indicate non abbiamo disponibilità. Ci dispiace molto 😔
+Restiamo a disposizione per qualsiasi ulteriore informazione.
+
+Garda Havens`,
+      en: `Good morning,
+
+thank you for reaching out and for your interest in Garda Havens!
+Unfortunately, we do not have availability for the dates you have requested. We are very sorry 😔
+Feel free to contact us for any further information.
+
+Garda Havens`
+    }
+  },
+  {
+    title: { it: "Pagamento", en: "Payment" },
+    text: {
+      it: `Il pagamento può essere effettuato con le seguenti modalità:
+
+• Contanti
+• PayPal: 00393450233733 (selezionare "Amici e familiari" per evitare commissioni)
+• Bonifico bancario:
+  IBAN: IT84S0357601601010004758384
+  Intestatario: Alessandro Barbazeni`,
+      en: `Payment can be made using the following methods:
+
+• Cash
+• PayPal: 00393450233733 (please select "Friends & Family" to avoid fees)
+• Bank transfer:
+  IBAN: IT84S0357601601010004758384
+  Account holder: Alessandro Barbazeni`
+    }
+  },
+  {
+    title: { it: "IBAN", en: "IBAN" },
+    text: {
+      it: `IT84S0357601601010004758384`,
+      en: `IT84S0357601601010004758384`
+    }
+  },
+  {
+    title: { it: "Intestatario", en: "Account holder" },
+    text: {
+      it: `Alessandro Barbazeni`,
+      en: `Alessandro Barbazeni`
+    }
+  },
+  {
+    title: { it: "Gardaland – Navetta", en: "Gardaland – Shuttle Bus" },
+    text: {
+      it: `Per Gardaland è disponibile una navetta gratuita che parte dal Gardaland Hotel.
+Gli orari sono consultabili qui: https://www.gardaland.it/media/ot0figvl/orari-navetta-2025.pdf
+
+Attenzione: la fermata si trova a circa 5 minuti a piedi dalla nostra struttura, su una strada non del tutto sicura — si consiglia prudenza, specialmente la sera o con bambini.`,
+      en: `A free shuttle bus to Gardaland is available, departing from the Gardaland Hotel.
+Timetable: https://www.gardaland.it/media/ot0figvl/orari-navetta-2025.pdf
+
+Please note: the bus stop is about a 5-minute walk from our property along a road that is not very pedestrian-friendly — we recommend being careful, especially in the evening or with children.`
     }
   }
 ];
