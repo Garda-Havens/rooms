@@ -1,310 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
-    <meta name="google-site-verification" content="fSFaHVjyNfI-MrTx41XddimgD24174_MB7PoGqwz1tI" />
-    <link rel="canonical" href="https://www.gardahavens.com/booknow-it.html" />
-
-    <title>Garda Havens</title>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="static/header.css">
-    <link rel="stylesheet" href="static/footer.css">
-    <link rel="stylesheet" href="static/homepage.css">
-    <link rel="stylesheet" href="static/rooms.css">
-    <link rel="stylesheet" href="static/booknow.css">
-    <link rel="stylesheet" href="static/guidebook.css">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Favicons -->
-    <link rel="icon" href="https://www.gardahavens.com/logo.png" type="image/png" sizes="192x192">
-    <link rel="icon" href="https://www.gardahavens.com/logo.ico" sizes="32x32">
-    <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
+  <meta name="google-site-verification" content="fSFaHVjyNfI-MrTx41XddimgD24174_MB7PoGqwz1tI" />
+  <link rel="canonical" href="https://www.gardahavens.com/booknow-it.html" />
+  <title>Prenota Ora – Garda Havens</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://www.gardahavens.com/logo.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="https://www.gardahavens.com/logo.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
 </head>
 <body>
-    <div class="container">
-            <header>
-                <div class="header-logo-title">
-                    <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
-                    <h1>Garda Havens</h1>
-                </div>
-                <!-- Hamburger Icon for mobile view -->
-                <div class="menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <!-- Navigation Menu -->
-                <nav>
-                    <ul>
-                        <li><a href="index-it.html">Home</a></li>
-                        <li><a href="rooms-it.html">Camere</a></li>
-                        <li><a href="booknow-it.html">Prenota Ora</a></li>
-                        <li><a href="guidebook-it.html">Guida</a></li>
 
-                        <li>
-                            <a href="booknow.html" id="lang-switch">
-                                <img src="static/uk.png" alt="Italian Flag">
-                            </a>
-                        </li>
-                    </ul>            
-                </nav>                        
-            </header>
+  <div class="topbar">
+    <a href="mailto:garda.havens@gmail.com"><i class="fas fa-envelope"></i> garda.havens@gmail.com</a>
+    <a href="tel:+393450233733"><i class="fas fa-phone"></i> +39 345 023 3733</a>
+  </div>
 
-            <script>
-                // Toggle menu visibility when hamburger is clicked
-                const menuToggle = document.querySelector('.menu-toggle');
-                const nav = document.querySelector('header nav');
-            
-                menuToggle.addEventListener('click', () => {
-                    menuToggle.classList.toggle('open');
-                    nav.classList.toggle('menu-active');
-                });
-            </script>
-
-            <div class="booking-header">
-                <h1>Prenota il tuo soggiorno</h1>
-                <p>Controlla la disponibilità e assicurati il rifugio perfetto sul Lago di Garda.</p>
-            </div>
-
-        
-
-        <section>
-            <div class="form-container">
-                <form class="rental-form" action="https://formspree.io/f/mpwdjdqn" method="POST">
-                            <!-- First Row: Check-in, Check-out -->
-                    <div class="section-title">Verifica Disponibilità</div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="checkinDate">Data di Check-in *</label>
-                            <input type="date" name="checkinDate" id="checkinDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="checkoutDate">Data di Check-out *</label>
-                            <input type="date" name="checkoutDate" id="checkoutDate" required>
-                        </div>
-                    </div>
-
-                    <!-- Second Row: Adults & Children -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="adults">Adulti *</label>
-                            <div class="custom-select" data-name="adults">
-                                <div class="select-selected">2 Adults</div>
-                                <div class="select-items select-hide">
-                                    <div>1 Adulto</div>
-                                    <div>2 Adulti</div>
-                                    <div>3 Adulti</div>
-                                    <div>4 Adulti</div>
-                                    <div>5 Adulti</div>
-                                    <div>6 Adulti</div>
-                                </div>
-                            </div>
-                            <input type="hidden" name="adults" value="2 Adults">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="children">Bambini</label>
-                            <div class="custom-select" data-name="children">
-                                <div class="select-selected">Nessun Bambino</div>
-                                <div class="select-items select-hide">
-                                    <div>Nessun Bambino</div>
-                                    <div>1 Bambino</div>
-                                    <div>2 Bambini</div>
-                                    <div>3 Bambini</div>
-                                    <div>4 Bambini</div>
-                                    <div>5 Bambini</div>
-                                </div>
-                            </div>
-                            <input type="hidden" name="children" value="No Children">
-                        </div>
-                    </div>
-
-                    <!-- Third Row: Room Type -->
-                    <div class="form-group">
-                        <label for="roomType">Camera *</label>
-                        <div class="custom-select" data-name="roomType">
-                            <div class="select-selected">Camera 1</div>
-                            <div class="select-items select-hide">
-                                <div>Camera 1</div>
-                                <div>Camera 2</div>
-                                <div>Camera 3</div>
-                                <div>Camera 4</div>
-                                <div>Camera 5</div>
-                                <div>Camera 6</div>
-
-                            </div>
-                        </div>
-                        <input type="hidden" name="roomType" value="Suite 1">
-                    </div>
-
-                    <!-- Your Details Section -->
-                    <div class="section-title">Le Tue Informazioni</div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">Nome *</label>
-                            <input type="text" name="firstName" id="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Cognome *</label>
-                            <input type="text" name="lastName" id="lastName" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" name="email" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Numero di Telefono *</label>
-                            <input type="tel" name="phone" id="phone" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="specialRequests">Richieste Speciali</label>
-                        <textarea name="specialRequests" id="specialRequests"></textarea>
-                    </div>
-
-                    <!--<div class="form-group">
-                        <label for="terms">
-                            <input type="checkbox" name="terms" id="terms" required> I agree to the terms and conditions *
-                        </label>
-                    </div>-->
-
-                    <button type="submit">Invia Richiesta</button>
-                </form>
- 
-                <script>
-                    document.querySelectorAll(".custom-select").forEach(selectWrapper => {
-                        const selected = selectWrapper.querySelector(".select-selected");
-                        const optionsList = selectWrapper.querySelector(".select-items");
-                        const hiddenInput = selectWrapper.nextElementSibling;
-                    
-                        selected.addEventListener("click", () => {
-                            closeAllSelects(selectWrapper);
-                            optionsList.classList.toggle("select-hide");
-                            selected.classList.toggle("select-arrow-active");
-                        });
-                    
-                        optionsList.querySelectorAll("div").forEach(option => {
-                            option.addEventListener("click", () => {
-                                selected.innerText = option.innerText;
-                                hiddenInput.value = option.innerText;
-                                optionsList.classList.add("select-hide");
-                            });
-                        });
-                    });
-                    
-                    function closeAllSelects(current) {
-                        document.querySelectorAll(".custom-select").forEach(select => {
-                            if (select !== current) {
-                                select.querySelector(".select-items").classList.add("select-hide");
-                            }
-                        });
-                    }
-                    
-                    document.addEventListener("click", function(e) {
-                        if (!e.target.closest(".custom-select")) {
-                            closeAllSelects();
-                        }
-                    });
-                </script>
-
-                <div class="side-boxes">
-                <!-- WhatsApp Booking -->
-                <div class="info-box">
-                    <h3>Prenota su WhatsApp</h3>
-                    <p>Inviaci un messaggio con i dettagli della tua prenotazione:</p>
-                    <p>
-                        <i class="fas fa-sign-in-alt icon"></i>Check-in <br>
-                        <i class="fas fa-sign-out-alt icon"></i>Check-out<br>
-                        <i class="fas fa-users icon"></i>Numero di adulti e bambini<br>
-                        <i class="fas fa-user icon"></i>Nome e Cognome<br><br>
-                        <span class="confirm-text">Confermeremo la disponibilità e ti aiuteremo a completare la prenotazione.</span>
-                    </p>                        
-                    <a href="https://wa.me/393450233733" target="_blank" class="whatsapp-btn-book">
-                        <i class="fab fa-whatsapp whatsapp-icon"></i> Chatta su WhatsApp
-                    </a>                        
-                </div>
-
-                <!-- Prenota via chiamata -->
-                <div class="info-box">
-                    <h3>Prenota via telefono</h3>
-                    <p>
-                        Preferisci parlare con noi? Chiamaci e prenota direttamente il tuo soggiorno.<br><br>
-                        <strong>Telefono:</strong> <a href="tel:+393450233733" class="contact-link">+39 3450233733</a>
-                    </p>
-                </div>
-
-                <!-- Prenota via Email -->
-                <div class="info-box">
-                    <h3>Prenota via Email</h3>
-                    <p>
-                        Inviaci i dettagli della prenotazione e ti risponderemo al più presto.<br><br>
-                        <strong>Email:</strong> <a href="mailto:garda.havens@gmail.com" class="contact-link">garda.havens@gmail.com</a>
-                    </p>
-                </div>
-
-
-            </div>
-        </section>
-   
-  
-
-   
-  
-        <footer>
-            <div class="footer-icons">
-                <div class="icon-box">
-                    <h2>Garda Havens</h2>
-                    <h4>Rilassati, esplora, divertiti.</h4>    
-                </div>
-
-                <div class="icon-box">
-                    <h2>Contatti</h2>
-                    <p>Via Belvedere, 10</p>
-                    <p>Castelnuovo del Garda, Verona (VR), Italia</p>
-                    <p>Alessandro (IT, ENG): +39 3450233733</p>
-                    <p>Jenny (DE, GR, IT, ENG): +30 6974565068</p>
-                    <p><a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a></p>
-                </div>
-
-        
-                <div class="icon-box">
-                    <h2>Prenota Ora</h2>
-                    <p><a href="mailto:garda.havens@gmail.com">Scrivici</a></p>
-                    <p><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></p>
-                    <p><a href="booknow.html">Sito Web</a></p>
-                </div>
-
-
-                <div class="icon-box">
-                    <h2>Link Utili</h2>
-                    <ul class="footer-menu">
-                        <li><a href="index-it.html">Home</a></li>
-                        <li><a href="rooms.html">Camere</a></li>
-                        <li><a href="booknow.html">Prenota Ora</a></li>
-                        <li><a href="guidebook.html">Guida</a></li>
-                    </ul>
-                </div>
-            </div>
-            <h5>&copy; 2025 Garda Havens. Tutti i diritti riservati. <br> CIN: IT023022C2FWABW3P7</h5>
-        </footer>
-        
+  <header class="site-header">
+    <div class="header-brand">
+      <img src="static/img/logonobg.png" alt="Garda Havens Logo">
+      <span class="brand-name">Garda Havens</span>
     </div>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    <nav class="site-nav" id="siteNav">
+      <ul>
+        <li><a href="index-it.html">Home</a></li>
+        <li><a href="rooms-it.html">Camere</a></li>
+        <li><a href="booknow-it.html" class="active">Prenota Ora</a></li>
+        <li><a href="guidebook-it.html">Guida</a></li>
+        <li><a href="craft-corner-it.html">L'Angolo dell'Artigiano</a></li>
+        <li><a href="booknow.html" class="lang-link"><img src="static/img/uk.png" alt="English"></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page-hero">
+    <h1>Prenota il Tuo Soggiorno</h1>
+    <p>Controlla la disponibilità e assicurati il rifugio perfetto sul Lago di Garda.</p>
+  </div>
+
+  <!-- METODI DI PRENOTAZIONE -->
+  <div class="band-ivory">
+  <div class="booking-methods reveal-scale">
+    <p class="section-subtitle" style="margin-bottom:20px;">Come Prenotare</p>
+    <div class="booking-info-rows">
+      <div class="icon-row"><i class="fas fa-sign-in-alt"></i> Data di check-in</div>
+      <div class="icon-row"><i class="fas fa-sign-out-alt"></i> Data di check-out</div>
+      <div class="icon-row"><i class="fas fa-users"></i> Numero di ospiti</div>
+      <div class="icon-row"><i class="fas fa-user"></i> Nome e cognome</div>
+    </div>
+    <p class="confirm-note" style="margin-bottom:32px;">Confermeremo la disponibilità e ti aiuteremo a completare la prenotazione.</p>
+    <div class="booking-methods-grid">
+      <div class="booking-method-card">
+        <i class="fab fa-whatsapp method-icon" style="color:#25D366;"></i>
+        <h3>WhatsApp</h3>
+        <p>Inviaci un messaggio con i dettagli della tua prenotazione.</p>
+        <a href="https://wa.me/393450233733" target="_blank" class="btn-wa">
+          <i class="fab fa-whatsapp"></i> Chatta Ora
+        </a>
+      </div>
+      <div class="booking-method-card">
+        <i class="fas fa-phone-alt method-icon"></i>
+        <h3>Telefono</h3>
+        <p>+39 345 023 3733</p>
+        <a href="tel:+393450233733" class="btn-ghost">Chiama</a>
+      </div>
+      <div class="booking-method-card">
+        <i class="fas fa-envelope method-icon"></i>
+        <h3>Email</h3>
+        <p>garda.havens@gmail.com</p>
+        <a href="mailto:garda.havens@gmail.com" class="btn-ghost">Scrivi</a>
+      </div>
+    </div>
+  </div>
+  </div><!-- /band-ivory -->
+
+  <!-- FORM -->
+  <div class="booking-form-section reveal">
+    <p class="section-subtitle" style="margin-bottom:36px;">Verifica Disponibilità</p>
+    <form class="rental-form" action="https://formspree.io/f/mpwdjdqn" method="POST">
+
+      <div class="form-section-label">Verifica Disponibilità</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="checkinDate">Data di Check-in *</label>
+          <input type="date" name="checkinDate" id="checkinDate" required>
+        </div>
+        <div class="form-group">
+          <label for="checkoutDate">Data di Check-out *</label>
+          <input type="date" name="checkoutDate" id="checkoutDate" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Adulti *</label>
+          <div class="custom-select" data-name="adults">
+            <div class="select-selected">2 Adulti</div>
+            <div class="select-items select-hide">
+              <div>1 Adulto</div><div>2 Adulti</div><div>3 Adulti</div>
+              <div>4 Adulti</div><div>5 Adulti</div><div>6 Adulti</div>
+            </div>
+          </div>
+          <input type="hidden" name="adults" value="2 Adulti">
+        </div>
+        <div class="form-group">
+          <label>Bambini</label>
+          <div class="custom-select" data-name="children">
+            <div class="select-selected">Nessun Bambino</div>
+            <div class="select-items select-hide">
+              <div>Nessun Bambino</div><div>1 Bambino</div><div>2 Bambini</div>
+              <div>3 Bambini</div><div>4 Bambini</div><div>5 Bambini</div>
+            </div>
+          </div>
+          <input type="hidden" name="children" value="Nessun Bambino">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Camera *</label>
+        <div class="custom-select" data-name="roomType">
+          <div class="select-selected">Camera 1</div>
+          <div class="select-items select-hide">
+            <div>Camera 1</div><div>Camera 2</div><div>Camera 3</div>
+            <div>Camera 4</div><div>Camera 5</div><div>Camera 6</div>
+          </div>
+        </div>
+        <input type="hidden" name="roomType" value="Camera 1">
+      </div>
+
+      <div class="form-section-label">Le Tue Informazioni</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">Nome *</label>
+          <input type="text" name="firstName" id="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Cognome *</label>
+          <input type="text" name="lastName" id="lastName" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Telefono *</label>
+          <input type="tel" name="phone" id="phone" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="specialRequests">Richieste Speciali</label>
+        <textarea name="specialRequests" id="specialRequests"></textarea>
+      </div>
+
+      <button type="submit">Invia Richiesta</button>
+    </form>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h2>Garda Havens</h2>
+        <h4>Rilassati, esplora, divertiti.</h4>
+      </div>
+      <div class="footer-col">
+        <h2>Contatti</h2>
+        <p>Via Belvedere, 10</p>
+        <p>Castelnuovo del Garda, VR, Italia</p>
+        <p>Alessandro: +39 3450233733</p>
+        <p>Jenny: +30 6974565068</p>
+        <a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a>
+      </div>
+      <div class="footer-col">
+        <h2>Prenota Ora</h2>
+        <ul>
+          <li><a href="mailto:garda.havens@gmail.com">Scrivici</a></li>
+          <li><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></li>
+          <li><a href="booknow-it.html">Prenota Online</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Link Utili</h2>
+        <ul>
+          <li><a href="index-it.html">Home</a></li>
+          <li><a href="rooms-it.html">Camere</a></li>
+          <li><a href="booknow-it.html">Prenota Ora</a></li>
+          <li><a href="guidebook-it.html">Guida</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 Garda Havens. Tutti i diritti riservati. | CIN: IT023022C2FWABW3P7</div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!siteNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('open');
+        siteNav.classList.remove('open');
+      }
+    });
+    document.querySelectorAll(".custom-select").forEach(sel => {
+      const selected = sel.querySelector(".select-selected");
+      const items = sel.querySelector(".select-items");
+      const hidden = sel.nextElementSibling;
+      selected.addEventListener("click", () => {
+        document.querySelectorAll(".select-items").forEach(i => { if(i !== items) i.classList.add("select-hide"); });
+        items.classList.toggle("select-hide");
+        selected.classList.toggle("select-arrow-active");
+      });
+      items.querySelectorAll("div").forEach(opt => {
+        opt.addEventListener("click", () => {
+          selected.textContent = opt.textContent;
+          if(hidden) hidden.value = opt.textContent;
+          items.classList.add("select-hide");
+          selected.classList.remove("select-arrow-active");
+        });
+      });
+    });
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".custom-select")) {
+        document.querySelectorAll(".select-items").forEach(i => i.classList.add("select-hide"));
+        document.querySelectorAll(".select-selected").forEach(s => s.classList.remove("select-arrow-active"));
+      }
+    });
+  </script>
+  <script src="static/reveal.js"></script>
 </body>
 </html>
-
-

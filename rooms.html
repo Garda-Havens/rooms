@@ -1,762 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
-    <meta name="google-site-verification" content="fSFaHVjyNfI-MrTx41XddimgD24174_MB7PoGqwz1tI" />
-    <link rel="canonical" href="https://www.gardahavens.com/rooms.html" />
-
-    <title>Garda Havens</title>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="static/header.css">
-    <link rel="stylesheet" href="static/footer.css">
-    <link rel="stylesheet" href="static/homepage.css">
-    <link rel="stylesheet" href="static/rooms.css">
-    <link rel="stylesheet" href="static/booknow.css">
-    <link rel="stylesheet" href="static/guidebook.css">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Merriweather&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Favicons -->
-    <link rel="icon" href="https://www.gardahavens.com/logo.png" type="image/png" sizes="192x192">
-    <link rel="icon" href="https://www.gardahavens.com/logo.ico" sizes="32x32">
-    <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="8weKiplXKfccR6gXjzsGzYR1MokmK6Bg40AnNNI4sKs" />
+  <meta name="google-site-verification" content="fSFaHVjyNfI-MrTx41XddimgD24174_MB7PoGqwz1tI" />
+  <link rel="canonical" href="https://www.gardahavens.com/rooms.html" />
+  <title>Rooms – Garda Havens</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://www.gardahavens.com/logo.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="https://www.gardahavens.com/logo.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
 </head>
 <body>
-    <div class="container">
-            <header>
-                <div class="header-logo-title">
-                    <img src="static/logonobg.png" alt="Room Rental Logo" class="logo-img">
-                    <h1>Garda Havens</h1>
-                </div>
-                <!-- Hamburger Icon for mobile view -->
-                <div class="menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <!-- Navigation Menu -->
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="rooms.html">Rooms</a></li>
-                        <li><a href="booknow.html">Book Now</a></li>
-                        <li><a href="guidebook.html">Guidebook</a></li>
 
-                        <li>
-                            <a href="rooms-it.html" id="lang-switch">
-                                <img src="static/it.png" alt="Italian Flag">
-                            </a>
-                        </li>
-                    </ul>            
-                </nav>                        
-            </header>
+  <div class="topbar">
+    <a href="mailto:garda.havens@gmail.com"><i class="fas fa-envelope"></i> garda.havens@gmail.com</a>
+    <a href="tel:+393450233733"><i class="fas fa-phone"></i> +39 345 023 3733</a>
+  </div>
 
-            <script>
-                // Toggle menu visibility when hamburger is clicked
-                const menuToggle = document.querySelector('.menu-toggle');
-                const nav = document.querySelector('header nav');
-            
-                menuToggle.addEventListener('click', () => {
-                    menuToggle.classList.toggle('open');
-                    nav.classList.toggle('menu-active');
-                });
-            </script>
-
-        <script>
-            function togglePriceDetails(el) {
-                const box = el.nextElementSibling;
-                box.style.display = box.style.display === 'block' ? 'none' : 'block';
-            }
-        </script>
-        
-        <script defer src="static/script_slideshow.js"></script>
-
-            <section id="services" class="services">
-                <h2>&mdash; What You'll Find &mdash;</h2>
-                <div class="service-grid">
-                    <div class="service-item"><i class="fas fa-snowflake"></i><p>Air Conditioning</p></div>
-                    <div class="service-item"><i class="fas fa-thermometer-half"></i><p>Heating</p></div>
-                    <div class="service-item"><i class="fas fa-wifi"></i><p>Wi-Fi</p></div>
-                    <div class="service-item"><i class="fas fa-mug-hot"></i><p>Microwave & Kettle</p></div>
-                    <div class="service-item"><i class="fas fa-coffee"></i><p>Coffee</p></div>
-                    <div class="service-item"><i class="fas fa-parking"></i><p>Free Parking</p></div>
-                    <div class="service-item"><i class="fas fa-bed"></i><p>Towels & Bed Linens</p></div>
-                    <div class="service-item"><i class="fas fa-soap"></i><p>Shampoo & Body Soap</p></div>
-                    <div class="service-item"><i class="fas fa-first-aid"></i><p>First Aid Kit</p></div>
-                    <div class="service-item"><i class="fas fa-fire-extinguisher"></i><p>Fire Extinguisher</p></div>
-                    <!--<div class="service-item"><i class="fas fa-bell"></i><p>Smoke & CO Alarm</p></div> -->
-                </div>
-
-            <h2>&mdash; Not Provided &mdash;</h2>
-            <div class="service-grid">
-                <div class="service-item">
-                    <i class="fas fa-utensils"></i>
-                    <i class="fas fa-ban"></i>
-                    <p>Breakfast</p>
-                </div>
-                <div class="service-item">
-                    <i class="fas fa-blender"></i>
-                    <i class="fas fa-ban"></i>
-                    <p>Kitchen</p>
-                </div>
-            </div>
-
-            </section>
-
-
-<!-- Rooms Section -->
-    <section id="rooms" class="rooms">
-        <!-- Room 1 -->
-        <div class="room">
-            <div class="slideshow-container" id="slideshow-1">
-                <div class="slide">
-                    <img src="static/1/1.jpeg" alt="Room 1 Image 1">
-                </div>
-                <div class="slide">
-                    <img src="static/1/2.jpeg" alt="Room 1 Image 2">
-                </div>
-                <div class="slide">
-                    <img src="static/1/3.jpeg" alt="Room 1 Image 3">
-                </div>
-                <div class="slide">
-                    <img src="static/1/4.jpeg" alt="Room 1 Image 4">
-                </div>
-                <div class="slide">
-                    <img src="static/1/5.jpeg" alt="Room 1 Image 5">
-                </div>
-                <div class="slide">
-                    <img src="static/1/6.jpeg" alt="Room 1 Image 6">
-                </div>
-                <div class="slide">
-                    <img src="static/1/7.jpeg" alt="Room 1 Image 7">
-                </div>
-                <div class="slide">
-                    <img src="static/1/8.jpeg" alt="Room 1 Image 8">
-                </div>
-                <div class="slide">
-                    <img src="static/1/9.jpeg" alt="Room 1 Image 9">
-                </div>
-                <div class="slide">
-                    <img src="static/1/10.jpeg" alt="Room 1 Image 10">
-                </div>
-                <div class="slide">
-                    <img src="static/1/11.jpeg" alt="Room 1 Image 11">
-                </div>
-                <div class="slide">
-                    <img src="static/1/12.jpeg" alt="Room 1 Image 12">
-                </div>
-                <div class="slide">
-                    <img src="static/1/13.jpeg" alt="Room 1 Image 13">
-                </div>
-                <div class="slide">
-                    <img src="static/1/14.jpeg" alt="Room 1 Image 14">
-                </div>
-                <button class="open-gallery" data-room="1">View Gallery</button>
-
-            </div>
-
-            <div class="room-info">
-                <h3 class="room-title">
-                    <span>Room 1 - Quadruple</span>
-                    <span>&euro;80-150/night</span>
-                </h3>
-                <div class="price-details-toggle" onclick="togglePriceDetails(this)">View price per person</div>
-                <div class="price-details-box">
-                    <ul>
-                        <p>1 person: €80/night</p>
-                        <p>2 people: €90/night</p>
-                        <p>3 people: €120/night</p>
-                        <p>4 people: €150/night</p>
-                    </ul>
-                </div>
-                <p>Located on the ground floor, this spacious room comfortably accommodates up to 4 guests. It offers a practical and comfortable setup, perfect for groups or families. The room features a private exit directly to the courtyard, providing easy access to outdoor space for relaxation or leisure activities. Its convenient location ensures easy access and a cozy, homelike atmosphere.</p>
-                
-                <!-- Amenities Section -->
-                <div class="amenities-section">
-                        <h3 class="amenities-title">Amenities</h3>
-                        <div class="amenities-grid">
-                            <div class="amenity-item">
-                                <span class="fas fa-ruler-combined amenity-icon"></span> <!-- FontAwesome icon for size -->
-                                <span>21 m²</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bath amenity-icon"></span> <!-- FontAwesome icon for Bathroom -->
-                                <span>1 Private Bathroom</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-shower amenity-icon"></span> <!-- FontAwesome icon for Shower & Hot Water -->
-                                <span>Shower</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-wind amenity-icon"></span> <!-- FontAwesome icon for Hairdryer -->
-                                <span>Hairdryer</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-tv amenity-icon"></span> <!-- FontAwesome icon for TV -->
-                                <span>TV</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-laptop-house amenity-icon"></span> <!-- FontAwesome icon for Work Space -->
-                                <span>Work Space</span>
-                            </div>
-                            <div class="amenity-item">
-                            <span class="fas fa-building amenity-icon"></span> <!-- FontAwesome icon for Ground Floor -->
-                            <span>Ground Floor</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-door-open amenity-icon"></span> <!-- FontAwesome icon for Exterior Access -->
-                                <span>Private Exterior Access</span>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-            
-            
-
-            <!-- Room 2 -->
-            <div class="room">
-                <div class="slideshow-container" id="slideshow-2">
-                    <div class="slide">
-                        <img src="static/2/1.jpeg" alt="Room 2 Image 1">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/2.jpeg" alt="Room 2 Image 2">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/3.jpeg" alt="Room 2 Image 3">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/4.jpeg" alt="Room 2 Image 4">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/5.jpeg" alt="Room 2 Image 5">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/6.jpeg" alt="Room 2 Image 6">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/7.jpeg" alt="Room 2 Image 7">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/8.jpeg" alt="Room 2 Image 8">
-                    </div>
-                    <div class="slide">
-                        <img src="static/2/9.jpeg" alt="Room 2 Image 9">
-                    </div>
-                    <button class="open-gallery" data-room="2">View Gallery</button>
-                </div>
-                <div class="room-info">
-                    <h3 class="room-title">
-                        <span>Room 2 - Sestuple</span>
-                        <span>&euro;90-190/night</span>
-                    </h3>
-                    <div class="price-details-toggle" onclick="togglePriceDetails(this)">View price per person</div>
-                    <div class="price-details-box">
-                        <ul>
-                            <p>1 person: €90/night</p>
-                            <p>2 people: €100/night</p>
-                            <p>3 people: €120/night</p>
-                            <p>4 people: €150/night</p>
-                            <p>5 people: €170/night</p>
-                            <p>6 people: €190/night</p>
-                        </ul>
-                    </div>
-                    <p>Ideal for larger groups or families, this ground-floor room can host up to 6 guests. Exceptionally spacious, it offers plenty of room to relax and unwind. One of its standout features is the large, well-equipped bathroom, adding extra comfort to your stay.</p>
-                    
-                    <!-- Amenities Section -->
-                    <div class="amenities-section">
-                        <h3 class="amenities-title">Amenities</h3>
-                        <div class="amenities-grid">
-                            <div class="amenity-item">
-                                <span class="fas fa-ruler-combined amenity-icon"></span> <!-- FontAwesome icon for size -->
-                                <span>34 m²</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bath amenity-icon"></span> <!-- FontAwesome icon for Bathroom -->
-                                <span>1 Private Bathroom</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-shower amenity-icon"></span> <!-- FontAwesome icon for Shower & Hot Water -->
-                                <span>Shower</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-wind amenity-icon"></span> <!-- FontAwesome icon for Hairdryer -->
-                                <span>Hairdryer</span>
-                            </div>
-
-                            <div class="amenity-item">
-                                <span class="fas fa-tv amenity-icon"></span> <!-- FontAwesome icon for TV -->
-                                <span>TV</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-laptop-house amenity-icon"></span> <!-- FontAwesome icon for Work Space -->
-                                <span>Work Space</span>
-                            </div>
-                            <div class="amenity-item">
-                            <span class="fas fa-building amenity-icon"></span> <!-- FontAwesome icon for Ground Floor -->
-                            <span>Ground Floor</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-door-open amenity-icon"></span> <!-- FontAwesome icon for Exterior Access -->
-                                <span>Private Exterior Access</span>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Room 3 -->
-            <div class="room">
-                <div class="slideshow-container" id="slideshow-3">
-                    <div class="slide">
-                        <img src="static/3/1.jpeg" alt="Room 3 Image 1">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/2.jpeg" alt="Room 3 Image 2">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/3.jpeg" alt="Room 3 Image 3">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/4.jpeg" alt="Room 3 Image 4">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/5.jpeg" alt="Room 3 Image 5">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/6.jpeg" alt="Room 3 Image 6">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/7.jpeg" alt="Room 3 Image 7">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/8.jpeg" alt="Room 3 Image 8">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/9.jpeg" alt="Room 3 Image 9">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/10.jpeg" alt="Room 3 Image 10">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/11.jpeg" alt="Room 3 Image 11">
-                    </div>
-                    <div class="slide">
-                        <img src="static/3/12.jpeg" alt="Room 3 Image 12">
-                    </div>
-
-                    <button class="open-gallery" data-room="3">View Gallery</button>
-
-                </div>
-                <div class="room-info">
-                    <h3 class="room-title">
-                        <span>Room 3 - Quadruple</span>
-                        <span>&euro;80-150/night</span>
-                    </h3>
-                    <div class="price-details-toggle" onclick="togglePriceDetails(this)">View price per person</div>
-                    <div class="price-details-box">
-                        <ul>
-                            <p>1 person: €80/night</p>
-                            <p>2 people: €90/night</p>
-                            <p>3 people: €120/night</p>
-                            <p>4 people: €150/night</p>
-                        </ul>
-                    </div>
-                    <p>Located on the first floor, this charming rustico-style room can host up to 4 guests. Full of character and warmth, it features cozy interiors and tasteful rustic decor that create a welcoming, homely feel. The windows offer a lovely view of the surrounding area, perfect for enjoying the peaceful atmosphere near Lake Garda. A great choice for those looking for both comfort and charm.</p>
-                    <div class="amenities-section">
-                        <h3 class="amenities-title">Amenities</h3>
-                        <div class="amenities-grid">
-                            <div class="amenity-item">
-                                <span class="fas fa-ruler-combined amenity-icon"></span> <!-- FontAwesome icon for size -->
-                                <span>23 m²</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bath amenity-icon"></span> <!-- FontAwesome icon for Bathroom -->
-                                <span>1 Private Bathroom</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-shower amenity-icon"></span> <!-- FontAwesome icon for Shower & Hot Water -->
-                                <span>Shower</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-wind amenity-icon"></span> <!-- FontAwesome icon for Hairdryer -->
-                                <span>Hairdryer</span>
-                            </div>
-
-                            <div class="amenity-item">
-                                <span class="fas fa-tv amenity-icon"></span> <!-- FontAwesome icon for TV -->
-                                <span>TV</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-laptop-house amenity-icon"></span> <!-- FontAwesome icon for Work Space -->
-                                <span>Work Space</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fas fa-image amenity-icon"></span> <!-- FontAwesome icon for Windows & View -->
-                                <span>Windows & View</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-layer-group amenity-icon"></span> <!-- FontAwesome icon for First Floor -->
-                                <span>First Floor</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Room 4 -->
-            <div class="room">
-                <div class="slideshow-container" id="slideshow-4">
-                    <div class="slide">
-                        <img src="static/4/1.jpeg" alt="Room 4 Image 1">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/2.jpeg" alt="Room 4 Image 2">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/3.jpeg" alt="Room 4 Image 3">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/4.jpeg" alt="Room 4 Image 4">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/5.jpeg" alt="Room 4 Image 5">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/6.jpeg" alt="Room 4 Image 6">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/7.jpeg" alt="Room 4 Image 7">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/8.jpeg" alt="Room 4 Image 8">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/9.jpeg" alt="Room 4 Image 9">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/10.jpeg" alt="Room 4 Image 10">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/11.jpeg" alt="Room 4 Image 11">
-                    </div>
-                    <div class="slide">
-                        <img src="static/4/12.jpeg" alt="Room 4 Image 12">
-                    </div>
-
-                    <button class="open-gallery" data-room="4">View Gallery</button>
-                </div>
-                <div class="room-info">
-                    <h3 class="room-title">
-                        <span>Room 4 - Triple</span>
-                        <span>&euro;80-120/night</span>
-                    </h3>
-                    <div class="price-details-toggle" onclick="togglePriceDetails(this)">View price per person</div>
-                    <div class="price-details-box">
-                        <ul>
-                            <p>1 person: €80/night</p>
-                            <p>2 people: €90/night</p>
-                            <p>3 people: €120/night</p>
-                        </ul>
-                    </div>
-                    <p>Perfect for smaller families or couples, this cozy triple room offers a warm and inviting atmosphere. Thoughtfully designed for comfort, it features windows that open to a pleasant view, allowing guests to enjoy the beauty of the surrounding landscape.</p>
-                    <div class="amenities-section">
-                        <h3 class="amenities-title">Amenities</h3>
-                        <div class="amenities-grid">
-                            <div class="amenity-item">
-                                <span class="fas fa-ruler-combined amenity-icon"></span> <!-- FontAwesome icon for size -->
-                                <span>19 m²</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bath amenity-icon"></span> <!-- FontAwesome icon for Bathroom -->
-                                <span>1 Private Bathroom</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-shower amenity-icon"></span> <!-- FontAwesome icon for Shower & Hot Water -->
-                                <span>Shower</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-wind amenity-icon"></span> <!-- FontAwesome icon for Hairdryer -->
-                                <span>Hairdryer</span>
-                            </div>
-
-                            <div class="amenity-item">
-                                <span class="fas fa-tv amenity-icon"></span> <!-- FontAwesome icon for TV -->
-                                <span>TV</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-laptop-house amenity-icon"></span> <!-- FontAwesome icon for Work Space -->
-                                <span>Work Space</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fas fa-image amenity-icon"></span> <!-- FontAwesome icon for Windows & View -->
-                                <span>Windows & View</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-layer-group amenity-icon"></span> <!-- FontAwesome icon for First Floor -->
-                                <span>First Floor</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Room 5 -->
-            <div class="room">
-                <div class="slideshow-container" id="slideshow-5">
-                    <div class="slide">
-                        <img src="static/5/1.jpeg" alt="Room 5 Image 1">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/2.jpeg" alt="Room 5 Image 2">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/3.jpeg" alt="Room 5 Image 3">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/4.jpeg" alt="Room 5 Image 4">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/5.jpeg" alt="Room 5 Image 5">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/6.jpeg" alt="Room 5 Image 6">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/7.jpeg" alt="Room 5 Image 7">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/8.jpeg" alt="Room 5 Image 8">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/9.jpeg" alt="Room 5 Image 9">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/10.jpeg" alt="Room 5 Image 10">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/11.jpeg" alt="Room 5 Image 11">
-                    </div>
-                    <div class="slide">
-                        <img src="static/5/12.jpeg" alt="Room 5 Image 12">
-                    </div>
-                    <button class="open-gallery" data-room="5">View Gallery</button>
-                </div>
-
-                
-                <div class="room-info">
-                    <h3 class="room-title">
-                        <span>Room 5 - Quadruple</span>
-                        <span>&euro;80-140/night</span>
-                    </h3>
-                    <div class="price-details-toggle" onclick="togglePriceDetails(this)">View price per person</div>
-                    <div class="price-details-box">
-                        <ul>
-                            <p>1 person: €80/night</p>
-                            <p>2 people: €90/night</p>
-                            <p>3 people: €120/night</p>
-                            <p>4 people: €140/night</p>
-                        </ul>
-                    </div>
-                    <p>A truly special space, Room 5 feels like a cozy treehouse hideaway. It can accommodate up to 4 guests and is perfect for those who appreciate peace and a touch of magic. The room features beautiful skylights that, on clear nights, offer a chance to stargaze right from bed. Its warm, embracing atmosphere makes it ideal for good sleepers seeking comfort, calm, and a unique stay close to nature.</p>
-                    <div class="amenities-section">
-                        <h3 class="amenities-title">Amenities</h3>
-                        <div class="amenities-grid">
-                            <div class="amenity-item">
-                                <span class="fas fa-ruler-combined amenity-icon"></span>
-                                <span>21 m²</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bath amenity-icon"></span>
-                                <span>1 Private Bathroom</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-shower amenity-icon"></span>
-                                <span>Shower</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-wind amenity-icon"></span>
-                                <span>Hairdryer</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-soap amenity-icon"></span>
-                                <span>Shampoo & Body Soap</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bed amenity-icon"></span>
-                                <span>Towels & Bed Linens</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-tv amenity-icon"></span>
-                                <span>TV</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-laptop-house amenity-icon"></span>
-                                <span>Work Space</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-sun amenity-icon"></span> <!-- FontAwesome icon for Skylights -->
-                                <span>Skylights</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-layer-group amenity-icon"></span> <!-- FontAwesome icon for First Floor -->
-                                <span>First Floor</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                
-                <!-- Room 6 -->
-                <!-- Room 6 -->
-                 <div class="room">
-                <div class="slideshow-container" id="slideshow-6">
-                    <div class="slide">
-                        <img src="static/6/1.jpeg" alt="Room 6 Image 1">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/2.jpeg" alt="Room 6 Image 2">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/3.jpeg" alt="Room 6 Image 3">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/4.jpeg" alt="Room 6 Image 4">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/5.jpeg" alt="Room 6 Image 5">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/6.jpeg" alt="Room 6 Image 6">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/7.jpeg" alt="Room 6 Image 7">
-                    </div>
-                    <div class="slide">
-                        <img src="static/6/8.jpeg" alt="Room 6 Image 8">
-                    </div>
-                    <button class="open-gallery" data-room="6">View Gallery</button>
-                </div>
-                
-                <div class="room-info">
-                    <h3 class="room-title">
-                        <span>Room 6 - Quadruple</span>
-                        <span>&euro;80-140/night</span>
-                    </h3>
-                    <div class="price-details-toggle" onclick="togglePriceDetails(this)">View price per person</div>
-                    <div class="price-details-box">
-                        <ul>
-                            <p>1 person: €80/night</p>
-                            <p>2 people: €90/night</p>
-                            <p>3 people: €120/night</p>
-                            <p>4 people: €140/night</p>
-                        </ul>
-                    </div>                    
-                    <p>The twin of Room 5, offering a spacious and cozy retreat with room for up to 4 guests. Featuring a striking high ceiling, it creates an open and airy feeling. The skylights bring in natural light by day and provide a perfect view of the stars by night, adding a special touch to your stay. </p>                
-                    <div class="amenities-section">
-                        <h3 class="amenities-title">Amenities</h3>
-                        <div class="amenities-grid">
-                            <div class="amenity-item">
-                                <span class="fas fa-ruler-combined amenity-icon"></span> <!-- FontAwesome icon for size -->
-                                <span>21 m²</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-bath amenity-icon"></span> <!-- FontAwesome icon for Bathroom -->
-                                <span>1 Private Bathroom</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-shower amenity-icon"></span> <!-- FontAwesome icon for Shower & Hot Water -->
-                                <span>Shower</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-wind amenity-icon"></span> <!-- FontAwesome icon for Hairdryer -->
-                                <span>Hairdryer</span>
-                            </div>
-
-                            <div class="amenity-item">
-                                <span class="fas fa-tv amenity-icon"></span> <!-- FontAwesome icon for TV -->
-                                <span>TV</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-laptop-house amenity-icon"></span> <!-- FontAwesome icon for Work Space -->
-                                <span>Work Space</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-sun amenity-icon"></span> <!-- FontAwesome icon for Skylights -->
-                                <span>Skylights</span>
-                            </div>
-                            <div class="amenity-item">
-                                <span class="fas fa-layer-group amenity-icon"></span> <!-- FontAwesome icon for First Floor -->
-                                <span>First Floor</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Modal Gallery -->
-        <div id="gallery-modal" class="gallery-modal">
-            <span class="close-modal">&times;</span>
-            <img class="modal-content" id="modal-image">
-            <div id="caption"></div>
-            <div class="gallery-navigation">
-                <button id="prev-image">Previous</button>
-                <button id="next-image">Next</button>
-            </div>
-        </div>
-
-        <!-- Footer Section -->
-        <footer>
-            <div class="footer-icons">
-                <div class="icon-box">
-                    <h2>Garda Havens</h2>
-                    <h4>Relax, explore, enjoy.</h4>    
-                </div>
-
-                <div class="icon-box">
-                    <h2>Contact</h2>
-                    <p>Via Belvedere, 10</p>
-                    <p>Castelnuovo del Garda, Verona (VR), Italy</p>
-                    <p>Alessandro (IT, ENG): +39 3450233733</p>
-                    <p>Jenny (DE, GR, IT, ENG): +30 6974565068</p>
-                    <p><a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a></p>
-                </div>
-
-        
-                <div class="icon-box">
-                    <h2>Book Now</h2>
-                    <p><a href="mailto:garda.havens@gmail.com">Email Us</a></p>
-                    <p><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></p>
-                    <p><a href="booknow.html">Website</a></p>
-                </div>
-
-
-                <div class="icon-box">
-                    <h2>Links</h2>
-                    <ul class="footer-menu">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="rooms.html">Rooms</a></li>
-                        <li><a href="booknow.html">Book Now</a></li>
-                        <li><a href="guidebook.html">Guidebook</a></li>
-                    </ul>
-                </div>
-            </div>
-            <h5>&copy; 2025 Garda Havens. All rights reserved. <br> CIN: IT023022C2FWABW3P7</h5>
-        </footer>
+  <header class="site-header">
+    <div class="header-brand">
+      <img src="static/img/logonobg.png" alt="Garda Havens Logo">
+      <span class="brand-name">Garda Havens</span>
     </div>
+    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
+    <nav class="site-nav" id="siteNav">
+      <ul>
+        <li><a href="index-en.html">Home</a></li>
+        <li><a href="rooms.html" class="active">Rooms</a></li>
+        <li><a href="booknow.html">Book Now</a></li>
+        <li><a href="guidebook.html">Guidebook</a></li>
+        <li><a href="craft-corner.html">The Craft Corner</a></li>
+        <li><a href="rooms-it.html" class="lang-link"><img src="static/img/it.png" alt="Italiano"></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="page-hero">
+    <h1>Our Rooms</h1>
+    <p>Six comfortable rooms in Castelnuovo del Garda – steps away from Gardaland.</p>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="services-strip">
+    <p class="section-subtitle" style="margin-bottom:20px;">Included in every stay</p>
+    <div class="service-grid">
+      <div class="service-item"><i class="fas fa-wifi"></i><p>Free Wi-Fi</p></div>
+      <div class="service-item"><i class="fas fa-tv"></i><p>Smart TV</p></div>
+      <div class="service-item"><i class="fas fa-snowflake"></i><p>Air Conditioning</p></div>
+      <div class="service-item"><i class="fas fa-thermometer-half"></i><p>Heating</p></div>
+      <div class="service-item"><i class="fas fa-bath"></i><p>Private Bathroom</p></div>
+      <div class="service-item"><i class="fas fa-bed"></i><p>Towels &amp; Bed Linens</p></div>
+      <div class="service-item"><i class="fas fa-soap"></i><p>Shampoo &amp; Body Soap</p></div>
+      <div class="service-item"><i class="fas fa-coffee"></i><p>Coffee</p></div>
+      <div class="service-item"><i class="fas fa-key"></i><p>Key Card Access</p></div>
+      <div class="service-item"><i class="fas fa-parking"></i><p>Free Parking</p></div>
+      <div class="service-item"><i class="fas fa-tree"></i><p>Large Outdoor Area</p></div>
+      <div class="service-item"><i class="fas fa-shield-alt"></i><p>Safety Equipment</p></div>
+    </div>
+  </div>
+  </div>
+
+  <!-- PROMO -->
+  <div class="promo-banner">
+    <div class="promo-card">
+      <i class="fas fa-tag"></i>
+      <span>Stay 2 or more nights and save <strong>€10 per night</strong> — contact us to apply the discount.</span>
+    </div>
+  </div>
+
+  <!-- ROOM GRID -->
+  <div class="room-section reveal">
+    <p class="section-subtitle" style="text-align:center; margin-bottom:32px;">Browse our rooms</p>
+    <div class="room-grid">
+
+    <div class="room-card reveal" style="transition-delay:0s;"
+      data-room="1"
+      data-name="Room 1"
+      data-badge="Quadruple · 21 m² · Ground floor"
+      data-topbar-meta="Quadruple · 21 m² · Ground floor"
+      data-price="€80–150"
+      data-price-unit="/ night"
+      data-desc="Located on the ground floor, this spacious room comfortably accommodates up to 4 guests. It offers a practical and comfortable setup, perfect for groups or families. The room features a private exit directly to the courtyard, providing easy access to outdoor space for relaxation or leisure activities. Its convenient location ensures easy access and a cozy, homelike atmosphere."
+      data-prices="1 person: €80/night|2 people: €90/night|3 people: €120/night|4 people: €150/night"
+      data-amenities="fa-ruler-combined::21 m²|fa-bath::Private Bathroom|fa-shower::Shower|fa-wind::Hairdryer|fa-tv::TV|fa-laptop-house::Work Space|fa-building::Ground Floor|fa-door-open::Private Exterior Access"
+      data-amen-label="Amenities"
+      data-book="booknow.html"
+      data-booklabel="Book Room 1">
+      <img src="static/1/1.jpeg" alt="Room 1" loading="lazy">
+      <div class="room-card-overlay">
+        <div class="room-card-name">Room 1</div>
+        <div class="room-card-type">Quadruple · 21 m²</div>
+        <div class="room-card-price">€80–150 / night</div>
+      <div class="room-card-cta">Explore →</div>
+      </div>
+    </div>
+
+    <div class="room-card reveal" style="transition-delay:0.12s;"
+      data-room="2"
+      data-name="Room 2"
+      data-badge="Sestuple · 34 m² · Ground floor"
+      data-topbar-meta="Sestuple · 34 m² · Ground floor"
+      data-price="€90–190"
+      data-price-unit="/ night"
+      data-desc="Ideal for larger groups or families, this ground-floor room can host up to 6 guests. Exceptionally spacious, it offers plenty of room to relax and unwind. One of its standout features is the large, well-equipped bathroom, adding extra comfort to your stay."
+      data-prices="1 person: €90/night|2 people: €100/night|3 people: €120/night|4 people: €150/night|5 people: €170/night|6 people: €190/night"
+      data-amenities="fa-ruler-combined::34 m²|fa-bath::Private Bathroom|fa-shower::Shower|fa-wind::Hairdryer|fa-tv::TV|fa-laptop-house::Work Space|fa-building::Ground Floor|fa-door-open::Private Exterior Access"
+      data-amen-label="Amenities"
+      data-book="booknow.html"
+      data-booklabel="Book Room 2">
+      <img src="static/2/1.jpeg" alt="Room 2" loading="lazy">
+      <div class="room-card-overlay">
+        <div class="room-card-name">Room 2</div>
+        <div class="room-card-type">Sestuple · 34 m²</div>
+        <div class="room-card-price">€90–190 / night</div>
+      <div class="room-card-cta">Explore →</div>
+      </div>
+    </div>
+
+    <div class="room-card reveal" style="transition-delay:0.24s;"
+      data-room="3"
+      data-name="Room 3"
+      data-badge="Quadruple · 23 m² · First floor"
+      data-topbar-meta="Quadruple · 23 m² · First floor"
+      data-price="€80–150"
+      data-price-unit="/ night"
+      data-desc="Located on the first floor, this charming rustico-style room can host up to 4 guests. Full of character and warmth, it features cozy interiors and tasteful rustic decor that create a welcoming, homely feel. The windows offer a lovely view of the surrounding area, perfect for enjoying the peaceful atmosphere near Lake Garda."
+      data-prices="1 person: €80/night|2 people: €90/night|3 people: €120/night|4 people: €150/night"
+      data-amenities="fa-ruler-combined::23 m²|fa-bath::Private Bathroom|fa-shower::Shower|fa-wind::Hairdryer|fa-tv::TV|fa-laptop-house::Work Space|fa-image::Windows &amp; View|fa-layer-group::First Floor"
+      data-amen-label="Amenities"
+      data-book="booknow.html"
+      data-booklabel="Book Room 3">
+      <img src="static/3/1.jpeg" alt="Room 3" loading="lazy">
+      <div class="room-card-overlay">
+        <div class="room-card-name">Room 3</div>
+        <div class="room-card-type">Quadruple · 23 m²</div>
+        <div class="room-card-price">€80–150 / night</div>
+      <div class="room-card-cta">Explore →</div>
+      </div>
+    </div>
+
+    <div class="room-card reveal" style="transition-delay:0.36s;"
+      data-room="4"
+      data-name="Room 4"
+      data-badge="Triple · 19 m² · First floor"
+      data-topbar-meta="Triple · 19 m² · First floor"
+      data-price="€80–120"
+      data-price-unit="/ night"
+      data-desc="Perfect for smaller families or couples, this cozy triple room offers a warm and inviting atmosphere. Thoughtfully designed for comfort, it features windows that open to a pleasant view, allowing guests to enjoy the beauty of the surrounding landscape."
+      data-prices="1 person: €80/night|2 people: €90/night|3 people: €120/night"
+      data-amenities="fa-ruler-combined::19 m²|fa-bath::Private Bathroom|fa-shower::Shower|fa-wind::Hairdryer|fa-tv::TV|fa-laptop-house::Work Space|fa-image::Windows &amp; View|fa-layer-group::First Floor"
+      data-amen-label="Amenities"
+      data-book="booknow.html"
+      data-booklabel="Book Room 4">
+      <img src="static/4/1.jpeg" alt="Room 4" loading="lazy">
+      <div class="room-card-overlay">
+        <div class="room-card-name">Room 4</div>
+        <div class="room-card-type">Triple · 19 m²</div>
+        <div class="room-card-price">€80–120 / night</div>
+      <div class="room-card-cta">Explore →</div>
+      </div>
+    </div>
+
+    <div class="room-card reveal" style="transition-delay:0.48s;"
+      data-room="5"
+      data-name="Room 5"
+      data-badge="Quadruple · 21 m² · First floor"
+      data-topbar-meta="Quadruple · 21 m² · First floor · Skylights"
+      data-price="€80–140"
+      data-price-unit="/ night"
+      data-desc="A truly special space, Room 5 feels like a cozy treehouse hideaway. It can accommodate up to 4 guests and is perfect for those who appreciate peace and a touch of magic. The room features beautiful skylights that, on clear nights, offer a chance to stargaze right from bed. Its warm, embracing atmosphere makes it ideal for good sleepers seeking comfort, calm, and a unique stay close to nature."
+      data-prices="1 person: €80/night|2 people: €90/night|3 people: €120/night|4 people: €140/night"
+      data-amenities="fa-ruler-combined::21 m²|fa-bath::Private Bathroom|fa-shower::Shower|fa-wind::Hairdryer|fa-soap::Shampoo &amp; Body Soap|fa-bed::Towels &amp; Bed Linens|fa-tv::TV|fa-laptop-house::Work Space|fa-sun::Skylights|fa-layer-group::First Floor"
+      data-amen-label="Amenities"
+      data-book="booknow.html"
+      data-booklabel="Book Room 5">
+      <img src="static/5/1.jpeg" alt="Room 5" loading="lazy">
+      <div class="room-card-overlay">
+        <div class="room-card-name">Room 5</div>
+        <div class="room-card-type">Quadruple · 21 m²</div>
+        <div class="room-card-price">€80–140 / night</div>
+      <div class="room-card-cta">Explore →</div>
+      </div>
+    </div>
+
+    <div class="room-card reveal" style="transition-delay:0.6s;"
+      data-room="6"
+      data-name="Room 6"
+      data-badge="Quadruple · 21 m² · First floor · High ceiling"
+      data-topbar-meta="Quadruple · 21 m² · First floor · Skylights"
+      data-price="€80–140"
+      data-price-unit="/ night"
+      data-desc="The twin of Room 5, offering a spacious and cozy retreat with room for up to 4 guests. Featuring a striking high ceiling, it creates an open and airy feeling. The skylights bring in natural light by day and provide a perfect view of the stars by night, adding a special touch to your stay."
+      data-prices="1 person: €80/night|2 people: €90/night|3 people: €120/night|4 people: €140/night"
+      data-amenities="fa-ruler-combined::21 m²|fa-bath::Private Bathroom|fa-shower::Shower|fa-wind::Hairdryer|fa-tv::TV|fa-laptop-house::Work Space|fa-sun::Skylights|fa-layer-group::First Floor"
+      data-amen-label="Amenities"
+      data-book="booknow.html"
+      data-booklabel="Book Room 6">
+      <img src="static/6/1.jpeg" alt="Room 6" loading="lazy">
+      <div class="room-card-overlay">
+        <div class="room-card-name">Room 6</div>
+        <div class="room-card-type">Quadruple · 21 m²</div>
+        <div class="room-card-price">€80–140 / night</div>
+        <div class="room-card-cta">Explore →</div>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- /room-section -->
+
+  <!-- GALLERY MODAL -->
+  <div class="gallery-modal" id="gallery-modal">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-card">
+      <div class="modal-topbar">
+        <div class="modal-topbar-info">
+          <h2 id="modal-room-name"></h2>
+          <div class="modal-topbar-meta" id="modal-room-meta"></div>
+        </div>
+        <div class="modal-topbar-actions">
+          <button class="modal-back-btn" id="modal-back-btn">&#8592; Gallery</button>
+          <button class="modal-close-btn" id="closeModal">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <div class="modal-room-info">
+          <div class="modal-room-left">
+            <span class="modal-type-badge" id="modal-type-badge"></span>
+            <p class="modal-room-desc" id="modal-desc"></p>
+            <div class="modal-amenities-label" id="modal-amen-label">Amenities</div>
+            <div class="modal-amenities" id="modal-amenities"></div>
+          </div>
+          <div class="modal-room-right">
+            <div class="modal-price-main" id="modal-price-main"></div>
+            <div class="modal-price-table" id="modal-price-table"></div>
+            <a class="modal-book-btn" id="modal-book-link" href="#">Book</a>
+          </div>
+        </div>
+        <div class="modal-photo-grid" id="modal-photo-grid"></div>
+      </div>
+      <div class="modal-lightbox" id="modal-lightbox">
+        <button id="prev-image">&#8592;</button>
+        <img id="modal-image" src="" alt="Gallery Image">
+        <button id="next-image">&#8594;</button>
+        <div class="modal-lightbox-nav">
+          <span class="caption" id="caption"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h2>Garda Havens</h2>
+        <h4>Relax, explore, enjoy.</h4>
+      </div>
+      <div class="footer-col">
+        <h2>Contact</h2>
+        <p>Via Belvedere, 10</p>
+        <p>Castelnuovo del Garda, VR, Italy</p>
+        <p>Alessandro: +39 3450233733</p>
+        <p>Jenny: +30 6974565068</p>
+        <a href="mailto:garda.havens@gmail.com">garda.havens@gmail.com</a>
+      </div>
+      <div class="footer-col">
+        <h2>Book Now</h2>
+        <ul>
+          <li><a href="mailto:garda.havens@gmail.com">Email Us</a></li>
+          <li><a href="https://wa.me/393450233733" target="_blank">WhatsApp</a></li>
+          <li><a href="booknow.html">Book Online</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Links</h2>
+        <ul>
+          <li><a href="index-en.html">Home</a></li>
+          <li><a href="rooms.html">Rooms</a></li>
+          <li><a href="booknow.html">Book Now</a></li>
+          <li><a href="guidebook.html">Guidebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 Garda Havens. All rights reserved. | CIN: IT023022C2FWABW3P7</div>
+  </footer>
+
+  <script src="static/slideshow.js"></script>
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      this.classList.toggle('open');
+      siteNav.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!siteNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('open');
+        siteNav.classList.remove('open');
+      }
+    });
+
+  </script>
+  <script src="static/reveal.js"></script>
 </body>
 </html>
