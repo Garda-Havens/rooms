@@ -122,6 +122,45 @@
     </div>
   </div>
 
+  <!-- ESTERNO SLIDESHOW -->
+  <div class="esterno-section reveal">
+    <p class="section-subtitle" style="margin-bottom:24px;">Wide Open Spaces</p>
+    <div class="esterno-slideshow" id="esternoSlideshow">
+      <div class="esterno-slideshow-hint">View Gallery ↗</div>
+    </div>
+  </div>
+
+  <!-- ESTERNO LIGHTBOX -->
+  <div class="gallery-modal photo-mode" id="esternoModal">
+    <div class="modal-backdrop" id="esternoBackdrop"></div>
+    <div class="modal-card">
+      <div class="modal-topbar">
+        <div class="modal-topbar-info">
+          <h2>Wide Open Spaces</h2>
+        </div>
+        <div class="modal-topbar-actions">
+          <button class="modal-close-btn" id="esternoCloseBtn">&times;</button>
+        </div>
+      </div>
+      <div class="modal-lightbox" id="esternoLightbox">
+        <button id="prev-image">&#8592;</button>
+        <img id="esternoLightboxImg" src="" alt="Exterior">
+        <button id="next-image">&#8594;</button>
+        <div class="modal-lightbox-nav">
+          <span id="esternoCaption" class="caption"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMING SOON TEASER -->
+  <div class="coming-soon-teaser reveal">
+    <p class="teaser-label">Coming Soon</p>
+    <p class="teaser-text">Something special is on its way.</p>
+  </div>
+
+  <hr class="section-divider">
+
   <!-- NAV CARDS -->
   <div class="nav-cards">
     <a class="nav-card reveal" style="transition-delay:0s;" href="rooms.html">
@@ -241,5 +280,53 @@
     }, 8000);
   </script>
   <script src="static/reveal.js"></script>
+  <script src="static/esterno-photos.js"></script>
+  <script>
+    (function () {
+      const container = document.getElementById('esternoSlideshow');
+      if (!container || !ESTERNO_PHOTOS.length) return;
+
+      ESTERNO_PHOTOS.forEach(function (f, i) {
+        const d = document.createElement('div');
+        d.className = 'esterno-slide' + (i === 0 ? ' active' : '');
+        d.style.backgroundImage = "url('static/esterno/" + encodeURIComponent(f) + "')";
+        container.insertBefore(d, container.firstChild);
+      });
+      let cur = 0;
+      setInterval(function () {
+        container.children[cur].classList.remove('active');
+        cur = (cur + 1) % ESTERNO_PHOTOS.length;
+        container.children[cur].classList.add('active');
+      }, 3500);
+
+      const modal    = document.getElementById('esternoModal');
+      const backdrop = document.getElementById('esternoBackdrop');
+      const closeBtn = document.getElementById('esternoCloseBtn');
+      const lbImg    = document.getElementById('esternoLightboxImg');
+      const caption  = document.getElementById('esternoCaption');
+      const prevBtn  = document.getElementById('prev-image');
+      const nextBtn  = document.getElementById('next-image');
+      let lbCur = 0;
+
+      function showPhoto(idx) {
+        lbCur = idx;
+        lbImg.src = 'static/esterno/' + encodeURIComponent(ESTERNO_PHOTOS[lbCur]);
+        caption.textContent = (lbCur + 1) + ' / ' + ESTERNO_PHOTOS.length;
+      }
+      function closeModal() { modal.classList.remove('open'); }
+
+      container.addEventListener('click', function () { showPhoto(cur); modal.classList.add('open'); });
+      backdrop.addEventListener('click', closeModal);
+      closeBtn.addEventListener('click', closeModal);
+      prevBtn.addEventListener('click', function () { showPhoto((lbCur - 1 + ESTERNO_PHOTOS.length) % ESTERNO_PHOTOS.length); });
+      nextBtn.addEventListener('click', function () { showPhoto((lbCur + 1) % ESTERNO_PHOTOS.length); });
+      document.addEventListener('keydown', function (e) {
+        if (!modal.classList.contains('open')) return;
+        if (e.key === 'ArrowLeft')  prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+        if (e.key === 'Escape')     closeModal();
+      });
+    })();
+  </script>
 </body>
 </html>
