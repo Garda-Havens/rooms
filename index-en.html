@@ -173,7 +173,7 @@
       </div>
     </a>
     <a class="nav-card reveal" style="transition-delay:0.15s;" href="booknow.html">
-      <div class="nav-card-bg" style="background-image:url('static/img/front12.jpeg')"></div>
+      <div class="nav-card-bg" style="background-image:url('static/esterno/IMG_8149 2 2.jpeg')"></div>
       <div class="nav-card-overlay"></div>
       <div class="nav-card-body">
         <p class="nav-card-label">Reservations</p>
@@ -293,11 +293,13 @@
         container.insertBefore(d, container.firstChild);
       });
       let cur = 0;
-      setInterval(function () {
+      function advance() {
         container.children[cur].classList.remove('active');
         cur = (cur + 1) % ESTERNO_PHOTOS.length;
         container.children[cur].classList.add('active');
-      }, 3500);
+      }
+      setTimeout(advance, 0);
+      setInterval(advance, 2500);
 
       const modal    = document.getElementById('esternoModal');
       const backdrop = document.getElementById('esternoBackdrop');
