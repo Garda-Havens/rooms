@@ -126,7 +126,7 @@
   <div class="esterno-section reveal">
     <p class="section-subtitle" style="margin-bottom:24px;">Wide Open Spaces</p>
     <div class="esterno-slideshow" id="esternoSlideshow">
-      <div class="esterno-slideshow-hint">View Gallery ↗</div>
+      <div class="esterno-slideshow-hint">View Gallery ↗&#xFE0E;</div>
     </div>
   </div>
 
@@ -143,9 +143,9 @@
         </div>
       </div>
       <div class="modal-lightbox" id="esternoLightbox">
-        <button id="prev-image">&#8592;</button>
+        <button id="prev-image">&#8592;&#xFE0E;</button>
         <img id="esternoLightboxImg" src="" alt="Exterior">
-        <button id="next-image">&#8594;</button>
+        <button id="next-image">&#8594;&#xFE0E;</button>
         <div class="modal-lightbox-nav">
           <span id="esternoCaption" class="caption"></span>
         </div>
@@ -173,7 +173,7 @@
       </div>
     </a>
     <a class="nav-card reveal" style="transition-delay:0.15s;" href="booknow.html">
-      <div class="nav-card-bg" style="background-image:url('static/esterno/IMG_8149 2 2.jpeg')"></div>
+      <div class="nav-card-bg" style="background-image:url('static/esterno/IMG_8150 2.jpeg')"></div>
       <div class="nav-card-overlay"></div>
       <div class="nav-card-body">
         <p class="nav-card-label">Reservations</p>
@@ -286,11 +286,12 @@
       const container = document.getElementById('esternoSlideshow');
       if (!container || !ESTERNO_PHOTOS.length) return;
 
+      const hint = container.querySelector('.esterno-slideshow-hint');
       ESTERNO_PHOTOS.forEach(function (f, i) {
         const d = document.createElement('div');
         d.className = 'esterno-slide' + (i === 0 ? ' active' : '');
         d.style.backgroundImage = "url('static/esterno/" + encodeURIComponent(f) + "')";
-        container.insertBefore(d, container.firstChild);
+        container.insertBefore(d, hint);
       });
       let cur = 0;
       function advance() {
@@ -298,7 +299,6 @@
         cur = (cur + 1) % ESTERNO_PHOTOS.length;
         container.children[cur].classList.add('active');
       }
-      setTimeout(advance, 0);
       setInterval(advance, 2500);
 
       const modal    = document.getElementById('esternoModal');

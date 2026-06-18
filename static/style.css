@@ -1208,11 +1208,7 @@ ul { list-style: none; }
 }
 
 .rental-form {
-  background: var(--ivory);
-  border: 1px solid var(--ivory-deep);
-  border-radius: var(--radius-lg);
-  padding: 36px 32px;
-  box-shadow: var(--shadow-sm);
+  padding: 0;
 }
 
 .form-section-label {
@@ -1247,7 +1243,7 @@ ul { list-style: none; }
   font-family: var(--font-body);
   font-size: 1rem;
   color: var(--text);
-  background: var(--cream);
+  background: var(--ivory);
   transition: border-color 0.25s, box-shadow 0.25s;
 }
 
@@ -1270,7 +1266,7 @@ ul { list-style: none; }
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--text);
-  background: var(--cream);
+  background: var(--ivory);
   cursor: pointer;
   position: relative;
   user-select: none;
@@ -1293,7 +1289,7 @@ ul { list-style: none; }
 
 .select-items {
   position: absolute; left: 0; right: 0; top: 100%;
-  background: var(--cream);
+  background: var(--ivory);
   border: 1px solid #d4b896;
   border-top: none;
   border-radius: 0 0 var(--radius) var(--radius);
@@ -1375,6 +1371,9 @@ ul { list-style: none; }
 .band-ivory .ticket-section { padding: 0; }
 .band-ivory .map-section { margin-bottom: 0; }
 .band-ivory .checkin-section { padding-bottom: 0; }
+
+.band-ivory .explore-section { margin-top: 0; margin-bottom: 0; }
+.band-ivory .food-section { margin-top: 0; margin-bottom: 0; }
 
 /* ── Guidebook ────────────────────────────────────────────── */
 .checkin-section-header {
@@ -1875,6 +1874,199 @@ ul { list-style: none; }
 
 @media (max-width: 900px) {
   .craft-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+/* ── Food Section ────────────────────────────────────────── */
+.food-section {
+  width: calc(100% - 10%);
+  max-width: 1100px;
+  margin: 60px auto;
+  text-align: center;
+}
+.food-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 36px;
+  text-align: left;
+}
+@media (max-width: 680px) {
+  .food-grid { grid-template-columns: 1fr; }
+}
+.food-category {
+  background: var(--ivory);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  border-top: 3px solid var(--clay);
+}
+.food-cat-icon {
+  color: var(--clay);
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+.food-cat-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--clay-dark);
+  margin: 0 0 14px;
+}
+.food-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.food-list li { display: flex; flex-direction: column; gap: 2px; }
+.food-item-name {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.food-map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--clay);
+  border: 1px solid var(--clay);
+  border-radius: 20px;
+  padding: 2px 10px;
+  text-decoration: none;
+  margin-top: 4px;
+  width: fit-content;
+  letter-spacing: 0.02em;
+  transition: background 0.18s, color 0.18s;
+}
+.food-map-btn:hover { background: var(--clay); color: #fff; }
+.food-desc {
+  font-family: var(--font-body);
+  font-size: 0.79rem;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* ── Explore Section ─────────────────────────────────────── */
+.explore-section {
+  width: calc(100% - 10%);
+  max-width: 1100px;
+  margin: 60px auto;
+  text-align: center;
+}
+.explore-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 28px 0 44px;
+}
+.explore-filter-btn {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(107,58,42,0.4);
+  background: transparent;
+  color: var(--clay);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  white-space: nowrap;
+}
+.explore-filter-btn:hover { background: var(--ivory-deep); }
+.explore-filter-btn.active { background: var(--clay); color: #fff; border-color: var(--clay); }
+.explore-category { margin-bottom: 0; text-align: left; border-bottom: 1px solid var(--ivory-deep); }
+.explore-category:last-of-type { border-bottom: none; }
+.explore-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0 14px;
+  border-bottom: 2px solid var(--clay);
+  cursor: pointer;
+  user-select: none;
+}
+.explore-cat-header:hover .explore-cat-title { color: var(--clay); }
+.explore-cat-chevron {
+  color: var(--clay);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
+}
+.explore-category.open .explore-cat-chevron { transform: rotate(180deg); }
+.explore-cat-icon { color: var(--clay); font-size: 1.05rem; }
+.explore-cat-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--clay-dark);
+}
+.explore-cat-count {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: #999;
+  background: var(--ivory-deep);
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  overflow: hidden;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.explore-grid.animating {
+  transition: max-height 0.38s ease, padding-top 0.38s ease, padding-bottom 0.38s ease;
+}
+.explore-category.open .explore-grid {
+  padding-top: 20px;
+  padding-bottom: 36px;
+}
+.explore-card {
+  background: var(--ivory);
+  border: 1px solid var(--ivory-deep);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.explore-card:hover { border-color: var(--clay); box-shadow: var(--shadow-sm); }
+.explore-card-name {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.explore-card-dist {
+  font-size: 0.72rem;
+  color: var(--clay);
+  background: var(--cream);
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  margin-left: auto;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.explore-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: #777;
+  line-height: 1.55;
+  margin-bottom: 10px;
 }
 
 /* ── Section divider ─────────────────────────────────────── */
