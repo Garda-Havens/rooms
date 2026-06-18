@@ -615,7 +615,7 @@ ul { list-style: none; }
 }
 .nav-card {
   position: relative;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   overflow: hidden;
   aspect-ratio: 1 / 1;
   box-shadow: var(--shadow-md);
@@ -1545,9 +1545,11 @@ ul { list-style: none; }
 
 /* Check-in section */
 .checkin-section {
-  width: fit-content;
+  width: 100%;
+  max-width: 640px;
   margin: 0 auto;
-  padding: 0 0 56px;
+  padding: 0 5% 56px;
+  box-sizing: border-box;
 }
 
 .checkin-box, .guest-info-box {
@@ -1817,7 +1819,7 @@ ul { list-style: none; }
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-md);
   cursor: zoom-in;
@@ -2209,7 +2211,8 @@ ul { list-style: none; }
   :root { --header-h: 64px; }
   .site-header { padding: 0 16px; }
   .band-ivory { padding-left: 16px; padding-right: 16px; }
-  .checkin-section { width: 100%; box-sizing: border-box; padding-left: 0; padding-right: 0; }
+  .explore-cat-count { display: none; }
+  .explore-cat-chevron { margin-left: auto; }
   .header-brand .brand-name { font-size: 1.25rem; }
   .header-brand img { height: 48px; }
 
