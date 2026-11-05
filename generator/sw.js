@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gardahavens-generator-v9';
+const CACHE_NAME = 'gardahavens-generator-v10';
 const FILES_TO_CACHE = [
   '/',             // index.html
   '/generator.html',

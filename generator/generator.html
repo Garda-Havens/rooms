@@ -142,9 +142,19 @@
     .topbar h1 { margin:0; }
     button.small { font-size:12px; padding:6px 12px; color:#666; border-color:#ddd; }
     .card > .rooms, .card > .toggle-pill, .card > .grid, .card > .grid-dates, .card > .grid4,
-    .card > #multiGuestSection, .card > details.more { margin-top:12px; }
+    .card > #multiGuestSection { margin-top:8px; }
+    .card > details.more { margin-top:12px; }
     .grid4 { display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; }
-    .grid-dates { display:grid; grid-template-columns:90px 1fr 1fr; gap:12px; }
+    .grid-dates { display:grid; grid-template-columns:90px minmax(0,1fr) minmax(0,1fr); gap:12px; }
+    .grid-dates.no-guests { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+    .grid-dates > div, .grid4 > div, .grid > div { min-width:0; }
+    /* Campi tutti della stessa altezza: le date non si allargano/stringono col contenuto */
+    input:not([type="checkbox"]), select { height:42px; }
+    input[type="date"] { display:block; width:100%; min-width:0; padding:0 10px; line-height:42px; text-align:left; }
+    input[type="date"]::-webkit-date-and-time-value { text-align:left; margin:0; }
+    .phone-box select, .phone-box input { height:40px !important; }
+    .multi-guest-grid { grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:8px; margin-top:0; }
+    .multi-guest-item { padding:8px; }
     details > summary { cursor:pointer; font-size:13px; color:#444; user-select:none; }
     details.paste { margin-bottom:4px; }
     details.paste[open] textarea { margin:8px 0; }
@@ -161,7 +171,7 @@
 
     /* ─── Responsive ─────────────────────────────────────────────────── */
     @media (max-width:760px) { .grid, .grid3 { grid-template-columns:1fr; } .grid4 { grid-template-columns:1fr 1fr; } }
-    @media (max-width:520px) { .grid-dates { grid-template-columns:1fr 1fr; } .grid-dates #singleGuestRow { grid-column:1 / -1; } }
+    @media (max-width:520px) { .grid-dates { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .grid-dates #singleGuestRow { grid-column:1 / -1; } }
     @media (max-width:760px) { .gcal-row { grid-template-columns:1fr !important; } }
     @media (max-width:520px) { .rooms { gap:6px; } .pill { padding:8px; font-size:13px; } }
     @media (max-width:520px) {
@@ -216,8 +226,11 @@
       <div class="rooms" id="rooms"></div>
       <label class="toggle-pill">
         <input type="checkbox" id="multiBooking" />
-        <span>Gruppo multi-camera</span>
+        <span>Multi-camera</span>
       </label>
+      <div id="multiGuestSection" style="display:none;">
+        <div class="multi-guest-grid" id="multiGuestsGrid"></div>
+      </div>
 
       <!-- Nome + WhatsApp -->
       <div class="grid">
@@ -257,7 +270,7 @@
       </div>
 
       <!-- Ospiti + date -->
-      <div class="grid-dates">
+      <div class="grid-dates" id="datesRow">
         <div id="singleGuestRow">
           <label>Ospiti</label>
           <select id="guests">
@@ -277,9 +290,6 @@
           <label>Check-out</label>
           <input id="checkout" type="date" />
         </div>
-      </div>
-      <div id="multiGuestSection" style="display:none;">
-        <div class="multi-guest-grid" id="multiGuestsGrid"></div>
       </div>
 
       <!-- Lingua + sconti -->
@@ -312,7 +322,7 @@
 
       <!-- Opzioni meno usate -->
       <details class="more">
-        <summary>Altro: emoji, firma, nota</summary>
+        <summary>Altro</summary>
         <div class="grid">
           <div>
             <label>Emoji</label>
@@ -636,6 +646,7 @@ function renderMultiGuestSelectors(rooms) {
 function syncModeUI() {
   const multi = isMultiMode();
   $("singleGuestRow").style.display  = multi ? "none" : "";
+  $("datesRow").classList.toggle("no-guests", multi);
   $("multiGuestSection").style.display = multi ? "" : "none";
   $("singleNameCol").style.display   = multi ? "none" : "";
   $("multiNameCol").style.display    = multi ? "" : "none";
@@ -1474,6 +1485,11 @@ autoSetDiscount();
 syncCustomDiscountUI();
 buildOutputs();
 renderSnippets();
+
+// Le parti apribili (Incolla richiesta, Altro, Messaggi rapidi) si chiudono toccando fuori
+document.addEventListener("click", e => {
+  document.querySelectorAll("details[open]").forEach(d => { if (!d.contains(e.target)) d.open = false; });
+});
 
 // Link dall'email: generator.html#GH|lang=..|... → compila in automatico
 function fillFromHash() {
