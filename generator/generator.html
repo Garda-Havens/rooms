@@ -124,6 +124,14 @@
     .ok   { color:#0a7a2f; }
     .warn { color:#a15a00; }
 
+    /* ─── Scheda ospite (richiesta dal sito) ─────────────────────────── */
+    #requestCard { margin-top:10px; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:14px; }
+    #requestCard .rc-name { font-weight:600; font-size:15px; }
+    #requestCard .rc-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    #requestCard .rc-actions a { text-decoration:none; padding:8px 12px; border-radius:12px; border:1px solid #d9d9dd; color:#111; background:#fff; font-size:13px; }
+    #requestCard .rc-actions a.rc-wa { background:#25D366; border-color:#25D366; color:#fff; }
+    #requestCard .rc-notes { margin-top:8px; white-space:pre-wrap; color:#444; }
+
     /* ─── Output area ────────────────────────────────────────────────── */
     .out { white-space:pre-wrap; overflow-wrap:break-word; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:13.5px; line-height:1.55; margin-top:10px; }
     .msgCard   { display:grid; grid-template-columns:1fr; gap:10px; }
@@ -178,6 +186,7 @@
           <button id="fillFromRequest" class="secondary">Compila dalla richiesta</button>
           <span class="muted" id="pasteStatus"></span>
         </div>
+        <div id="requestCard" style="display:none;"></div>
       </div>
 
       <hr class="section-divider">
@@ -395,6 +404,8 @@ async function checkAccess() {
 
     if (data.success) {
       localStorage.setItem("ghAccess", "granted");
+      localStorage.setItem("ghKey", val); // serve per scaricare le richieste dal sito (#r=...)
+      setTimeout(fillFromHash, 0);
       document.getElementById("accessOverlay").style.display = "none";
     } else {
       alert("Codice errato ❌");
@@ -1350,6 +1361,7 @@ function resetAll() {
   $("phoneNumber").value = "";
   $("pasteRequest").value = "";
   $("pasteStatus").textContent = "";
+  renderRequestCard(null);
   // Rebuild outputs
   buildOutputs();
   renderSnippets();
@@ -1421,6 +1433,68 @@ function fillFromRequest() {
   renderSnippets();
   const who = [d.name, d.surname].filter(Boolean).join(" ");
   status.textContent = (warnings.length ? "⚠️ " + warnings.join(" · ") : "✅ Compilato") + (who ? ` – ${who}` : "") + " · " + todo;
+  renderRequestCard({ firstName: d.name, lastName: d.surname, tel: d.tel });
+}
+
+/** Scheda con i contatti dell'ospite. info: { firstName, lastName, tel, email, notes, ref } o null per nasconderla. */
+function renderRequestCard(info) {
+  const box = $("requestCard");
+  box.innerHTML = "";
+  if (!info) { box.style.display = "none"; return; }
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; };
+  const name = [info.firstName, info.lastName].filter(Boolean).join(" ") || "Ospite";
+  box.appendChild(el("div", "rc-name", name + (info.ref ? `  ·  ${info.ref}` : "")));
+  const tel = String(info.tel || "");
+  const digits = tel.replace(/\D/g, "");
+  const intl = tel.trim().startsWith("+");
+  const lines = [];
+  if (tel) lines.push("📞 " + tel + (intl ? "" : "  ⚠️ prefisso non indicato"));
+  if (info.email) lines.push("✉️ " + info.email);
+  lines.forEach(l => box.appendChild(el("div", "muted", l)));
+  if (info.notes) box.appendChild(el("div", "rc-notes", "📝 " + info.notes));
+  const actions = el("div", "rc-actions");
+  const link = (href, text, cls) => { const a = el("a", cls, text); a.href = href; if (href.startsWith("http")) a.target = "_blank"; actions.appendChild(a); };
+  if (digits) {
+    link("https://wa.me/" + digits, "💬 WhatsApp", "rc-wa");
+    link("tel:" + (intl ? "+" : "") + digits, "📞 Chiama");
+  }
+  if (info.email) link("mailto:" + info.email, "✉️ Email");
+  if (actions.children.length) box.appendChild(actions);
+  box.style.display = "";
+}
+
+/* Richiesta salvata nel foglio: link generator.html#r=<codice> → scarica i dati dallo script */
+const REQUESTS_URL = "https://script.google.com/macros/s/AKfycbzRomEGmh-v-hcGkZ_S_XITYxa3Mjtdv4AVy56KRqLxd_I5bKGznEO6urS4N2dm8Qixlg/exec";
+
+async function loadRequest(id, retry) {
+  if (localStorage.getItem("ghAccess") !== "granted") return; // dopo il login riparte da checkAccess()
+  let key = localStorage.getItem("ghKey");
+  if (!key) {
+    key = (prompt("Inserisci il codice d'accesso per aprire la richiesta") || "").trim();
+    if (!key) return;
+    localStorage.setItem("ghKey", key);
+  }
+  const status = $("pasteStatus");
+  status.textContent = "⏳ Carico la richiesta…";
+  try {
+    const res = await fetch(`${REQUESTS_URL}?r=${encodeURIComponent(id)}&k=${encodeURIComponent(key)}`);
+    const json = await res.json();
+    if (json.ok) {
+      const r = json.request;
+      $("pasteRequest").value = r.gh;
+      fillFromRequest();
+      renderRequestCard({ firstName: r.firstName, lastName: r.lastName, email: r.email, notes: r.notes, ref: r.ref,
+        tel: (r.phoneIntl ? "+" : "") + r.phoneDigits });
+      return;
+    }
+    if (json.error === "auth" && !retry) { localStorage.removeItem("ghKey"); return loadRequest(id, true); }
+    const msg = { auth: "codice d'accesso errato", locked: "troppi tentativi, riprova tra un'ora",
+      not_found: "richiesta non trovata", not_configured: "script non configurato (SHEET_ID / GENERATOR_KEY)" };
+    status.textContent = "⚠️ " + (msg[json.error] || "errore del server");
+  } catch (err) {
+    console.error(err);
+    status.textContent = "⚠️ Errore di connessione";
+  }
 }
 $("fillFromRequest").addEventListener("click", fillFromRequest);
 
@@ -1434,6 +1508,8 @@ renderSnippets();
 // Link dall'email: generator.html#GH|lang=..|... → compila in automatico
 function fillFromHash() {
   const h = decodeURIComponent(location.hash.slice(1));
+  const m = h.match(/^r=([0-9a-f]{32})$/);
+  if (m) { loadRequest(m[1]); return; }
   if (!h.startsWith("GH|")) return;
   $("pasteRequest").value = h;
   fillFromRequest();
