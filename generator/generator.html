@@ -238,10 +238,10 @@
                 <option value="48">🇵🇱 +48</option>
                 <option value="420">🇨🇿 +420</option>
                 <option value="36">🇭🇺 +36</option>
-                <option value="custom">✏️ Altro...</option>
+                <option value="custom" selected>✏️ Altro...</option>
               </select>
               <input id="phonePrefixCustom" type="tel" placeholder="+xx"
-                style="display:none; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb;" />
+                style="display:block; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb;" />
               <input id="phoneNumber" type="tel" placeholder="Numero"
                 style="border:none; border-radius:0; min-width:0; flex:1; padding:10px 10px; font-size:14px;" />
             </div>
@@ -1344,8 +1344,8 @@ function resetAll() {
   $("signature").value = "Garda Havens";
   $("extra").value = "";
   // Reset phone
-  $("phonePrefix").value = "39";
-  $("phonePrefixCustom").style.display = "none";
+  $("phonePrefix").value = "custom";
+  $("phonePrefixCustom").style.display = "block";
   $("phonePrefixCustom").value = "";
   $("phoneNumber").value = "";
   $("pasteRequest").value = "";
@@ -1374,34 +1374,16 @@ function parseRequest(text) {
   return data;
 }
 
-/** Sets prefix select + number from a free-text phone. Returns a warning or "". */
-function fillPhone(raw, lang) {
-  let digits = raw.replace(/[^\d+]/g, "");
-  const intl = digits.startsWith("+") || digits.startsWith("00");
-  digits = digits.replace(/^\+|^00/, "").replace(/\D/g, "");
-  const prefixes = [...$("phonePrefix").options].map(o => o.value)
-    .filter(v => v !== "custom").sort((a, b) => b.length - a.length);
-  const setCustom = () => {
-    // Empty custom prefix + full number: getWaNumber() still builds the right number
-    $("phonePrefix").value = "custom";
-    $("phonePrefixCustom").style.display = "block";
-    $("phonePrefixCustom").value = "";
-    $("phoneNumber").value = digits;
-  };
-  $("phonePrefixCustom").style.display = "none";
+/** Numero dalla richiesta → prefisso "Altro" vuoto + numero completo. Ritorna un avviso o "". */
+function fillPhone(raw) {
+  const intl = /^\s*(\+|00)/.test(raw);
+  const digits = raw.replace(/\D/g, "").replace(/^00/, "");
+  $("phonePrefix").value = "custom";
+  $("phonePrefixCustom").style.display = "block";
   $("phonePrefixCustom").value = "";
-  if (!digits) { $("phoneNumber").value = ""; return "telefono mancante"; }
-  if (intl) {
-    const p = prefixes.find(p => digits.startsWith(p));
-    if (p) { $("phonePrefix").value = p; $("phoneNumber").value = digits.slice(p.length); return ""; }
-    setCustom(); return "";
-  }
-  if (lang === "it" || /^3\d{8,9}$/.test(digits)) {
-    $("phonePrefix").value = "39"; $("phoneNumber").value = digits;
-    return lang === "it" ? "" : "prefisso non indicato, impostato +39: controlla";
-  }
-  setCustom();
-  return "prefisso non indicato: controlla il numero";
+  $("phoneNumber").value = digits;
+  if (!digits) return "telefono mancante";
+  return intl ? "" : "prefisso non indicato: controlla il numero";
 }
 
 function fillFromRequest() {
@@ -1432,7 +1414,7 @@ function fillFromRequest() {
   // Nome, lingua, telefono
   $("guestName").value = d.name || "";
   if (d.lang === "it" || d.lang === "en") $("langToggle").value = d.lang;
-  const phoneWarn = fillPhone(d.tel || "", d.lang);
+  const phoneWarn = fillPhone(d.tel || "");
   if (phoneWarn) warnings.push(phoneWarn);
 
   buildOutputs();
