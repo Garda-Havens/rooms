@@ -1447,6 +1447,16 @@ autoSetDiscount();
 syncCustomDiscountUI();
 buildOutputs();
 renderSnippets();
+
+// Link dall'email: generator.html#GH|lang=..|... → compila in automatico
+function fillFromHash() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h.startsWith("GH|")) return;
+  $("pasteRequest").value = h;
+  fillFromRequest();
+}
+fillFromHash();
+window.addEventListener("hashchange", fillFromHash);
 </script>
 </body>
 </html>
