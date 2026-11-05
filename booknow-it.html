@@ -176,6 +176,9 @@
         <textarea name="specialRequests" id="specialRequests"></textarea>
       </div>
 
+      <!-- One-line summary for the WhatsApp notification, pasted into the generator -->
+      <input type="hidden" name="gh" id="ghCode">
+
       <button type="submit">Invia Richiesta</button>
     </form>
   </div>
@@ -261,6 +264,15 @@
       var btnText = btn.textContent;
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        // Build the one-line summary (no line breaks: WhatsApp templates don't allow them)
+        var val = function (n) { return ((form.elements[n] || {}).value || '').replace(/[|\r\n]+/g, ' ').trim(); };
+        var num = function (n) { var m = val(n).match(/\d+/); return m ? m[0] : '0'; };
+        document.getElementById('ghCode').value = [
+          'GH', 'lang=it',
+          'in=' + val('checkinDate'), 'out=' + val('checkoutDate'),
+          'room=' + num('roomType'), 'adults=' + num('adults'), 'kids=' + num('children'),
+          'name=' + val('firstName'), 'surname=' + val('lastName'), 'tel=' + val('phone')
+        ].join('|');
         btn.disabled = true;
         btn.textContent = 'Invio in corso…';
         fetch(form.action, {
