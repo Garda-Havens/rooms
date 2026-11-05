@@ -125,23 +125,45 @@
     .warn { color:#a15a00; }
 
     /* ─── Scheda ospite (richiesta dal sito) ─────────────────────────── */
-    #requestCard { margin-top:10px; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:14px; }
-    #requestCard .rc-name { font-weight:600; font-size:15px; }
-    #requestCard .rc-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-    #requestCard .rc-actions a { text-decoration:none; padding:8px 12px; border-radius:12px; border:1px solid #d9d9dd; color:#111; background:#fff; font-size:13px; }
+    #requestCard { margin-top:8px; background:#fbfbfc; border:1px solid #ececf0; border-radius:10px; padding:8px 10px; font-size:13px; }
+    #requestCard .rc-name { font-weight:600; }
+    #requestCard .rc-actions { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+    #requestCard .rc-actions a { text-decoration:none; padding:5px 10px; border-radius:10px; border:1px solid #d9d9dd; color:#111; background:#fff; font-size:13px; }
     #requestCard .rc-actions a.rc-wa { background:#25D366; border-color:#25D366; color:#fff; }
-    #requestCard .rc-notes { margin-top:8px; white-space:pre-wrap; color:#444; }
+    #requestCard .rc-notes { margin-top:4px; white-space:pre-wrap; color:#444; }
 
     /* ─── Output area ────────────────────────────────────────────────── */
     .out { white-space:pre-wrap; overflow-wrap:break-word; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:13.5px; line-height:1.55; margin-top:10px; }
     .msgCard   { display:grid; grid-template-columns:1fr; gap:10px; }
     .msgHeader { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-bottom:2px; }
 
+    /* ─── Layout semplificato ────────────────────────────────────────── */
+    .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+    .topbar h1 { margin:0; }
+    button.small { font-size:12px; padding:6px 12px; color:#666; border-color:#ddd; }
+    .card > .rooms, .card > .toggle-pill, .card > .grid, .card > .grid-dates, .card > .grid4,
+    .card > #multiGuestSection, .card > details.more { margin-top:12px; }
+    .grid4 { display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; }
+    .grid-dates { display:grid; grid-template-columns:90px 1fr 1fr; gap:12px; }
+    details > summary { cursor:pointer; font-size:13px; color:#444; user-select:none; }
+    details.paste { margin-bottom:4px; }
+    details.paste[open] textarea { margin:8px 0; }
+    #pasteStatus:empty { display:none; }
+    #pasteStatus { margin-top:6px; }
+    .toggle-pill { padding:8px 12px; font-size:13px; }
+    .phone-box { display:flex; align-items:center; border:1px solid #d9d9dd; border-radius:10px; overflow:hidden; background:#fff; }
+    .phone-box select { width:auto; border:none; border-right:1px solid #d9d9dd; border-radius:0; padding:10px 8px; font-size:14px; background:#f9f9fb; min-width:80px; }
+    .phone-box #phonePrefixCustom { display:block; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb; }
+    .phone-box #phoneNumber { border:none; border-radius:0; min-width:0; flex:1; padding:10px; font-size:14px; }
+    .msgItem + .msgItem { border-top:1px solid #ececf0; padding-top:10px; }
+    #priceHint:empty { display:none; }
+    #priceHint { margin-bottom:8px; }
+
     /* ─── Responsive ─────────────────────────────────────────────────── */
-    @media (max-width:760px) { .grid, .grid3 { grid-template-columns:1fr; } }
+    @media (max-width:760px) { .grid, .grid3 { grid-template-columns:1fr; } .grid4 { grid-template-columns:1fr 1fr; } }
+    @media (max-width:520px) { .grid-dates { grid-template-columns:1fr 1fr; } .grid-dates #singleGuestRow { grid-column:1 / -1; } }
     @media (max-width:760px) { .gcal-row { grid-template-columns:1fr !important; } }
-    @media (max-width:900px) { .rooms { grid-template-columns:repeat(2, minmax(0,1fr)); } }
-    @media (max-width:520px) { .rooms { grid-template-columns:1fr; } }
+    @media (max-width:520px) { .rooms { gap:6px; } .pill { padding:8px; font-size:13px; } }
     @media (max-width:520px) {
       .wrap { padding:10px; }
       .card { padding:12px; border-radius:12px; }
@@ -176,64 +198,43 @@
   <!-- ── Main app ───────────────────────────────────────────────────── -->
   <div class="wrap">
     <div class="card">
-      <h1>Garda Havens – Generatore disponibilità</h1>
-
-      <!-- STEP 0: Incolla richiesta dal sito (WhatsApp Formspree) -->
-      <div class="section">
-        <h2>Incolla richiesta dal sito</h2>
-        <textarea id="pasteRequest" placeholder="Incolla qui il messaggio WhatsApp della richiesta (contiene la riga GH|...)"></textarea>
-        <div class="row" style="margin-top:8px;">
-          <button id="fillFromRequest" class="secondary">Compila dalla richiesta</button>
-          <span class="muted" id="pasteStatus"></span>
-        </div>
-        <div id="requestCard" style="display:none;"></div>
+      <div class="topbar">
+        <h1>Generatore</h1>
+        <button id="resetTop" class="secondary small">&#8635; Reset</button>
       </div>
 
-      <hr class="section-divider">
+      <!-- Richiesta dal sito: riga GH|... (si apre solo se serve) -->
+      <details id="pasteBox" class="paste">
+        <summary>📋 Incolla richiesta</summary>
+        <textarea id="pasteRequest" placeholder="Messaggio o riga GH|..."></textarea>
+        <button id="fillFromRequest" class="secondary small">Compila</button>
+      </details>
+      <div class="muted" id="pasteStatus"></div>
+      <div id="requestCard" style="display:none;"></div>
 
-      <!-- STEP 1: Camere -->
-      <div class="section">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-          <h2 style="margin:0;">1 · Camere</h2>
-          <button id="resetTop" class="secondary" style="font-size:12px;padding:6px 12px;color:#888;border-color:#ddd;">&#8635; Reset</button>
-        </div>
-        <div class="rooms" id="rooms"></div>
-      </div>
+      <!-- Camere -->
+      <div class="rooms" id="rooms"></div>
+      <label class="toggle-pill">
+        <input type="checkbox" id="multiBooking" />
+        <span>Gruppo multi-camera</span>
+      </label>
 
-      <hr class="section-divider">
-
-      <!-- STEP 2: Ospiti & date -->
-      <div class="section">
-        <h2>2 · Ospiti &amp; Date</h2>
-
-        <!-- Toggle multi-camera — riga separata -->
-        <div style="margin-bottom:10px;">
-          <label class="toggle-pill">
-            <input type="checkbox" id="multiBooking" />
-            <span><strong>Gruppo multi-camera</strong> – ospiti divisi in più camere</span>
-          </label>
-        </div>
-
-        <!-- Nome ospite + telefono: 2 colonne desktop, 1 colonna mobile -->
-        <div class="grid" style="margin-bottom:10px;">
-
-          <!-- Nome ospite (single o multi) -->
-          <div>
-            <div id="singleNameCol">
-              <label>Nome ospite (opzionale)</label>
-              <input id="guestName" placeholder="es. Marco" />
-            </div>
-            <div id="multiNameCol" style="display:none;">
-              <label>Nome ospite / gruppo (opzionale)</label>
-              <input id="guestNameMulti" placeholder="es. Famiglia Rossi" />
-            </div>
+      <!-- Nome + WhatsApp -->
+      <div class="grid">
+        <div>
+          <div id="singleNameCol">
+            <label>Nome</label>
+            <input id="guestName" />
           </div>
-
-          <!-- Telefono -->
-          <div>
-            <label>Numero WhatsApp</label>
-            <div style="display:flex; align-items:center; gap:0; border:1px solid #d9d9dd; border-radius:10px; overflow:hidden; background:#fff;">
-              <select id="phonePrefix" style="width:auto; border:none; border-right:1px solid #d9d9dd; border-radius:0; padding:10px 8px; font-size:14px; background:#f9f9fb; min-width:80px;">
+          <div id="multiNameCol" style="display:none;">
+            <label>Nome</label>
+            <input id="guestNameMulti" />
+          </div>
+        </div>
+        <div>
+          <label>WhatsApp</label>
+          <div class="phone-box">
+              <select id="phonePrefix">
                 <option value="39">🇮🇹 +39</option>
                 <option value="49">🇩🇪 +49</option>
                 <option value="43">🇦🇹 +43</option>
@@ -249,131 +250,100 @@
                 <option value="36">🇭🇺 +36</option>
                 <option value="custom" selected>✏️ Altro...</option>
               </select>
-              <input id="phonePrefixCustom" type="tel" placeholder="+xx"
-                style="display:block; border:none; border-right:1px solid #d9d9dd; border-radius:0; width:58px; padding:10px 8px; font-size:14px; background:#f9f9fb;" />
-              <input id="phoneNumber" type="tel" placeholder="Numero"
-                style="border:none; border-radius:0; min-width:0; flex:1; padding:10px 10px; font-size:14px;" />
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Single mode: numero ospiti -->
-        <div id="singleGuestRow" style="margin-bottom:10px;">
-          <div>
-            <label>Numero ospiti</label>
-            <select id="guests">
-              <option value="1">1 ospite</option>
-              <option value="2">2 ospiti</option>
-              <option value="3" selected>3 ospiti</option>
-              <option value="4">4 ospiti</option>
-              <option value="5">5 ospiti</option>
-              <option value="6">6 ospiti</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Multi mode: per-room selectors (rendered dynamically) -->
-        <div id="multiGuestSection" style="display:none;">
-          <div class="muted" style="margin-bottom:6px;">Seleziona quanti ospiti per ciascuna camera scelta:</div>
-          <div class="multi-guest-grid" id="multiGuestsGrid"></div>
-        </div>
-
-        <!-- Dates -->
-        <div class="grid" style="margin-top:14px;">
-          <div>
-            <label>Check-in</label>
-            <input id="checkin" type="date" />
-          </div>
-          <div>
-            <label>Check-out</label>
-            <input id="checkout" type="date" />
+              <input id="phonePrefixCustom" type="tel" />
+              <input id="phoneNumber" type="tel" />
           </div>
         </div>
       </div>
 
-      <hr class="section-divider">
+      <!-- Ospiti + date -->
+      <div class="grid-dates">
+        <div id="singleGuestRow">
+          <label>Ospiti</label>
+          <select id="guests">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+        <div>
+          <label>Check-in</label>
+          <input id="checkin" type="date" />
+        </div>
+        <div>
+          <label>Check-out</label>
+          <input id="checkout" type="date" />
+        </div>
+      </div>
+      <div id="multiGuestSection" style="display:none;">
+        <div class="multi-guest-grid" id="multiGuestsGrid"></div>
+      </div>
 
-      <!-- STEP 3: Prezzi & sconti -->
-      <div class="section">
-        <h2>3 · Prezzi &amp; Sconti</h2>
-
-        <div class="grid3">
-          <div>
-            <label>Sconto soggiorno lungo (€/notte)</label>
-            <input id="discountPerNight" type="number" min="0" step="10" value="10" />
-            <div class="muted" style="margin-top:5px;">Auto: ≥ 2 notti → 10€, altrimenti 0€</div>
-          </div>
-          <div>
-            <label>Extra sconto</label>
-            <select id="extraDiscountType">
-              <option value="none" selected>Nessuno</option>
-              <option value="bundle">Sconto prenotazione congiunta</option>
-              <option value="custom">Sconto personalizzato</option>
-            </select>
-          </div>
-          <div>
-            <label>Importo sconto personalizzato (€/notte)</label>
-            <input id="customDiscountPerNight" type="number" min="0" step="10" placeholder="es. 10" value="0" />
-          </div>
+      <!-- Lingua + sconti -->
+      <div class="grid4">
+        <div>
+          <label>Lingua</label>
+          <select id="langToggle">
+            <option value="both">IT + EN</option>
+            <option value="it" selected>IT</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+        <div>
+          <label>Sconto €/notte</label>
+          <input id="discountPerNight" type="number" min="0" step="10" value="10" />
+        </div>
+        <div>
+          <label>Extra sconto</label>
+          <select id="extraDiscountType">
+            <option value="none" selected>Nessuno</option>
+            <option value="bundle">Prenotazione congiunta</option>
+            <option value="custom">Personalizzato</option>
+          </select>
+        </div>
+        <div>
+          <label>Extra €/notte</label>
+          <input id="customDiscountPerNight" type="number" min="0" step="10" value="0" />
         </div>
       </div>
 
-      <hr class="section-divider">
-
-      <!-- STEP 4: Preferenze messaggio -->
-      <div class="section">
-        <h2>4 · Preferenze messaggio</h2>
-
-        <div class="grid3">
+      <!-- Opzioni meno usate -->
+      <details class="more">
+        <summary>Altro: emoji, firma, nota</summary>
+        <div class="grid">
           <div>
-            <label>Lingua output</label>
-            <select id="langToggle">
-              <option value="both">Italiano + English</option>
-              <option value="it" selected>Solo Italiano</option>
-              <option value="en">Solo English</option>
-            </select>
-          </div>
-          <div>
-            <label>Emoji (opzionale)</label>
-            <input id="emoji" placeholder="es. 😊" value="😊" />
+            <label>Emoji</label>
+            <input id="emoji" value="😊" />
           </div>
           <div>
             <label>Firma</label>
             <input id="signature" value="Garda Havens" />
           </div>
         </div>
+        <label style="margin-top:10px;">Nota</label>
+        <textarea id="extra"></textarea>
+      </details>
 
-        <div style="margin-top:12px;">
-          <label>Nota extra (opzionale)</label>
-          <textarea id="extra"></textarea>
-        </div>
-      </div>
-
-      <hr class="section-divider">
-
-      <!-- Generate button -->
-      <div class="row">
-        <button id="generate">Genera messaggi</button>
-        <button id="resetBottom" class="secondary" style="color:#888;border-color:#ddd;">&#8635; Reset</button>
+      <div class="row" style="margin-top:14px;">
+        <button id="generate">Genera</button>
         <span class="muted" id="summary"></span>
       </div>
     </div>
 
-    <!-- ── Output card ──────────────────────────────────────────────── -->
-    <div class="card" style="margin-top:14px;">
-      <div class="msgHeader" style="margin-bottom:10px;">
-        <h2 style="margin:0;">Output</h2>
-        <span class="muted" id="priceHint"></span>
-      </div>
+    <!-- ── Messaggi ─────────────────────────────────────────────────── -->
+    <div class="card" style="margin-top:12px;">
+      <div class="muted" id="priceHint"></div>
       <div class="msgCard" id="outputs"></div>
     </div>
 
-    <!-- ── Static snippets ─────────────────────────────────────────── -->
-    <div class="card" style="margin-top:14px;">
-      <h2>Messaggi rapidi</h2>
-      <div class="msgCard" id="snippets"></div>
-    </div>
+    <!-- ── Messaggi rapidi ─────────────────────────────────────────── -->
+    <details class="card more" style="margin-top:12px;">
+      <summary>Messaggi rapidi</summary>
+      <div class="msgCard" id="snippets" style="margin-top:10px;"></div>
+    </details>
 
   </div><!-- /wrap -->
 
@@ -631,8 +601,8 @@ function renderRooms() {
     lbl.innerHTML = `
       <input type="checkbox" name="roomCheck" value="${r.id}" />
       <div>
-        <div><strong>Camera ${r.id}</strong> <span class="tag">${r.type}</span></div>
-        <div class="muted" style="font-size:12px;">${formatEuro(minP)}–${formatEuro(maxP)}/notte</div>
+        <div><strong>Camera ${r.id}</strong> <!-- <span class="tag">${r.type}</span> --></div>
+        <!-- <div class="muted" style="font-size:12px;">${formatEuro(minP)}–${formatEuro(maxP)}/notte</div> -->
       </div>`;
     lbl.querySelector("input").addEventListener("change", onRoomOrModeChange);
     host.appendChild(lbl);
@@ -656,7 +626,7 @@ function renderMultiGuestSelectors(rooms) {
       opts += `<option value="${g}">${g} ${g>1?"ospiti":"ospite"}</option>`;
     }
     item.innerHTML = `
-      <label>Camera ${rid} <span class="tag" style="font-size:11px;">${room.type}</span></label>
+      <label>Camera ${rid} <!-- <span class="tag" style="font-size:11px;">${room.type}</span> --></label>
       <select id="mgRoom_${rid}">${opts}</select>`;
     item.querySelector("select").addEventListener("change", buildOutputs);
     grid.appendChild(item);
@@ -675,6 +645,12 @@ function syncModeUI() {
 }
 
 function onRoomOrModeChange() {
+  // Camera scelta: togli il promemoria "👉 seleziona…" lasciato dalla richiesta
+  const st = $("pasteStatus");
+  if (st.dataset.todo && getSelectedRooms().length) {
+    st.textContent = st.textContent.replace(st.dataset.todo, "").replace(/\s*·\s*$/, "");
+    delete st.dataset.todo;
+  }
   syncModeUI();
   buildOutputs();
 }
@@ -1031,8 +1007,7 @@ function renderOutputs(outputs) {
   host.innerHTML = "";
   outputs.forEach((o, idx) => {
     const box = document.createElement("div");
-    box.className = "card";
-    box.style.padding = "12px";
+    box.className = "msgItem";
     box.innerHTML = `
       <div class="msgHeader">
         <strong>${o.title}</strong>
@@ -1283,8 +1258,7 @@ function renderSnippets() {
   SNIPPETS.forEach((s, idx) => {
     const sid = `snip_${idx}`;
     const box = document.createElement("div");
-    box.className = "card";
-    box.style.padding = "12px";
+    box.className = "msgItem";
     box.innerHTML = `
       <div class="msgHeader">
         <strong>${s.title[lang]}</strong>
@@ -1369,7 +1343,6 @@ function resetAll() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 document.getElementById("resetTop").addEventListener("click", resetAll);
-document.getElementById("resetBottom").addEventListener("click", resetAll);
 
 /* ═══════════════════════════════════════════════════════════════════════
    INCOLLA RICHIESTA (riga "GH|lang=..|in=..|out=..|rooms=..|adults=..|kids=..|name=..|surname=..|tel=..")
@@ -1431,9 +1404,10 @@ function fillFromRequest() {
 
   buildOutputs();
   renderSnippets();
-  const who = [d.name, d.surname].filter(Boolean).join(" ");
-  status.textContent = (warnings.length ? "⚠️ " + warnings.join(" · ") : "✅ Compilato") + (who ? ` – ${who}` : "") + " · " + todo;
+  status.textContent = (warnings.length ? "⚠️ " + warnings.join(" · ") + " · " : "") + todo;
+  status.dataset.todo = todo;
   renderRequestCard({ firstName: d.name, lastName: d.surname, tel: d.tel });
+  $("pasteBox").open = false;
 }
 
 /** Scheda con i contatti dell'ospite. info: { firstName, lastName, tel, email, notes, ref } o null per nasconderla. */
@@ -1447,18 +1421,14 @@ function renderRequestCard(info) {
   const tel = String(info.tel || "");
   const digits = tel.replace(/\D/g, "");
   const intl = tel.trim().startsWith("+");
-  const lines = [];
-  if (tel) lines.push("📞 " + tel + (intl ? "" : "  ⚠️ prefisso non indicato"));
-  if (info.email) lines.push("✉️ " + info.email);
-  lines.forEach(l => box.appendChild(el("div", "muted", l)));
   if (info.notes) box.appendChild(el("div", "rc-notes", "📝 " + info.notes));
   const actions = el("div", "rc-actions");
   const link = (href, text, cls) => { const a = el("a", cls, text); a.href = href; if (href.startsWith("http")) a.target = "_blank"; actions.appendChild(a); };
   if (digits) {
     link("https://wa.me/" + digits, "💬 WhatsApp", "rc-wa");
-    link("tel:" + (intl ? "+" : "") + digits, "📞 Chiama");
+    link("tel:" + (intl ? "+" : "") + digits, "📞 " + (intl ? "+" : "") + digits);
   }
-  if (info.email) link("mailto:" + info.email, "✉️ Email");
+  if (info.email) link("mailto:" + info.email, "✉️ " + info.email);
   if (actions.children.length) box.appendChild(actions);
   box.style.display = "";
 }
