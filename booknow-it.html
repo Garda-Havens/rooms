@@ -253,6 +253,34 @@
       }
     });
   </script>
+  <script>
+    // Send the form to Formspree via AJAX, then redirect to our own thank-you page
+    (function () {
+      var form = document.querySelector('.rental-form');
+      var btn = form.querySelector('button[type="submit"]');
+      var btnText = btn.textContent;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.textContent = 'Invio in corso…';
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (res) {
+          if (res.ok) { window.location.href = 'thank-you-it.html'; return; }
+          return res.json().then(function (data) {
+            var msg = data && data.errors ? data.errors.map(function (er) { return er.message; }).join('\n') : '';
+            throw new Error(msg);
+          });
+        }).catch(function (err) {
+          alert('Spiacenti, si è verificato un errore. Riprova oppure contattaci via email o WhatsApp.' + (err && err.message ? '\n\n' + err.message : ''));
+          btn.disabled = false;
+          btn.textContent = btnText;
+        });
+      });
+    })();
+  </script>
   <script src="static/reveal.js"></script>
 </body>
 </html>

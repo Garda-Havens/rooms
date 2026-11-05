@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Thank you – Garda Havens</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="https://www.gardahavens.com/logo.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="https://www.gardahavens.com/logo.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
+  <style>
+    body { padding-top: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;
+           background: linear-gradient(to bottom, var(--clay-dark) 0%, var(--clay) 100%); }
+    .thanks-card { background: var(--ivory); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+                   max-width: 520px; width: 90%; padding: 48px 36px; text-align: center; }
+    .thanks-card .thanks-logo { display: block; height: 90px; margin: 0 auto 18px; }
+    .thanks-card .fa-check-circle { font-size: 2.6rem; color: var(--olive); margin-bottom: 14px; display: block; }
+    .thanks-card h1 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--clay); margin-bottom: 12px; }
+    .thanks-card p { color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+    .thanks-card .redirect-note { font-size: .9rem; opacity: .75; margin-top: 18px; }
+    .thanks-card a.btn-guide { display: inline-block; margin-top: 22px; padding: 12px 28px; background: var(--olive);
+                               color: var(--cream); text-decoration: none; border-radius: var(--radius); font-weight: 500; }
+    .thanks-card a.btn-guide:hover { background: var(--olive-light); }
+  </style>
+</head>
+<body>
+  <div class="thanks-card">
+    <img src="static/img/logonobg.png" alt="Garda Havens" class="thanks-logo">
+    <i class="fas fa-check-circle"></i>
+    <h1>Thank you!</h1>
+    <p>We've received your request and will get back to you as soon as possible.</p>
+    <p class="redirect-note">You will be taken to our guidebook in <span id="countdown">8</span> seconds.</p>
+    <a class="btn-guide" href="guidebook.html">Go to the guidebook</a>
+  </div>
+
+  <script>
+    var target = 'guidebook.html';
+    var seconds = 8;
+    var counter = document.getElementById('countdown');
+    var timer = setInterval(function () {
+      seconds--;
+      counter.textContent = seconds;
+      if (seconds <= 0) { clearInterval(timer); window.location.replace(target); }
+    }, 1000);
+  </script>
+</body>
+</html>
