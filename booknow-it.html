@@ -95,7 +95,7 @@
   <!-- FORM -->
   <div class="booking-form-section reveal">
     <p class="section-subtitle" style="margin-bottom:36px;">Verifica Disponibilità</p>
-    <form class="rental-form" action="https://formspree.io/f/mpwdjdqn" method="POST">
+    <form class="rental-form" novalidate>
 
       <div class="form-section-label">Il Tuo Soggiorno</div>
 
@@ -110,41 +110,26 @@
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Adulti *</label>
-          <div class="custom-select" data-name="adults">
-            <div class="select-selected">2 Adulti</div>
-            <div class="select-items select-hide">
-              <div>1 Adulto</div><div>2 Adulti</div><div>3 Adulti</div>
-              <div>4 Adulti</div><div>5 Adulti</div><div>6 Adulti</div>
-            </div>
+      <div class="form-group">
+        <label>Numero di camere *</label>
+        <div class="custom-select" data-name="rooms">
+          <div class="select-selected">1 Camera</div>
+          <div class="select-items select-hide">
+            <div data-value="1">1 Camera</div><div data-value="2">2 Camere</div><div data-value="3">3 Camere</div><div data-value="4">4 Camere</div><div data-value="5">5 Camere</div><div data-value="6">6 Camere</div>
           </div>
-          <input type="hidden" name="adults" value="2 Adulti">
         </div>
-        <div class="form-group">
-          <label>Bambini</label>
-          <div class="custom-select" data-name="children">
-            <div class="select-selected">Nessun Bambino</div>
-            <div class="select-items select-hide">
-              <div>Nessun Bambino</div><div>1 Bambino</div><div>2 Bambini</div>
-              <div>3 Bambini</div><div>4 Bambini</div><div>5 Bambini</div>
-            </div>
-          </div>
-          <input type="hidden" name="children" value="Nessun Bambino">
-        </div>
+        <input type="hidden" name="rooms" value="1">
       </div>
 
-      <div class="form-group">
-        <label>Camera *</label>
-        <div class="custom-select" data-name="roomType">
-          <div class="select-selected">Camera 1</div>
-          <div class="select-items select-hide">
-            <div>Camera 1</div><div>Camera 2</div><div>Camera 3</div>
-            <div>Camera 4</div><div>Camera 5</div><div>Camera 6</div>
-          </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="adults">Adulti *</label>
+          <input type="number" name="adults" id="adults" min="1" max="30" step="1" value="2" inputmode="numeric" required>
         </div>
-        <input type="hidden" name="roomType" value="Camera 1">
+        <div class="form-group">
+          <label for="children">Bambini</label>
+          <input type="number" name="children" id="children" min="0" max="30" step="1" value="0" inputmode="numeric">
+        </div>
       </div>
 
       <div class="form-section-label">Le Tue Informazioni</div>
@@ -152,22 +137,54 @@
       <div class="form-row">
         <div class="form-group">
           <label for="firstName">Nome *</label>
-          <input type="text" name="firstName" id="firstName" required>
+          <input type="text" name="firstName" id="firstName" autocomplete="given-name" required>
         </div>
         <div class="form-group">
           <label for="lastName">Cognome *</label>
-          <input type="text" name="lastName" id="lastName" required>
+          <input type="text" name="lastName" id="lastName" autocomplete="family-name" required>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="email">Email *</label>
-          <input type="email" name="email" id="email" required>
+          <input type="email" name="email" id="email" autocomplete="email" required>
         </div>
         <div class="form-group">
-          <label for="phone">Telefono *</label>
-          <input type="tel" name="phone" id="phone" required>
+          <label for="phone">Telefono / WhatsApp *</label>
+          <div class="phone-input">
+            <select name="phonePrefix" id="phonePrefix" aria-label="Prefisso" required>
+            <option value="" disabled>Prefisso</option>
+            <option value="39" selected>+39 Italia</option>
+            <option value="49">+49 Germania</option>
+            <option value="43">+43 Austria</option>
+            <option value="41">+41 Svizzera</option>
+            <option value="31">+31 Paesi Bassi</option>
+            <option value="32">+32 Belgio</option>
+            <option value="33">+33 Francia</option>
+            <option value="44">+44 Regno Unito</option>
+            <option value="353">+353 Irlanda</option>
+            <option value="34">+34 Spagna</option>
+            <option value="351">+351 Portogallo</option>
+            <option value="45">+45 Danimarca</option>
+            <option value="46">+46 Svezia</option>
+            <option value="47">+47 Norvegia</option>
+            <option value="358">+358 Finlandia</option>
+            <option value="48">+48 Polonia</option>
+            <option value="420">+420 Rep. Ceca</option>
+            <option value="421">+421 Slovacchia</option>
+            <option value="36">+36 Ungheria</option>
+            <option value="386">+386 Slovenia</option>
+            <option value="385">+385 Croazia</option>
+            <option value="40">+40 Romania</option>
+            <option value="30">+30 Grecia</option>
+            <option value="352">+352 Lussemburgo</option>
+            <option value="1">+1 USA / Canada</option>
+            <option value="other">Altro…</option>
+            </select>
+            <input type="text" id="phonePrefixOther" placeholder="+xx" inputmode="tel" aria-label="Prefisso" hidden>
+            <input type="tel" name="phone" id="phone" placeholder="Numero" autocomplete="tel-national" required>
+          </div>
         </div>
       </div>
 
@@ -176,8 +193,11 @@
         <textarea name="specialRequests" id="specialRequests"></textarea>
       </div>
 
-      <!-- One-line summary for the WhatsApp notification, pasted into the generator -->
-      <input type="hidden" name="gh" id="ghCode">
+      <!-- Anti-spam: hidden from people, bots fill it in -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+      </div>
 
       <button type="submit">Invia Richiesta</button>
     </form>
@@ -243,7 +263,7 @@
       items.querySelectorAll("div").forEach(opt => {
         opt.addEventListener("click", () => {
           selected.textContent = opt.textContent;
-          if(hidden) hidden.value = opt.textContent;
+          if(hidden) hidden.value = opt.dataset.value || opt.textContent;
           items.classList.add("select-hide");
           selected.classList.remove("select-arrow-active");
         });
@@ -257,39 +277,61 @@
     });
   </script>
   <script>
-    // Send the form to Formspree via AJAX, then redirect to our own thank-you page
+    // Booking request: sent to our Google Apps Script, which notifies us on WhatsApp + email
     (function () {
+      var REQUEST_URL = 'https://script.google.com/macros/s/AKfycbzRomEGmh-v-hcGkZ_S_XITYxa3Mjtdv4AVy56KRqLxd_I5bKGznEO6urS4N2dm8Qixlg/exec';
       var form = document.querySelector('.rental-form');
       var btn = form.querySelector('button[type="submit"]');
       var btnText = btn.textContent;
+      var prefix = document.getElementById('phonePrefix');
+      var prefixOther = document.getElementById('phonePrefixOther');
+
+      prefix.addEventListener('change', function () {
+        prefixOther.hidden = prefix.value !== 'other';
+        if (!prefixOther.hidden) prefixOther.focus();
+      });
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        // Build the one-line summary (no line breaks: WhatsApp templates don't allow them)
-        var val = function (n) { return ((form.elements[n] || {}).value || '').replace(/[|\r\n]+/g, ' ').trim(); };
-        var num = function (n) { var m = val(n).match(/\d+/); return m ? m[0] : '0'; };
-        document.getElementById('ghCode').value = [
-          'GH', 'lang=it',
-          'in=' + val('checkinDate'), 'out=' + val('checkoutDate'),
-          'room=' + num('roomType'), 'adults=' + num('adults'), 'kids=' + num('children'),
-          'name=' + val('firstName'), 'surname=' + val('lastName'), 'tel=' + val('phone')
-        ].join('|');
+        var f = form.elements;
+        var v = function (n) { return (f[n].value || '').trim(); };
+
+        var code = prefix.value === 'other' ? prefixOther.value.replace(/\D/g, '') : prefix.value;
+        if (!form.checkValidity()) {
+          var bad = form.querySelector(':invalid');
+          if (bad === prefix) { alert('Seleziona il prefisso del telefono.'); prefix.focus(); return; }
+          form.reportValidity ? form.reportValidity() : alert('Compila tutti i campi obbligatori (*).');
+          return;
+        }
+        if (!code) { alert('Seleziona il prefisso del telefono.'); (prefix.value === 'other' ? prefixOther : prefix).focus(); return; }
+        if (v('checkoutDate') <= v('checkinDate')) { alert('La data di check-out deve essere successiva al check-in.'); f.checkoutDate.focus(); return; }
+
+        var data = {
+          lang: 'it',
+          checkin: v('checkinDate'), checkout: v('checkoutDate'),
+          rooms: v('rooms'), adults: v('adults'), children: v('children') || '0',
+          firstName: v('firstName'), lastName: v('lastName'), email: v('email'),
+          phone: '+' + code + ' ' + v('phone'),
+          notes: v('specialRequests'),
+          website: v('website')
+        };
+
         btn.disabled = true;
         btn.textContent = 'Invio in corso…';
-        fetch(form.action, {
+        fetch(REQUEST_URL, {
           method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        }).then(function (res) {
-          if (res.ok) { window.location.href = 'thank-you-it.html'; return; }
-          return res.json().then(function (data) {
-            var msg = data && data.errors ? data.errors.map(function (er) { return er.message; }).join('\n') : '';
-            throw new Error(msg);
+          headers: { 'Content-Type': 'text/plain' }, // text/plain avoids the CORS preflight Apps Script can't answer
+          body: JSON.stringify(data)
+        }).then(function (res) { return res.json(); })
+          .then(function (json) {
+            if (json && json.ok) { window.location.href = 'thank-you-it.html'; return; }
+            throw new Error(json && json.error || '');
+          })
+          .catch(function (err) {
+            alert('Spiacenti, si è verificato un errore. Riprova oppure contattaci via email o WhatsApp.' + (err && err.message ? '\n\n' + err.message : ''));
+            btn.disabled = false;
+            btn.textContent = btnText;
           });
-        }).catch(function (err) {
-          alert('Spiacenti, si è verificato un errore. Riprova oppure contattaci via email o WhatsApp.' + (err && err.message ? '\n\n' + err.message : ''));
-          btn.disabled = false;
-          btn.textContent = btnText;
-        });
       });
     })();
   </script>

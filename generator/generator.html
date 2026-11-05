@@ -173,7 +173,7 @@
       <!-- STEP 0: Incolla richiesta dal sito (WhatsApp Formspree) -->
       <div class="section">
         <h2>Incolla richiesta dal sito</h2>
-        <textarea id="pasteRequest" placeholder="Incolla qui il messaggio WhatsApp di Formspree (la riga che inizia con GH|...)"></textarea>
+        <textarea id="pasteRequest" placeholder="Incolla qui il messaggio WhatsApp della richiesta (contiene la riga GH|...)"></textarea>
         <div class="row" style="margin-top:8px;">
           <button id="fillFromRequest" class="secondary">Compila dalla richiesta</button>
           <span class="muted" id="pasteStatus"></span>
@@ -1360,7 +1360,7 @@ document.getElementById("resetTop").addEventListener("click", resetAll);
 document.getElementById("resetBottom").addEventListener("click", resetAll);
 
 /* ═══════════════════════════════════════════════════════════════════════
-   INCOLLA RICHIESTA (riga "GH|lang=..|in=..|out=..|room=..|adults=..|kids=..|name=..|surname=..|tel=..")
+   INCOLLA RICHIESTA (riga "GH|lang=..|in=..|out=..|rooms=..|adults=..|kids=..|name=..|surname=..|tel=..")
 ═══════════════════════════════════════════════════════════════════════ */
 function parseRequest(text) {
   const m = text.match(/GH\|[^\n]*/);
@@ -1409,18 +1409,19 @@ function fillFromRequest() {
   if (!d) { status.textContent = "⚠️ Riga GH|... non trovata"; return; }
   const warnings = [];
 
-  // Camera (singola)
-  $("multiBooking").checked = false;
-  const room = Number(d.room);
-  document.querySelectorAll('input[name="roomCheck"]').forEach(c => c.checked = Number(c.value) === room);
-  if (!ROOMS.some(r => r.id === room)) warnings.push("camera non riconosciuta");
+  // Camere: il sito chiede solo quante ne servono, quali le scegli tu
+  const nRooms = Number(d.rooms) || 1;
+  document.querySelectorAll('input[name="roomCheck"]').forEach(c => c.checked = false);
+  $("multiBooking").checked = nRooms > 1;
   syncModeUI();
+  const todo = `👉 seleziona ${nRooms === 1 ? "la camera" : nRooms + " camere"}`;
 
   // Ospiti = adulti + bambini
   const total = (Number(d.adults) || 0) + (Number(d.kids) || 0);
   const maxOpt = Math.max(...[...$("guests").options].map(o => Number(o.value)));
   $("guests").value = String(Math.min(Math.max(total, 1), maxOpt));
-  if (total > maxOpt) warnings.push(`${total} ospiti: impostato ${maxOpt}`);
+  if (nRooms === 1 && total > maxOpt) warnings.push(`${total} ospiti: impostato ${maxOpt}`);
+  if (nRooms > 1) warnings.push(`${total} ospiti da dividere tra le camere`);
 
   // Date
   if (/^\d{4}-\d{2}-\d{2}$/.test(d.in || ""))  $("checkin").value  = d.in;  else warnings.push("check-in mancante");
@@ -1436,7 +1437,7 @@ function fillFromRequest() {
   buildOutputs();
   renderSnippets();
   const who = [d.name, d.surname].filter(Boolean).join(" ");
-  status.textContent = (warnings.length ? "⚠️ " + warnings.join(" · ") : "✅ Compilato") + (who ? ` – ${who}` : "");
+  status.textContent = (warnings.length ? "⚠️ " + warnings.join(" · ") : "✅ Compilato") + (who ? ` – ${who}` : "") + " · " + todo;
 }
 $("fillFromRequest").addEventListener("click", fillFromRequest);
 
