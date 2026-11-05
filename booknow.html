@@ -152,39 +152,7 @@
         </div>
         <div class="form-group">
           <label for="phone">Phone / WhatsApp *</label>
-          <div class="phone-input">
-            <select name="phonePrefix" id="phonePrefix" aria-label="Country code" required>
-            <option value="" disabled selected>Country code</option>
-            <option value="39">+39 Italy</option>
-            <option value="49">+49 Germany</option>
-            <option value="43">+43 Austria</option>
-            <option value="41">+41 Switzerland</option>
-            <option value="31">+31 Netherlands</option>
-            <option value="32">+32 Belgium</option>
-            <option value="33">+33 France</option>
-            <option value="44">+44 United Kingdom</option>
-            <option value="353">+353 Ireland</option>
-            <option value="34">+34 Spain</option>
-            <option value="351">+351 Portugal</option>
-            <option value="45">+45 Denmark</option>
-            <option value="46">+46 Sweden</option>
-            <option value="47">+47 Norway</option>
-            <option value="358">+358 Finland</option>
-            <option value="48">+48 Poland</option>
-            <option value="420">+420 Czech Republic</option>
-            <option value="421">+421 Slovakia</option>
-            <option value="36">+36 Hungary</option>
-            <option value="386">+386 Slovenia</option>
-            <option value="385">+385 Croatia</option>
-            <option value="40">+40 Romania</option>
-            <option value="30">+30 Greece</option>
-            <option value="352">+352 Luxembourg</option>
-            <option value="1">+1 USA / Canada</option>
-            <option value="other">Other…</option>
-            </select>
-            <input type="text" id="phonePrefixOther" placeholder="+xx" inputmode="tel" aria-label="Country code" hidden>
-            <input type="tel" name="phone" id="phone" placeholder="Number" autocomplete="tel-national" required>
-          </div>
+          <input type="tel" name="phone" id="phone" placeholder="+44 7700 900123" autocomplete="tel" required>
         </div>
       </div>
 
@@ -285,27 +253,16 @@
       var form = document.querySelector('.rental-form');
       var btn = form.querySelector('button[type="submit"]');
       var btnText = btn.textContent;
-      var prefix = document.getElementById('phonePrefix');
-      var prefixOther = document.getElementById('phonePrefixOther');
-
-      prefix.addEventListener('change', function () {
-        prefixOther.hidden = prefix.value !== 'other';
-        if (!prefixOther.hidden) prefixOther.focus();
-      });
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var f = form.elements;
         var v = function (n) { return (f[n].value || '').trim(); };
 
-        var code = prefix.value === 'other' ? prefixOther.value.replace(/\D/g, '') : prefix.value;
         if (!form.checkValidity()) {
-          var bad = form.querySelector(':invalid');
-          if (bad === prefix) { alert('Please select your phone country code.'); prefix.focus(); return; }
           form.reportValidity ? form.reportValidity() : alert('Please fill in all required fields (*).');
           return;
         }
-        if (!code) { alert('Please select your phone country code.'); (prefix.value === 'other' ? prefixOther : prefix).focus(); return; }
         if (v('checkoutDate') <= v('checkinDate')) { alert('The check-out date must be after the check-in date.'); f.checkoutDate.focus(); return; }
 
         var data = {
@@ -313,7 +270,7 @@
           checkin: v('checkinDate'), checkout: v('checkoutDate'),
           rooms: v('rooms'), adults: v('adults'), children: v('children') || '0',
           firstName: v('firstName'), lastName: v('lastName'), email: v('email'),
-          phone: '+' + code + ' ' + v('phone'),
+          phone: v('phone'),
           notes: v('specialRequests'),
           website: v('website')
         };

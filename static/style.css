@@ -1256,21 +1256,6 @@ ul { list-style: none; }
 
 .form-group textarea { min-height: 110px; resize: vertical; }
 
-/* Phone: country code + number */
-.phone-input { display: flex; gap: 8px; }
-.phone-input select {
-  flex: 0 0 auto; max-width: 46%;
-  padding: 13px 10px;
-  border: 1px solid #d4b896;
-  border-radius: var(--radius);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--text);
-  background: var(--ivory);
-}
-.phone-input select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,146,58,0.15); }
-.phone-input #phonePrefixOther { flex: 0 0 72px; width: 72px; }
-.phone-input input[type="tel"] { flex: 1 1 auto; min-width: 0; }
 
 /* Anti-spam honeypot */
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
