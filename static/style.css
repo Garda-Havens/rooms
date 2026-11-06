@@ -135,8 +135,11 @@ ul { list-style: none; }
   color: var(--cream);
 }
 
-.lang-link img { height: 22px; width: auto; border-radius: 0; opacity: 0.85; transition: opacity 0.2s; }
-.lang-link img:hover { opacity: 1; }
+/* Flags as CSS backgrounds so search engines don't pick them as the page thumbnail */
+.lang-link { display: inline-block; width: 37px; height: 22px; background: center / contain no-repeat content-box; box-sizing: content-box; opacity: 0.85; transition: opacity 0.2s; vertical-align: middle; }
+.lang-link:hover { opacity: 1; }
+.lang-en { background-image: url("img/uk.png"); }
+.lang-it { background-image: url("img/it.png"); }
 
 /* Hamburger */
 .menu-toggle {
