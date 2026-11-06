@@ -304,7 +304,7 @@
         </div>
         <div>
           <label>Sconto €/notte</label>
-          <input id="discountPerNight" type="number" min="0" step="10" value="10" />
+          <input id="discountPerNight" type="number" min="0" step="10" value="0" />
         </div>
         <div>
           <label>Extra sconto</label>
@@ -358,6 +358,7 @@
   </div><!-- /wrap -->
 
 
+<script src="../static/js/prices.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════
    0. ACCESS GATE (Secure Version with Apps Script)
@@ -443,8 +444,9 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHbv_XBgYojwiD
  * @param {string}  phone
  * @param {string}  checkin   - YYYY-MM-DD
  * @param {string}  checkout  - YYYY-MM-DD
+ * @param {string}  description - prezzi concordati (va nella descrizione dell'evento)
  */
-async function createCalendarEvent(btn, roomId, guestName, phone, checkin, checkout) {
+async function createCalendarEvent(btn, roomId, guestName, phone, checkin, checkout, description) {
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "INCOLLA_QUI_URL_APPS_SCRIPT") {
     alert("⚙️ Configura prima APPS_SCRIPT_URL nel codice HTML.");
     return;
@@ -460,13 +462,25 @@ async function createCalendarEvent(btn, roomId, guestName, phone, checkin, check
   btn.style.opacity = "0.7";
   btn.style.pointerEvents = "none";
 
-  try {
-    const res  = await fetch(APPS_SCRIPT_URL, {
+  // Codice d'accesso: lo script del calendario accetta solo richieste con il codice del generatore
+  const send = async () => {
+    let k = localStorage.getItem("ghKey");
+    if (!k) {
+      k = (prompt("Inserisci il codice d'accesso per salvare sul calendario") || "").trim();
+      if (!k) return { ok: false, error: "auth" };
+      localStorage.setItem("ghKey", k);
+    }
+    const res = await fetch(APPS_SCRIPT_URL, {
       method:  "POST",
       headers: { "Content-Type": "text/plain" }, // Apps Script richiede text/plain per evitare preflight CORS
-      body:    JSON.stringify({ roomId, title, checkin, checkout }),
+      body:    JSON.stringify({ k, roomId, title, checkin, checkout, description }),
     });
-    const json = await res.json();
+    return res.json();
+  };
+
+  try {
+    let json = await send();
+    if (json.error === "auth") { localStorage.removeItem("ghKey"); json = await send(); } // codice vecchio: lo richiede una volta
 
     if (json.ok) {
       btn.innerHTML     = "✅ Salvato";
@@ -477,6 +491,9 @@ async function createCalendarEvent(btn, roomId, guestName, phone, checkin, check
       btn.style.background = "#c0392b";
       btn.style.borderColor = "#c0392b";
       console.error("Apps Script error:", json.error);
+      const msg = { auth: "codice d'accesso errato", locked: "troppi tentativi con codice sbagliato, riprova tra un'ora",
+        not_configured: "nello script del calendario manca la proprietà GENERATOR_KEY" };
+      if (msg[json.error]) alert("Calendario: " + msg[json.error]);
     }
   } catch (err) {
     btn.innerHTML = "❌ Rete";
@@ -542,6 +559,69 @@ function priceForRoom(roomId, guests) {
   return room ? (room.prices[guests] ?? null) : null;
 }
 
+/** Richiesta caricata (#r= o riga GH): contatti, rif. e data di invio */
+var currentRequest = null;
+
+/** Preventivo di una camera dal listino unico (prezzo notte per notte + promo).
+ *  Ritorna { error:"guests"|"contact" } oppure { nightly:[€...], full, promos:[{it,en,amount}] } */
+function roomQuote(rid, guests, checkin, checkout) {
+  const n = nightsBetween(checkin, checkout);
+  if (!window.GHPrices) {               // listino non caricato: prezzi fissi di riserva
+    const p = priceForRoom(rid, guests);
+    return p === null ? { error: "guests" } : { nightly: Array(n).fill(p), full: p * n, promos: [] };
+  }
+  // Promo: valgono nel giorno in cui l'ospite ha mandato la richiesta (se la conosciamo), altrimenti oggi
+  const bookedOn = currentRequest && /^\d{4}-\d{2}-\d{2}$/.test(currentRequest.sent || "") ? currentRequest.sent : undefined;
+  const q = GHPrices.quote({ roomId: rid, guests, checkin, checkout, bookedOn });
+  if (q.error) return q;
+  return { nightly: q.nights.map(x => x.price), full: q.subtotal,
+           promos: q.discounts.filter(x => x.kind === "promo") };
+}
+
+/** "€70 a notte"  oppure  "2 notti a €70 + 1 notte a €90" */
+function nightlyLabel(nightly, lang) {
+  const it = lang === "it";
+  const groups = [];
+  nightly.forEach(p => {
+    const g = groups.find(x => x.p === p);
+    g ? g.n++ : groups.push({ p, n: 1 });
+  });
+  if (groups.length === 1) return it ? `${formatEuro(groups[0].p)} a notte` : `${formatEuro(groups[0].p)} per night`;
+  return groups.map(g => it ? `${g.n} ${pluralIT(g.n)} a ${formatEuro(g.p)}` : `${g.n} ${pluralEN(g.n)} at ${formatEuro(g.p)}`).join(" + ");
+}
+
+/** Righe promo (sommate su tutte le camere) */
+function promoLines(roomData, lang) {
+  const sum = {};
+  roomData.forEach(r => (r.promos || []).forEach(p => {
+    const k = lang === "it" ? p.it : p.en;
+    sum[k] = (sum[k] || 0) + p.amount;
+  }));
+  return Object.keys(sum).map(k => `${k}: -${formatEuro(sum[k])}`);
+}
+
+/** Descrizione dell'evento calendario: prezzi concordati per una camera.
+ *  r: { rid, g, nightly, full, promos }, manualPerNight: sconti manuali €/notte */
+function calendarDescription(r, { guests, nights, checkin, checkout, manualPerNight, manualLines }) {
+  if (r.missing) return "Prezzo: da definire";
+  const promos = r.promos || [];
+  const promoTot = promos.reduce((s, p) => s + p.amount, 0);
+  const manual = manualPerNight * nights;
+  const total = r.full - manual - promoTot;
+  const g = guests === 1 ? "1 ospite" : `${guests} ospiti`;
+  const out = [
+    `Camera ${r.rid} · ${g} · ${formatDateIT(checkin)}–${formatDateIT(checkout)} (${nights} ${pluralIT(nights)})`,
+    `Prezzo: ${nightlyLabel(r.nightly, "it")} = ${formatEuro(r.full)}`,
+    ...(manual > 0 ? manualLines.map(l => `${l} → -${formatEuro(manual)}`) : []),
+    ...promos.map(p => `${p.it} (${p.pct}%): -${formatEuro(p.amount)}`),
+    `TOTALE CONCORDATO: ${formatEuro(total)}` + (total !== r.full ? ` (invece di ${formatEuro(r.full)})` : ""),
+  ];
+  const req = currentRequest;
+  if (req && (req.ref || req.email || req.sent)) out.push([req.ref ? `Rif. ${req.ref}` : "", req.sent ? `richiesta del ${formatDateIT(req.sent)}` : "", req.email || ""].filter(Boolean).join(" · "));
+  out.push(`Offerta creata il ${formatDateIT(new Date().toISOString().slice(0,10))}`);
+  return out.join("\n");
+}
+
 function getSelectedRooms() {
   return [...document.querySelectorAll('input[name="roomCheck"]:checked')]
     .map(c => Number(c.value));
@@ -593,7 +673,9 @@ function autoSetCheckoutFromCheckin() {
 
 function autoSetDiscount() {
   const n = nightsBetween($("checkin").value, $("checkout").value);
-  $("discountPerNight").value = n >= 2 ? "10" : "0";
+  // Sconto più notti dal listino (static/js/prices.js); se è spento resta 0
+  const ls = window.GHPrices && GHPrices.data.longStay;
+  $("discountPerNight").value = ls && n >= ls.minNights ? String(ls.perNight) : "0";
 }
 
 
@@ -710,47 +792,54 @@ function computeDiscounts(discountPerNight, extraDiscountType, customDiscountPer
 
 // ── 6a. Standard (single guest count across all rooms) ────────────────
 function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, emoji, extra, signature }) {
-  const prices   = rooms.map(rid => priceForRoom(rid, guests));
-  const missing  = prices.some(p => p === null);
+  const roomData = rooms.map(rid => {
+    const q = roomQuote(rid, guests, checkin, checkout);
+    const disc = q.error ? 0 : d.totalDiscountPerNight * nights + q.promos.reduce((s, p) => s + p.amount, 0);
+    return { rid, ...q, missing: !!q.error, disc, total: q.error ? null : q.full - disc };
+  });
+  const missing  = roomData.some(r => r.missing);
+  const contact  = roomData.some(r => r.error === "contact");
   const ci  = formatDateIT(checkin), co = formatDateIT(checkout);
   const ciE = formatDateEN(checkin), coE = formatDateEN(checkout);
   const roomsStr = rooms.slice().sort((a,b)=>a-b).join(", ");
-  const discTotal = (!missing && d.totalDiscountPerNight > 0) ? d.totalDiscountPerNight * nights : 0;
+  const labelsIT = roomData.map(r => r.missing ? "" : nightlyLabel(r.nightly, "it"));
+  const labelsEN = roomData.map(r => r.missing ? "" : nightlyLabel(r.nightly, "en"));
+  const prices   = labelsIT; // per il confronto "tutte uguali"
 
   // Price lines
   const priceLineIT = missing
-    ? "Tariffa: da verificare per questo numero di ospiti."
-    : allSame(prices)
-      ? `Prezzo: ${formatEuro(prices[0])} a notte`
-      : `Prezzo per notte:\n${rooms.map((rid,i)=>`• Camera ${rid}: ${formatEuro(prices[i])}/notte`).join("\n")}`;
+    ? (contact ? "Tariffa: da definire per queste date." : "Tariffa: da verificare per questo numero di ospiti.")
+    : allSame(labelsIT)
+      ? `Prezzo: ${labelsIT[0]}`
+      : `Prezzo per notte:\n${roomData.map((r,i)=>`• Camera ${r.rid}: ${labelsIT[i]}`).join("\n")}`;
 
   const priceLineEN = missing
-    ? "Rate: to be confirmed for this number of guests."
-    : allSame(prices)
-      ? `Rate: ${formatEuro(prices[0])} per night`
-      : `Nightly rate:\n${rooms.map((rid,i)=>`• Room ${rid}: ${formatEuro(prices[i])}/night`).join("\n")}`;
+    ? (contact ? "Rate: to be defined for these dates." : "Rate: to be confirmed for this number of guests.")
+    : allSame(labelsEN)
+      ? `Rate: ${labelsEN[0]}`
+      : `Nightly rate:\n${roomData.map((r,i)=>`• Room ${r.rid}: ${labelsEN[i]}`).join("\n")}`;
+
+  const promoIT = missing ? [] : promoLines(roomData, "it");
+  const promoEN = missing ? [] : promoLines(roomData, "en");
 
   // Total lines
   function totalLine(lang) {
     if (missing) return "";
     const isIT   = lang === "it";
     const roomLbl = isIT ? "Camera" : "Room";
+    const sameAll = allSame(roomData.map(r => r.full)) && allSame(roomData.map(r => r.disc));
 
-    if (allSame(prices)) {
-      const full  = prices[0] * nights;
-      const total = full - discTotal;
-      return discTotal > 0
+    if (sameAll) {
+      const full  = roomData[0].full;
+      const total = roomData[0].total;
+      return roomData[0].disc > 0
         ? (isIT ? `Totale ${formatEuro(total)} invece di ${formatEuro(full)}` : `Total: ${formatEuro(total)} instead of ${formatEuro(full)}`)
         : (isIT ? `Totale ${formatEuro(full)}` : `Total: ${formatEuro(full)}`);
     }
-    const lines = rooms.map((rid,i) => {
-      const full  = prices[i] * nights;
-      const total = full - discTotal;
-      return discTotal > 0
-        ? `• ${roomLbl} ${rid}: ${formatEuro(total)} (invece di ${formatEuro(full)})`
-        : `• ${roomLbl} ${rid}: ${formatEuro(full)}`;
-    });
-    return (isIT ? `Totale (${nights} ${pluralIT(nights)}):\n` : `Total (${nights} ${pluralEN(nights)}):\n`) + lines.join("\n");
+    const ls = roomData.map(r => r.disc > 0
+        ? `• ${roomLbl} ${r.rid}: ${formatEuro(r.total)} (${isIT ? "invece di" : "instead of"} ${formatEuro(r.full)})`
+        : `• ${roomLbl} ${r.rid}: ${formatEuro(r.full)}`);
+    return (isIT ? `Totale (${nights} ${pluralIT(nights)}):\n` : `Total (${nights} ${pluralEN(nights)}):\n`) + ls.join("\n");
   }
 
   const siteIT = "Puoi visitare www.gardahavens.com per consultare foto, listino prezzi e informazioni su biglietti convenzionati per le attrazioni locali.";
@@ -766,6 +855,7 @@ function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, em
     `confermiamo la disponibilità ${roomLabelIT} per ${guestLabelIT} nel periodo ${ci}–${co} (${nights} ${pluralIT(nights)})${emoji ? " "+emoji : ""}.`,
     priceLineIT,
     d.discountLineIT || null,
+    ...promoIT,
     totalLine("it") || null,
     "(esclusa tassa di soggiorno e bollo)",
     "Cancellazione gratuita, pagamento al check-in.",
@@ -779,6 +869,7 @@ function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, em
     `we confirm the availability of ${roomLabelEN} for ${guestLabelEN} from ${ciE} to ${coE} (${nights} ${pluralEN(nights)})${emoji ? " "+emoji : ""}.`,
     priceLineEN,
     d.discountLineEN || null,
+    ...promoEN,
     totalLine("en") || null,
     "(city tax and stamp duty not included)",
     "Free cancellation, payment at check-in.",
@@ -799,17 +890,23 @@ function buildStandardMessages({ rooms, guests, nights, checkin, checkout, d, em
     signature
   ].join("\n");
 
-  const priceHint = missing
+  const priceHint = contact
+    ? "⚠️ Date oltre il listino (dal " + (Number(GHPrices.data.validUntil.slice(0,4)) + 1) + "): prezzo da definire a mano."
+    : missing
     ? "⚠️ Alcune camere non hanno prezzo per quel numero di ospiti (controlla)."
     : allSame(prices)
-      ? `Prezzo per ${guests} ospiti: ${formatEuro(prices[0])}/notte`
+      ? `Prezzo per ${guests} ospiti: ${labelsIT[0]}`
       : "Prezzi diversi tra camere selezionate";
+
+  const calDesc = {};
+  roomData.forEach(r => { calDesc[r.rid] = calendarDescription(r, { guests, nights, checkin, checkout,
+    manualPerNight: d.totalDiscountPerNight, manualLines: d.discountLineIT ? d.discountLineIT.split("\n") : [] }); });
 
   return { messages: [
     { title:"Offerta (IT)",        text:formalIT, lang:"it" },
     { title:"Offer (EN)",          text:formalEN, lang:"en" },
-    { title:"Conferma (IT)",       text:shortIT,  lang:"it",  gcal:{ rooms, checkin, checkout } },
-    { title:"Confirmation (EN)",   text:shortEN,  lang:"en",  gcal:{ rooms, checkin, checkout } },
+    { title:"Conferma (IT)",       text:shortIT,  lang:"it",  gcal:{ rooms, checkin, checkout, desc: calDesc } },
+    { title:"Confirmation (EN)",   text:shortEN,  lang:"en",  gcal:{ rooms, checkin, checkout, desc: calDesc } },
   ], priceHint };
 }
 
@@ -822,28 +919,31 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
   // Per-room data
   const roomData = rooms.map((rid, i) => {
     const g = roomGuests[i];
-    const p = priceForRoom(rid, g);
-    return { rid, g, p, missing: p === null };
+    const q = roomQuote(rid, g, checkin, checkout);
+    const promo = q.error ? 0 : q.promos.reduce((s, p) => s + p.amount, 0);
+    return { rid, g, ...q, missing: !!q.error, promo };
   });
 
   const anyMissing = roomData.some(r => r.missing);
+  const contact = roomData.some(r => r.error === "contact");
   const totalGuests = roomGuests.reduce((s, g) => s + g, 0);
   const discPerRoom = d.totalDiscountPerNight; // applied per room per night
 
   // Build per-room lines
   function roomLines(lang) {
-    return roomData.map(({ rid, g, p, missing }) => {
-      const full  = missing ? null : p * nights;
-      const disc  = (!missing && discPerRoom > 0) ? discPerRoom * nights : 0;
+    return roomData.map(({ rid, g, nightly, full, promo, missing, error }) => {
+      const disc  = missing ? 0 : discPerRoom * nights + promo;
       const total = missing ? null : full - disc;
       const gLabel = lang === "it"
         ? (g === 1 ? "1 ospite" : `${g} ospiti`)
         : (g === 1 ? "1 guest" : `${g} guests`);
+      const it = lang === "it";
+      const lbl = missing ? "" : nightlyLabel(nightly, lang);
       const priceStr = missing
-        ? (lang === "it" ? "tariffa da verificare" : "rate to be confirmed")
+        ? (error === "contact" ? (it ? "tariffa da definire" : "rate to be defined") : (it ? "tariffa da verificare" : "rate to be confirmed"))
         : disc > 0
-          ? `${formatEuro(p)}/notte → ${formatEuro(total)} (invece di ${formatEuro(full)})`
-          : `${formatEuro(p)}/notte → tot. ${formatEuro(full)}`;
+          ? `${lbl} → ${formatEuro(total)} (${it ? "invece di" : "instead of"} ${formatEuro(full)})`
+          : `${lbl} → tot. ${formatEuro(full)}`;
       return lang === "it"
         ? `• Camera ${rid} (${gLabel}): ${priceStr}`
         : `• Room ${rid} (${gLabel}): ${priceStr}`;
@@ -854,9 +954,9 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
   function grandTotal() {
     if (anyMissing) return null;
     let fullSum = 0, discSum = 0;
-    roomData.forEach(({ p }) => {
-      fullSum += p * nights;
-      discSum += discPerRoom * nights;
+    roomData.forEach(({ full, promo }) => {
+      fullSum += full;
+      discSum += discPerRoom * nights + promo;
     });
     return { full: fullSum, total: fullSum - discSum, hasDisc: discSum > 0 };
   }
@@ -883,6 +983,7 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
     `confermiamo la disponibilità delle Camere n. ${roomsStr} per il vostro gruppo (${totalGuests} ospiti in totale) nel periodo ${ci}–${co} (${nights} ${pluralIT(nights)})${emoji ? " "+emoji : ""}.`,
     "Dettaglio per camera:", ...roomLines("it"),
     d.discountLineIT || null,
+    ...(anyMissing ? [] : promoLines(roomData, "it")),
     totalLineIT || null,
     "(esclusa tassa di soggiorno e bollo)",
     "Cancellazione gratuita, pagamento al check-in.",
@@ -896,6 +997,7 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
     `we confirm the availability of Rooms no. ${roomsStr} for your group (${totalGuests} guests in total) from ${ciE} to ${coE} (${nights} ${pluralEN(nights)})${emoji ? " "+emoji : ""}.`,
     "Room breakdown:", ...roomLines("en"),
     d.discountLineEN || null,
+    ...(anyMissing ? [] : promoLines(roomData, "en")),
     totalLineEN || null,
     "(city tax and stamp duty not included)",
     "Free cancellation, payment at check-in.",
@@ -916,15 +1018,21 @@ function buildMultiMessages({ rooms, roomGuests, nights, checkin, checkout, d, e
     signature
   ].join("\n");
 
-  const priceHint = anyMissing
+  const priceHint = contact
+    ? "⚠️ Date oltre il listino (dal " + (Number(GHPrices.data.validUntil.slice(0,4)) + 1) + "): prezzo da definire a mano."
+    : anyMissing
     ? "⚠️ Alcune camere non hanno prezzo per il numero di ospiti selezionato."
     : `Gruppo: ${totalGuests} ospiti totali in ${rooms.length} camere`;
+
+  const calDesc = {};
+  roomData.forEach(r => { calDesc[r.rid] = calendarDescription(r, { guests: r.g, nights, checkin, checkout,
+    manualPerNight: discPerRoom, manualLines: d.discountLineIT ? d.discountLineIT.split("\n") : [] }); });
 
   return { messages: [
     { title:"Offerta Gruppo (IT)",       text:formalIT, lang:"it" },
     { title:"Group Offer (EN)",          text:formalEN, lang:"en" },
-    { title:"Conferma Gruppo (IT)",      text:shortIT,  lang:"it",  gcal:{ rooms, checkin, checkout } },
-    { title:"Group Confirmation (EN)",   text:shortEN,  lang:"en",  gcal:{ rooms, checkin, checkout } },
+    { title:"Conferma Gruppo (IT)",      text:shortIT,  lang:"it",  gcal:{ rooms, checkin, checkout, desc: calDesc } },
+    { title:"Group Confirmation (EN)",   text:shortEN,  lang:"en",  gcal:{ rooms, checkin, checkout, desc: calDesc } },
   ], priceHint };
 }
 
@@ -1037,7 +1145,7 @@ function renderOutputs(outputs) {
 
     // GCal buttons — one per room, below the message text
     if (o.gcal) {
-      const { rooms, checkin, checkout } = o.gcal;
+      const { rooms, checkin, checkout, desc } = o.gcal;
 
       const gcalRow = document.createElement("div");
       gcalRow.className = "gcal-row";
@@ -1055,7 +1163,7 @@ function renderOutputs(outputs) {
         btn.onclick = () => {
           const guestName = getGuestName();
           const phone     = getWaNumber();
-          createCalendarEvent(btn, rid, guestName, phone, checkin, checkout);
+          createCalendarEvent(btn, rid, guestName, phone, checkin, checkout, (desc || {})[rid] || "");
         };
         gcalRow.appendChild(btn);
       });
@@ -1417,7 +1525,7 @@ function fillFromRequest() {
   renderSnippets();
   status.textContent = (warnings.length ? "⚠️ " + warnings.join(" · ") + " · " : "") + todo;
   status.dataset.todo = todo;
-  renderRequestCard({ firstName: d.name, lastName: d.surname, tel: d.tel });
+  renderRequestCard({ firstName: d.name, lastName: d.surname, tel: d.tel, sent: d.sent });
   $("pasteBox").open = false;
 }
 
@@ -1425,6 +1533,7 @@ function fillFromRequest() {
 function renderRequestCard(info) {
   const box = $("requestCard");
   box.innerHTML = "";
+  currentRequest = info || null;   // usato anche nella descrizione dell'evento calendario
   if (!info) { box.style.display = "none"; return; }
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; };
   const name = [info.firstName, info.lastName].filter(Boolean).join(" ") || "Ospite";
@@ -1465,7 +1574,7 @@ async function loadRequest(id, retry) {
       $("pasteRequest").value = r.gh;
       fillFromRequest();
       renderRequestCard({ firstName: r.firstName, lastName: r.lastName, email: r.email, notes: r.notes, ref: r.ref,
-        tel: (r.phoneIntl ? "+" : "") + r.phoneDigits });
+        tel: (r.phoneIntl ? "+" : "") + r.phoneDigits, sent: r.sent });
       return;
     }
     if (json.error === "auth" && !retry) { localStorage.removeItem("ghKey"); return loadRequest(id, true); }

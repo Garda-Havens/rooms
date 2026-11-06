@@ -4,14 +4,14 @@ Run this script whenever you add or remove photos from a room folder.
 - Renames any non-sequential files (e.g. IMG_5177.jpeg) to 1.jpeg, 2.jpeg, …
 - Rewrites the ROOM_PHOTOS block in slideshow.js.
 
-Usage:  python3 sync-photos.py
+Usage:  python3 tools/sync-photos.py
 """
 
 import os, re
 
-BASE   = os.path.dirname(os.path.abspath(__file__))
-STATIC = os.path.join(BASE, 'static')
-JS     = os.path.join(BASE, 'static', 'slideshow.js')
+BASE   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # cartella del sito (tools/ è una sottocartella)
+STATIC = os.path.join(BASE, 'static', 'img', 'camere')
+JS     = os.path.join(BASE, 'static', 'js', 'slideshow.js')
 ROOMS  = [1, 2, 3, 4, 5, 6]
 EXTS   = {'.jpeg', '.jpg', '.png', '.webp'}
 
@@ -62,7 +62,7 @@ for r in ROOMS:
             key=natural_key
         )
 
-    room_photos[r] = [f'static/{r}/{f}' for f in files]
+    room_photos[r] = [f'static/img/camere/{r}/{f}' for f in files]
     print(f'  Room {r}: {len(files)} photo(s) → {files}')
 
 # Build the new ROOM_PHOTOS block

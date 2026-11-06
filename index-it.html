@@ -15,15 +15,26 @@
   <meta property="og:url" content="https://www.gardahavens.com/index-it.html" />
   <meta property="og:title" content="Garda Havens – Camere vicino a Gardaland" />
   <meta property="og:description" content="Camere a Castelnuovo del Garda, a un minuto da Gardaland. Prenota direttamente." />
-  <meta property="og:image" content="https://www.gardahavens.com/static/img/front22.jpeg" />
+  <meta property="og:image" content="https://www.gardahavens.com/static/img/loghi/logo.jpg" />
+  <meta property="og:image:width" content="1400" />
+  <meta property="og:image:height" content="1400" />
   <meta property="og:site_name" content="Garda Havens" />
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script src="static/js/seasonal-logo.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link rel="icon" href="https://www.gardahavens.com/favicon.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "primaryImageOfPage": { "@type": "ImageObject", "url": "https://www.gardahavens.com/static/img/loghi/logo.jpg", "width": 1400, "height": 1400 },
+    "publisher": { "@type": "Organization", "name": "Garda Havens", "url": "https://www.gardahavens.com/", "logo": "https://www.gardahavens.com/static/img/loghi/logo.jpg" }
+  }
+  </script>
 </head>
 <body>
 
@@ -34,7 +45,7 @@
 
   <header class="site-header">
     <div class="header-brand">
-      <img src="static/img/logonobg.png" alt="Garda Havens Logo">
+      <span class="brand-logo" role="img" aria-label="Garda Havens Logo"></span>
       <span class="brand-name">Garda Havens</span>
     </div>
     <div class="menu-toggle" id="menuToggle" aria-label="Menu">
@@ -73,7 +84,7 @@
         </a>
       </div>
       <div class="wa-strip-logo">
-        <img src="static/img/logonobg.png" alt="Garda Havens">
+        <span class="brand-logo" role="img" aria-label="Garda Havens"></span>
       </div>
     </div>
   </div>
@@ -98,7 +109,7 @@
         <div class="rating-icon"><span class="rating-icon-booking">B.</span></div>
         <div class="rating-stars">★★★★★</div>
         <div class="rating-platform">Booking.com</div>
-        <div class="rating-score">9.7<span>/ 10</span></div>
+        <div class="rating-score">9.6<span>/ 10</span></div>
       </div>
       <div class="rating-item">
         <div class="rating-icon"><i class="fab fa-airbnb"></i></div>
@@ -161,7 +172,7 @@
   <!-- NAV CARDS -->
   <div class="nav-cards">
     <a class="nav-card reveal" style="transition-delay:0s;" href="rooms-it.html">
-      <div class="nav-card-bg" style="background-image:url('static/3/8.jpeg')"></div>
+      <div class="nav-card-bg" style="background-image:url('static/img/camere/3/8.jpeg')"></div>
       <div class="nav-card-overlay"></div>
       <div class="nav-card-body">
         <p class="nav-card-label">Alloggio</p>
@@ -170,7 +181,7 @@
       </div>
     </a>
     <a class="nav-card reveal" style="transition-delay:0.15s;" href="booknow-it.html">
-      <div class="nav-card-bg" style="background-image:url('static/esterno/IMG_8150 2.jpeg')"></div>
+      <div class="nav-card-bg" style="background-image:url('static/img/esterno/IMG_8150 2.jpeg')"></div>
       <div class="nav-card-overlay"></div>
       <div class="nav-card-body">
         <p class="nav-card-label">Prenotazioni</p>
@@ -221,7 +232,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2025 Garda Havens. Tutti i diritti riservati. &nbsp;|&nbsp; CIN: IT023022C2FWABW3P7
+      &copy; 2025 Garda Havens. Tutti i diritti riservati. &nbsp;|&nbsp; CIN: IT023022C2FWABW3P7 &nbsp;|&nbsp; <a href="privacy-it.html">Privacy</a>
     </div>
   </footer>
 
@@ -266,8 +277,8 @@
       }, 700);
     }, 8000);
   </script>
-  <script src="static/reveal.js"></script>
-  <script src="static/esterno-photos.js"></script>
+  <script src="static/js/reveal.js"></script>
+  <script src="static/js/esterno-photos.js"></script>
   <script>
     (function () {
       const container = document.getElementById('esternoSlideshow');
@@ -278,7 +289,7 @@
       ESTERNO_PHOTOS.forEach(function (f, i) {
         const d = document.createElement('div');
         d.className = 'esterno-slide' + (i === 0 ? ' active' : '');
-        d.style.backgroundImage = "url('static/esterno/" + encodeURIComponent(f) + "')";
+        d.style.backgroundImage = "url('static/img/esterno/" + encodeURIComponent(f) + "')";
         container.insertBefore(d, hint);
       });
       let cur = 0;
@@ -301,7 +312,7 @@
 
       function showPhoto(idx) {
         lbCur = idx;
-        lbImg.src = 'static/esterno/' + encodeURIComponent(ESTERNO_PHOTOS[lbCur]);
+        lbImg.src = 'static/img/esterno/' + encodeURIComponent(ESTERNO_PHOTOS[lbCur]);
         caption.textContent = (lbCur + 1) + ' / ' + ESTERNO_PHOTOS.length;
       }
       function closeModal() { modal.classList.remove('open'); }

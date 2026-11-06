@@ -11,15 +11,25 @@
   <meta property="og:url" content="https://www.gardahavens.com/craft-corner-it.html" />
   <meta property="og:title" content="L'Angolo dell'Artigiano – Garda Havens" />
   <meta property="og:description" content="Artigiani locali e giovani imprenditori vicino al Lago di Garda, selezionati da Garda Havens." />
-  <meta property="og:image" content="https://www.gardahavens.com/static/img/front22.jpeg" />
+  <meta property="og:image" content="https://www.gardahavens.com/static/img/loghi/logo.jpg" />
+  <meta property="og:image:width" content="1400" />
+  <meta property="og:image:height" content="1400" />
   <meta property="og:site_name" content="Garda Havens" />
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link rel="icon" href="https://www.gardahavens.com/favicon.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "primaryImageOfPage": { "@type": "ImageObject", "url": "https://www.gardahavens.com/static/img/loghi/logo.jpg", "width": 1400, "height": 1400 },
+    "publisher": { "@type": "Organization", "name": "Garda Havens", "url": "https://www.gardahavens.com/", "logo": "https://www.gardahavens.com/static/img/loghi/logo.jpg" }
+  }
+  </script>
 </head>
 <body>
 
@@ -30,7 +40,7 @@
 
   <header class="site-header">
     <div class="header-brand">
-      <img src="static/img/logonobg.png" alt="Garda Havens Logo">
+      <span class="brand-logo" role="img" aria-label="Garda Havens Logo"></span>
       <span class="brand-name">Garda Havens</span>
     </div>
     <div class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></div>
@@ -145,7 +155,7 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2025 Garda Havens. Tutti i diritti riservati. &nbsp;|&nbsp; CIN: IT023022C2FWABW3P7</div>
+    <div class="footer-bottom">&copy; 2025 Garda Havens. Tutti i diritti riservati. &nbsp;|&nbsp; CIN: IT023022C2FWABW3P7 | <a href="privacy-it.html">Privacy</a></div>
   </footer>
 
   <!-- LIGHTBOX -->
@@ -182,6 +192,6 @@
     document.getElementById('craftLightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
   </script>
-  <script src="static/reveal.js"></script>
+  <script src="static/js/reveal.js"></script>
 </body>
 </html>

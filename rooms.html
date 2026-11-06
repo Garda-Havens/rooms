@@ -15,15 +15,25 @@
   <meta property="og:url" content="https://www.gardahavens.com/rooms.html" />
   <meta property="og:title" content="Rooms – Garda Havens" />
   <meta property="og:description" content="Rooms in Castelnuovo del Garda, one minute from Gardaland. Book directly." />
-  <meta property="og:image" content="https://www.gardahavens.com/static/img/front22.jpeg" />
+  <meta property="og:image" content="https://www.gardahavens.com/static/img/loghi/logo.jpg" />
+  <meta property="og:image:width" content="1400" />
+  <meta property="og:image:height" content="1400" />
   <meta property="og:site_name" content="Garda Havens" />
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link rel="icon" href="https://www.gardahavens.com/favicon.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="https://www.gardahavens.com/logo.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "primaryImageOfPage": { "@type": "ImageObject", "url": "https://www.gardahavens.com/static/img/loghi/logo.jpg", "width": 1400, "height": 1400 },
+    "publisher": { "@type": "Organization", "name": "Garda Havens", "url": "https://www.gardahavens.com/", "logo": "https://www.gardahavens.com/static/img/loghi/logo.jpg" }
+  }
+  </script>
 </head>
 <body>
 
@@ -34,7 +44,7 @@
 
   <header class="site-header">
     <div class="header-brand">
-      <img src="static/img/logonobg.png" alt="Garda Havens Logo">
+      <span class="brand-logo" role="img" aria-label="Garda Havens Logo"></span>
       <span class="brand-name">Garda Havens</span>
     </div>
     <div class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></div>
@@ -93,7 +103,7 @@
       data-amen-label="Amenities"
       data-book="booknow.html"
       data-booklabel="Book Room 1">
-      <img src="static/1/1.jpeg" alt="Room 1" loading="lazy">
+      <img src="static/img/camere/1/1.jpeg" alt="Room 1" loading="lazy">
       <div class="room-card-overlay">
         <div class="room-card-name">Room 1</div>
         <div class="room-card-type">Quadruple · 21 m²</div>
@@ -115,7 +125,7 @@
       data-amen-label="Amenities"
       data-book="booknow.html"
       data-booklabel="Book Room 2">
-      <img src="static/2/1.jpeg" alt="Room 2" loading="lazy">
+      <img src="static/img/camere/2/1.jpeg" alt="Room 2" loading="lazy">
       <div class="room-card-overlay">
         <div class="room-card-name">Room 2</div>
         <div class="room-card-type">Sestuple · 34 m²</div>
@@ -137,7 +147,7 @@
       data-amen-label="Amenities"
       data-book="booknow.html"
       data-booklabel="Book Room 3">
-      <img src="static/3/1.jpeg" alt="Room 3" loading="lazy">
+      <img src="static/img/camere/3/1.jpeg" alt="Room 3" loading="lazy">
       <div class="room-card-overlay">
         <div class="room-card-name">Room 3</div>
         <div class="room-card-type">Quadruple · 23 m²</div>
@@ -159,7 +169,7 @@
       data-amen-label="Amenities"
       data-book="booknow.html"
       data-booklabel="Book Room 4">
-      <img src="static/4/1.jpeg" alt="Room 4" loading="lazy">
+      <img src="static/img/camere/4/1.jpeg" alt="Room 4" loading="lazy">
       <div class="room-card-overlay">
         <div class="room-card-name">Room 4</div>
         <div class="room-card-type">Triple · 19 m²</div>
@@ -181,7 +191,7 @@
       data-amen-label="Amenities"
       data-book="booknow.html"
       data-booklabel="Book Room 5">
-      <img src="static/5/1.jpeg" alt="Room 5" loading="lazy">
+      <img src="static/img/camere/5/1.jpeg" alt="Room 5" loading="lazy">
       <div class="room-card-overlay">
         <div class="room-card-name">Room 5</div>
         <div class="room-card-type">Quadruple · 21 m²</div>
@@ -203,7 +213,7 @@
       data-amen-label="Amenities"
       data-book="booknow.html"
       data-booklabel="Book Room 6">
-      <img src="static/6/1.jpeg" alt="Room 6" loading="lazy">
+      <img src="static/img/camere/6/1.jpeg" alt="Room 6" loading="lazy">
       <div class="room-card-overlay">
         <div class="room-card-name">Room 6</div>
         <div class="room-card-type">Quadruple · 21 m²</div>
@@ -232,14 +242,17 @@
       <div class="modal-body" id="modal-body">
         <div class="modal-room-info">
           <div class="modal-room-left">
-            <span class="modal-type-badge" id="modal-type-badge"></span>
             <p class="modal-room-desc" id="modal-desc"></p>
             <div class="modal-amenities-label" id="modal-amen-label">Amenities</div>
             <div class="modal-amenities" id="modal-amenities"></div>
           </div>
           <div class="modal-room-right">
+            <label class="modal-date-label" for="modal-date">Prices for the night of</label>
+            <input type="date" id="modal-date">
             <div class="modal-price-main" id="modal-price-main"></div>
+            <div class="modal-price-period" id="modal-price-period"></div>
             <div class="modal-price-table" id="modal-price-table"></div>
+            <p class="modal-price-note">*Tourist tax and €2 stamp duty not included.</p>
             <a class="modal-book-btn" id="modal-book-link" href="#">Book</a>
           </div>
         </div>
@@ -287,10 +300,12 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">&copy; 2025 Garda Havens. All rights reserved. | CIN: IT023022C2FWABW3P7</div>
+    <div class="footer-bottom">&copy; 2025 Garda Havens. All rights reserved. | CIN: IT023022C2FWABW3P7 | <a href="privacy.html">Privacy Policy</a></div>
   </footer>
 
-  <script src="static/slideshow.js"></script>
+  <script src="static/js/prices.js"></script>
+  <script src="static/js/gh-calendar.js"></script>
+  <script src="static/js/slideshow.js"></script>
   <script>
     const menuToggle = document.getElementById('menuToggle');
     const siteNav = document.getElementById('siteNav');
@@ -307,6 +322,6 @@
     });
 
   </script>
-  <script src="static/reveal.js"></script>
+  <script src="static/js/reveal.js"></script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+# File di sistema del Mac (anche le copie "… 2" create dalla sincronizzazione)
+.DS_Store
+.DS_Store *
+# Impostazioni locali di Claude Code
+.claude/
