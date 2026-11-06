@@ -19,5 +19,4 @@ Sito di Garda Havens (www.gardahavens.com), pubblicato con GitHub Pages.
 | `static/img/loghi/` | Logo normale e loghi di stagione. |
 | `static/img/` | Altre immagini (home, guida, bandiere, partner). |
 | `generator/` | Generatore di offerte (privato, con codice di accesso). |
-| `apps-script/` | Copie degli script Google (richieste dal sito e calendario camere). Il codice vero sta su script.google.com. |
 | `tools/sync-photos.py` | Dopo aver aggiunto o tolto foto delle camere: `python3 tools/sync-photos.py`. |

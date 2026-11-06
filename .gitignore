@@ -3,3 +3,7 @@
 .DS_Store *
 # Impostazioni locali di Claude Code
 .claude/
+
+# Script Google (tenuti fuori dal sito pubblico)
+apps-script/
+*.gs
