@@ -132,6 +132,7 @@
     #requestCard .rc-contacts { margin-top:4px; color:#444; font-size:13px; word-break:break-all; }
     #requestCard .rc-actions a.rc-wa { background:#25D366; border-color:#25D366; color:#fff; }
     #requestCard .rc-notes { margin-top:4px; white-space:pre-wrap; color:#444; }
+    #requestCard .rc-status { margin-top:4px; color:#444; font-size:13px; }
 
     /* ─── Output area ────────────────────────────────────────────────── */
     .out { white-space:pre-wrap; overflow-wrap:break-word; background:#fbfbfc; border:1px solid #ececf0; border-radius:12px; padding:12px; font-size:13.5px; line-height:1.55; margin-top:10px; }
@@ -515,6 +516,7 @@ async function createCalendarEvent(btn, roomId, guestName, phone, checkin, check
     if (json.error === "auth") { localStorage.removeItem("ghKey"); json = await send(); } // codice vecchio: lo richiede una volta
 
     if (json.ok) {
+      markRequest("confermata");
       btn.innerHTML     = "✅ Salvato";
       btn.style.background = "#0a7a2f";
       btn.style.borderColor = "#0a7a2f";
@@ -1208,6 +1210,7 @@ function renderOutputs(outputs) {
     btn.onclick = async () => {
       const idx = btn.getAttribute("data-copy");
       const t = $(`out_${idx}`).textContent;
+      markRequest("offerta");
       try { await navigator.clipboard.writeText(t); }
       catch {
         const ta = Object.assign(document.createElement("textarea"), { value:t });
@@ -1225,6 +1228,7 @@ function renderOutputs(outputs) {
       const num = getWaNumber();
       if (!num) { alert("Inserisci un numero WhatsApp nel campo sopra."); return; }
       const url = `https://api.whatsapp.com/send/?phone=${num}&text=${encodeWaText(t)}&type=phone_number&app_absent=0`;
+      markRequest("offerta");
       window.open(url, "_blank");
     };
   });
@@ -1578,6 +1582,7 @@ function renderRequestCard(info) {
   // Contatti in chiaro (selezionabili), poi tre pulsanti uguali
   const contacts = [digits ? (intl ? "+" : "") + digits : "", info.email || ""].filter(Boolean).join("  ·  ");
   if (contacts) box.appendChild(el("div", "rc-contacts", contacts));
+  if (info.id) box.appendChild(el("div", "rc-status", statusLabel(info)));
   const actions = el("div", "rc-actions");
   const link = (href, text, cls) => { const a = el("a", cls, text); a.href = href; if (href.startsWith("http")) a.target = "_blank"; actions.appendChild(a); };
   if (digits) {
@@ -1591,6 +1596,32 @@ function renderRequestCard(info) {
 
 /* Richiesta salvata nel foglio: link generator.html#r=<codice> → scarica i dati dallo script */
 const REQUESTS_URL = "https://script.google.com/macros/s/AKfycbzRomEGmh-v-hcGkZ_S_XITYxa3Mjtdv4AVy56KRqLxd_I5bKGznEO6urS4N2dm8Qixlg/exec";
+
+/* Stato della richiesta nel foglio (lo legge anche la Plancia):
+   offerta = offerta copiata o inviata su WhatsApp · confermata = evento creato in calendario */
+function statusLabel(info) {
+  const when = /^\d{4}-\d{2}-\d{2}/.test(info.updatedAt || "")
+    ? " · " + info.updatedAt.slice(8, 10) + "/" + info.updatedAt.slice(5, 7) : "";
+  const label = { nuova: "🆕 Nuova, offerta non ancora inviata", offerta: "📨 Offerta inviata" + when,
+    confermata: "✅ Confermata" + when, persa: "✖️ Segnata come persa" + when };
+  return label[info.status] || label.nuova;
+}
+
+function markRequest(status) {
+  const req = currentRequest, key = localStorage.getItem("ghKey");
+  if (!req || !req.id || !key) return;           // offerta scritta a mano, non da una richiesta del sito
+  if (req.status === status || (status === "offerta" && req.status === "confermata")) return;
+  fetch(`${REQUESTS_URL}?a=status&r=${encodeURIComponent(req.id)}&s=${status}&auto=1&k=${encodeURIComponent(key)}`)
+    .then(res => res.json())
+    .then(json => {
+      if (!json.ok || currentRequest !== req) return;
+      req.status = json.status;
+      if (json.updatedAt) req.updatedAt = json.updatedAt;
+      const line = document.querySelector("#requestCard .rc-status");
+      if (line) line.textContent = statusLabel(req);
+    })
+    .catch(err => console.error("Stato richiesta:", err));
+}
 
 async function loadRequest(id, retry) {
   if (localStorage.getItem("ghAccess") !== "granted") return; // dopo il login riparte da checkAccess()
@@ -1610,7 +1641,8 @@ async function loadRequest(id, retry) {
       $("pasteRequest").value = r.gh;
       fillFromRequest();
       renderRequestCard({ firstName: r.firstName, lastName: r.lastName, email: r.email, notes: r.notes, ref: r.ref,
-        tel: (r.phoneIntl ? "+" : "") + r.phoneDigits, sent: r.sent });
+        tel: (r.phoneIntl ? "+" : "") + r.phoneDigits, sent: r.sent,
+        id: r.id, status: r.status, updatedAt: r.updatedAt });
       return;
     }
     if (json.error === "auth" && !retry) { localStorage.removeItem("ghKey"); return loadRequest(id, true); }
