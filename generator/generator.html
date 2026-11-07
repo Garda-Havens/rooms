@@ -408,16 +408,35 @@ async function checkAccess() {
 document.getElementById("accessForm")
   .addEventListener("submit", e => { e.preventDefault(); checkAccess(); });
 
-// Face ID / portachiavi: quando il codice viene inserito tutto insieme (non digitato) accede da solo
+// Face ID / portachiavi: quando il codice compare tutto insieme (senza tasti premuti) accede da solo.
+// Safari su iPhone a volte inserisce la password senza avvisare la pagina: per questo, oltre agli
+// eventi, si controlla il campo più volte al secondo finché la schermata di accesso è aperta.
 (function () {
   const inp = document.getElementById("accessCode");
-  let prev = 0;
-  inp.addEventListener("input", e => {
+  const overlay = document.getElementById("accessOverlay");
+  let prev = 0, typed = false, fired = "";
+  const go = () => {
+    const v = inp.value.trim();
+    if (!v || v === fired || overlay.style.display === "none") return;
+    fired = v;                       // non riprova lo stesso codice più volte
+    setTimeout(checkAccess, 150);
+  };
+  const check = () => {
     const len = inp.value.length;
-    const filled = e.inputType === "insertReplacementText" || e.inputType === "insertFromPaste" || len - prev > 1;
+    if (len - prev > 1 && !typed) go(); // più caratteri insieme senza tasti = riempimento automatico
     prev = len;
-    if (filled && len > 0) setTimeout(checkAccess, 150);
+    typed = false;
+  };
+  inp.addEventListener("keydown", () => { typed = true; });
+  inp.addEventListener("input", e => {
+    if (e.inputType === "insertReplacementText" || e.inputType === "insertFromPaste") { prev = inp.value.length; go(); return; }
+    check();
   });
+  inp.addEventListener("change", check);
+  const timer = setInterval(() => {
+    if (overlay.style.display === "none") { clearInterval(timer); return; }
+    check();
+  }, 250);
 })();
 
 /* ═══════════════════════════════════════════════════════════════════════
