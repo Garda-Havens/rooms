@@ -902,17 +902,9 @@ ul { list-style: none; }
   opacity: 1;
   transform: translateX(0);
 }
-/* Touch: niente hover → freccia tonda sempre visibile in alto a destra */
+/* Touch: niente hover → "Esplora →" sempre visibile, bianco e sottolineato, in basso a destra */
 @media (hover: none) {
-  .room-card-cta {
-    top: 10px; right: 10px; bottom: auto;
-    width: 30px; height: 30px; padding: 0;
-    font-size: 0; letter-spacing: 0;
-    border: 1px solid rgba(255,255,255,0.55); border-radius: 50%; background: rgba(20,8,4,0.35);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 1; transform: none;
-  }
-  .room-card-cta::after { content: "↗"; font-size: 0.95rem; line-height: 1; }
+  .room-card-cta { opacity: 1; transform: none; right: 16px; bottom: 14px; }
   .room-card-overlay { padding: 14px 16px; }
 }
 
