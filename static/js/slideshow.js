@@ -116,20 +116,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Calendario (static/js/gh-calendar.js) ───────────────────────
   let cal = null;
   if (P && dateInput && window.GHCalendar) {
-    dateInput.value = P.today();
+    // Nessuna data all'apertura: i prezzi compaiono solo dopo aver scelto il giorno
     cal = GHCalendar.attach(dateInput, {
       theme: "dark",
+      placeholder: IT ? "Scegli una data" : "Choose a date",
       min: P.today,
       marks: iso => { const r = P.rule(iso); return !r || !r.eur; },
       dim: iso => iso > P.data.validUntil,
       legend: IT ? "Alta stagione e festività" : "High season & holidays",
       onChange: () => { if (currentCard) renderPrices(); }
-    });
-    // Prezzo sulle card: periodo di oggi
-    document.querySelectorAll(".room-card").forEach(card => {
-      const t = P.table(card.dataset.room, P.today());
-      const el = card.querySelector(".room-card-price");
-      if (t && el) el.textContent = `${range(t)} ${card.dataset.priceUnit}`;
     });
   }
 
@@ -146,9 +141,19 @@ document.addEventListener("DOMContentLoaded", () => {
       period.textContent = "";
       return;
     }
-    const date = dateInput.value || P.today();
-    const t = P.table(card.dataset.room, date);
+    const date = dateInput.value;
     const note = document.querySelector(".modal-price-note");
+    if (!date) {                      // data non ancora scelta: niente cifre
+      if (note) note.style.display = "none";
+      main.innerHTML = `€ – <span>${card.dataset.priceUnit}</span>`;
+      period.textContent = IT ? "Scegli una data per vedere i prezzi" : "Choose a date to see the prices";
+      const max = P.maxGuests(card.dataset.room);
+      let rows = "";
+      for (let g = 1; g <= max; g++) rows += `<p>${g} ${IT ? (g === 1 ? "ospite" : "ospiti") : (g === 1 ? "person" : "people")}: –</p>`;
+      tableEl.innerHTML = rows;
+      return;
+    }
+    const t = P.table(card.dataset.room, date);
     if (note) note.style.display = t ? "" : "none";
     if (!t) {
       main.innerHTML = "";

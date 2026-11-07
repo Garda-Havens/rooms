@@ -127,8 +127,9 @@
     /* ─── Scheda ospite (richiesta dal sito) ─────────────────────────── */
     #requestCard { margin-top:8px; background:#fbfbfc; border:1px solid #ececf0; border-radius:10px; padding:8px 10px; font-size:13px; }
     #requestCard .rc-name { font-weight:600; }
-    #requestCard .rc-actions { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
-    #requestCard .rc-actions a { text-decoration:none; padding:5px 10px; border-radius:10px; border:1px solid #d9d9dd; color:#111; background:#fff; font-size:13px; }
+    #requestCard .rc-actions { display:grid; grid-template-columns:repeat(3, 1fr); gap:6px; margin-top:8px; }
+    #requestCard .rc-actions a { display:flex; align-items:center; justify-content:center; gap:5px; height:36px; text-decoration:none; border-radius:10px; border:1px solid #d9d9dd; color:#111; background:#fff; font-size:13px; white-space:nowrap; }
+    #requestCard .rc-contacts { margin-top:4px; color:#444; font-size:13px; word-break:break-all; }
     #requestCard .rc-actions a.rc-wa { background:#25D366; border-color:#25D366; color:#fff; }
     #requestCard .rc-notes { margin-top:4px; white-space:pre-wrap; color:#444; }
 
@@ -198,9 +199,11 @@
         box-shadow:0 4px 12px rgba(0,0,0,.15);
         display:flex; flex-direction:column; align-items:center;">
       <h2 style="text-transform:none; letter-spacing:0; font-size:16px; margin-bottom:12px;">Accesso Privato</h2>
-      <input id="accessCode" type="password" placeholder="Inserisci codice"
-             style="padding:10px; font-size:16px; margin-bottom:12px; width:100%;">
-      <button id="checkAccess" style="width:100%;">Accedi</button>
+      <form id="accessForm" style="width:100%; display:flex; flex-direction:column;" onsubmit="return false;">
+        <input id="accessCode" type="password" name="password" autocomplete="current-password" placeholder="Inserisci codice"
+               style="padding:10px; font-size:16px; margin-bottom:12px; width:100%;">
+        <button id="checkAccess" type="submit" style="width:100%;">Accedi</button>
+      </form>
       <p class="muted" style="margin-top:8px;">Solo uso personale</p>
     </div>
   </div>
@@ -369,7 +372,9 @@ if (localStorage.getItem("ghAccess") === "granted") {
   document.getElementById("accessOverlay").style.display = "none";
 }
 
+let accessBusy = false;
 async function checkAccess() {
+  if (accessBusy) return;
   const val = document.getElementById("accessCode").value.trim();
 
   if (!val) {
@@ -379,6 +384,7 @@ async function checkAccess() {
 
   const url = `${SCRIPT_URL}?key=${encodeURIComponent(val)}`;
 
+  accessBusy = true;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -394,16 +400,25 @@ async function checkAccess() {
   } catch (error) {
     console.error("Errore:", error);
     alert("Errore di connessione al server.");
+  } finally {
+    accessBusy = false;
   }
 }
 
-document.getElementById("checkAccess")
-  .addEventListener("click", checkAccess);
+document.getElementById("accessForm")
+  .addEventListener("submit", e => { e.preventDefault(); checkAccess(); });
 
-document.getElementById("accessCode")
-  .addEventListener("keypress", e => {
-    if (e.key === "Enter") checkAccess();
+// Face ID / portachiavi: quando il codice viene inserito tutto insieme (non digitato) accede da solo
+(function () {
+  const inp = document.getElementById("accessCode");
+  let prev = 0;
+  inp.addEventListener("input", e => {
+    const len = inp.value.length;
+    const filled = e.inputType === "insertReplacementText" || e.inputType === "insertFromPaste" || len - prev > 1;
+    prev = len;
+    if (filled && len > 0) setTimeout(checkAccess, 150);
   });
+})();
 
 /* ═══════════════════════════════════════════════════════════════════════
    1. DATA
@@ -1541,14 +1556,18 @@ function renderRequestCard(info) {
   const tel = String(info.tel || "");
   const digits = tel.replace(/\D/g, "");
   const intl = tel.trim().startsWith("+");
-  if (info.notes) box.appendChild(el("div", "rc-notes", "📝 " + info.notes));
+  const notes = String(info.notes || "").trim();
+  if (notes && !/^(null|undefined)$/i.test(notes)) box.appendChild(el("div", "rc-notes", "📝 " + notes));
+  // Contatti in chiaro (selezionabili), poi tre pulsanti uguali
+  const contacts = [digits ? (intl ? "+" : "") + digits : "", info.email || ""].filter(Boolean).join("  ·  ");
+  if (contacts) box.appendChild(el("div", "rc-contacts", contacts));
   const actions = el("div", "rc-actions");
   const link = (href, text, cls) => { const a = el("a", cls, text); a.href = href; if (href.startsWith("http")) a.target = "_blank"; actions.appendChild(a); };
   if (digits) {
     link("https://wa.me/" + digits, "💬 WhatsApp", "rc-wa");
-    link("tel:" + (intl ? "+" : "") + digits, "📞 " + (intl ? "+" : "") + digits);
+    link("tel:" + (intl ? "+" : "") + digits, "📞 Chiama");
   }
-  if (info.email) link("mailto:" + info.email, "✉️ " + info.email);
+  if (info.email) link("mailto:" + info.email, "✉️ Email");
   if (actions.children.length) box.appendChild(actions);
   box.style.display = "";
 }
