@@ -40,8 +40,8 @@
 
     // Stagioni. Alta = prezzo base; bassa = sconto a notte per camera.
     seasons: [
-      { it: "Alta stagione",  en: "High season", from: "06-10", to: "09-15" },
-      { it: "Bassa stagione", en: "Low season",  from: "09-16", to: "06-09", eur: -20 }
+      { it: "Alta stagione",  en: "High season", from: "06-10", to: "09-19" },
+      { it: "Bassa stagione", en: "Low season",  from: "09-20", to: "06-09", eur: -20 }
     ],
 
     // Festività e ponti: vincono sulla stagione e applicano il prezzo base.
