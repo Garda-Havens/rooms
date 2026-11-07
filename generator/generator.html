@@ -373,12 +373,14 @@ if (localStorage.getItem("ghAccess") === "granted") {
 }
 
 let accessBusy = false;
-async function checkAccess() {
+/** silent = verifica automatica: in caso di codice sbagliato non mostra nessun avviso */
+async function checkAccess(silent) {
+  silent = silent === true;
   if (accessBusy) return;
   const val = document.getElementById("accessCode").value.trim();
 
   if (!val) {
-    alert("Inserisci il codice di accesso.");
+    if (!silent) alert("Inserisci il codice di accesso.");
     return;
   }
 
@@ -394,48 +396,44 @@ async function checkAccess() {
       localStorage.setItem("ghKey", val); // serve per scaricare le richieste dal sito (#r=...)
       setTimeout(fillFromHash, 0);
       document.getElementById("accessOverlay").style.display = "none";
-    } else {
+    } else if (!silent) {
       alert("Codice errato ❌");
     }
   } catch (error) {
     console.error("Errore:", error);
-    alert("Errore di connessione al server.");
+    if (!silent) alert("Errore di connessione al server.");
   } finally {
     accessBusy = false;
   }
 }
 
 document.getElementById("accessForm")
-  .addEventListener("submit", e => { e.preventDefault(); checkAccess(); });
+  .addEventListener("submit", e => { e.preventDefault(); checkAccess(false); });
 
-// Face ID / portachiavi: quando il codice compare tutto insieme (senza tasti premuti) accede da solo.
-// Safari su iPhone a volte inserisce la password senza avvisare la pagina: per questo, oltre agli
-// eventi, si controlla il campo più volte al secondo finché la schermata di accesso è aperta.
+// Face ID / portachiavi: appena il codice smette di cambiare lo verifica da solo, senza avvisi.
+// Funziona comunque Safari inserisca la password (con o senza eventi, con o senza "tasti").
+// Se il codice è giusto entra; se è sbagliato o incompleto non succede niente.
 (function () {
   const inp = document.getElementById("accessCode");
   const overlay = document.getElementById("accessOverlay");
-  let prev = 0, typed = false, fired = "";
-  const go = () => {
-    const v = inp.value.trim();
-    if (!v || v === fired || overlay.style.display === "none") return;
-    fired = v;                       // non riprova lo stesso codice più volte
-    setTimeout(checkAccess, 150);
+  const MIN_LEN = 4;      // sotto i 4 caratteri non prova
+  const PAUSE_MS = 700;   // attesa dopo l'ultimo cambiamento
+  let last = "", tried = "", timer = null;
+  const schedule = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      const v = inp.value.trim();
+      if (overlay.style.display === "none" || v.length < MIN_LEN || v === tried) return;
+      tried = v;                       // ogni codice viene provato una sola volta
+      checkAccess(true);
+    }, PAUSE_MS);
   };
-  const check = () => {
-    const len = inp.value.length;
-    if (len - prev > 1 && !typed) go(); // più caratteri insieme senza tasti = riempimento automatico
-    prev = len;
-    typed = false;
-  };
-  inp.addEventListener("keydown", () => { typed = true; });
-  inp.addEventListener("input", e => {
-    if (e.inputType === "insertReplacementText" || e.inputType === "insertFromPaste") { prev = inp.value.length; go(); return; }
-    check();
-  });
-  inp.addEventListener("change", check);
-  const timer = setInterval(() => {
-    if (overlay.style.display === "none") { clearInterval(timer); return; }
-    check();
+  inp.addEventListener("input", schedule);
+  inp.addEventListener("change", schedule);
+  // Safari a volte riempie il campo senza nessun evento: controllo il valore 4 volte al secondo
+  const poll = setInterval(() => {
+    if (overlay.style.display === "none") { clearInterval(poll); return; }
+    if (inp.value !== last) { last = inp.value; schedule(); }
   }, 250);
 })();
 
